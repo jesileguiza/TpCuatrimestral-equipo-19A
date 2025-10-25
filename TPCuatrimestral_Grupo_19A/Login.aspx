@@ -1,47 +1,41 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.Login" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Login TPCuatrimestral</title>
-
+<title>Login TPCuatrimestral</title>
 <style>
     body {
-        text-align: center;
-        height: 100vh; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Arial, sans-serif;
-        background-color: #f3f3f3;
         margin: 0;
-        padding: 20px;
+        padding: 0;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url("Imagen/fondo login.png") no-repeat center center fixed;
+        background-size: cover; 
     }
-    .login{
-        background-color: #7a42f4;
-        color:white;
-        padding: 30px 40px;
+
+    .login-box {
+        background-color: #3B7A57;
+        color: white;
+        padding: 40px 45px;
         border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         text-align: center;
         width: 320px;
-    }
-    .login-box {
-        background-color: #7a42f4;
-        color: white;
-        padding: 30px 40px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        width: 300px;
-        margin: auto;
+        backdrop-filter: blur(5px); 
     }
 
+    .login-box h1 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
 
-
-    .login-box input[type="text"], .login-box input[type="password"] {
+    .login-box input[type="text"],
+    .login-box input[type="password"] {
         width: 100%;
         padding: 10px;
         margin: 10px 0;
@@ -50,48 +44,49 @@
         box-sizing: border-box;
     }
 
-    .login-box button {
-        background-color: #7a42f4;
-        text-align: right;
+    .login-box button,
+    .login-box input[type="submit"],
+    .login-box asp\:Button {
+        background-color: #C46210;
         color: white;
-        padding: 10px 20px;
+        padding: 10px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
         width: 100%;
+        font-size: 15px;
+        margin-top: 10px;
     }
+
+    .login-box button:hover,
     .login-box input[type="submit"]:hover {
-        background-color: #4b25a8;
+        background-color: #3a1c86;
     }
-
-
 
 </style>
-
-
 </head>
-<body >
+
+<body>
     <form id="form1" runat="server">
         <div class="login-box">
-        <div > 
-            <h1>Bienvenido, Ingrese usuario y contraseña</h1>
-        </div>
-        <div>
-            <asp:Label ID="Usu" runat="server" Text="Usuario: "></asp:Label>
-            <asp:TextBox ID="TxtUsuario" runat="server"></asp:TextBox>
-        </div>
-
-        <div>
-            <asp:Label ID="Contr" runat="server" Text="Contraseña: "></asp:Label>
-    <asp:TextBox ID="TxtContra" runat="server" ></asp:TextBox>
-        </div>
-
-
-        <div> 
-            <asp:Button ID="Ingreso" runat="server" Text="Ingresar"  /> 
-        </div>
+            <h1>Bienvenido, ingrese usuario y contraseña</h1>
+            
+            <div>
+                <asp:Label ID="Usu" runat="server" Text="Usuario: "></asp:Label>
+                <asp:TextBox ID="TxtUsuario" runat="server"></asp:TextBox>
             </div>
+
+            <div>
+                <asp:Label ID="Contr" runat="server" Text="Contraseña: "></asp:Label>
+                <asp:TextBox ID="TxtContra" runat="server" TextMode="Password"></asp:TextBox>
+            </div>
+
+            <div>
+                <asp:Button ID="Ingreso" runat="server" Text="Ingresar" />
+            </div>
+        </div>
     </form>
 </body>
 </html>
+
 

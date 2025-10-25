@@ -68,6 +68,7 @@
     <Content Include="Catalogo.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Imagen\fondo login.png" />
     <Content Include="Login.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Web.config" />
@@ -106,6 +107,7 @@
     </Compile>
     <Compile Include="MasterComercio.Master.cs">
       <DependentUpon>MasterComercio.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="MasterComercio.Master.designer.cs">
       <DependentUpon>MasterComercio.Master</DependentUpon>

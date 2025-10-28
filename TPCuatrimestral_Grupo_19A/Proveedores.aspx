@@ -3,4 +3,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Aca iria la presentacion de cada proveedor</h1>
+    <asp:GridView ID="dgvProveedores" runat="server" CssClass="table"></asp:GridView>
 </asp:Content>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Negocio;
 
 namespace TPCuatrimestral_Grupo_19A
 {
@@ -11,7 +12,9 @@ namespace TPCuatrimestral_Grupo_19A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ProveedorNegocio negocio = new ProveedorNegocio();
+            dgvProveedores.DataSource = negocio.listar();
+            dgvProveedores.DataBind();
         }
     }
 }

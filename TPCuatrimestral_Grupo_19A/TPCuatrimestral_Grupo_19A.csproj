@@ -70,6 +70,7 @@
     <Content Include="Global.asax" />
     <Content Include="Imagen\fondo login.png" />
     <Content Include="Login.aspx" />
+    <Content Include="Pagina_Ppal.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -111,6 +112,13 @@
     </Compile>
     <Compile Include="MasterComercio.Master.designer.cs">
       <DependentUpon>MasterComercio.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pagina_Ppal.aspx.cs">
+      <DependentUpon>Pagina_Ppal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pagina_Ppal.aspx.designer.cs">
+      <DependentUpon>Pagina_Ppal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedores.aspx.cs">

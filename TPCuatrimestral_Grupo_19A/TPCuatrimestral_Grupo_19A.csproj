@@ -67,8 +67,14 @@
     <Content Include="AboutUs.aspx" />
     <Content Include="Catalogo.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Estilos\estilos.css" />
     <Content Include="Global.asax" />
+    <Content Include="Imagen\cotillon.jpg" />
     <Content Include="Imagen\fondo login.png" />
+    <Content Include="Imagen\jugueteria.jpg" />
+    <Content Include="Imagen\libreria.jpg" />
+    <Content Include="Imagen\papelera.png" />
+    <Content Include="Imagen\reposteria.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Pagina_Ppal.aspx" />
     <Content Include="Proveedores.aspx" />

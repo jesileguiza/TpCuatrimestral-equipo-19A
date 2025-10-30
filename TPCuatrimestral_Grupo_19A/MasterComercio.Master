@@ -28,6 +28,7 @@
                             <a class="nav-link active" aria-current="page" href="login.aspx">Iniciar Sesion</a>
                             <a class="nav-link" href="Pagina_Ppal.aspx">Pagina Principal</a>
                             <a class="nav-link" href="Catalogo.aspx">Catalogo de productos</a>
+                            <a class="nav-link" href="Clientes.aspx">Clientes</a>
                             <a class="nav-link" href="Proveedores.aspx">Proveedores</a>
                             <a class="nav-link" href="AboutUs.aspx">Sobre nosotros</a>
                 

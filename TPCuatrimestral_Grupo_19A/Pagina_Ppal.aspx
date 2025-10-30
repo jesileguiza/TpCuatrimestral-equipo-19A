@@ -11,7 +11,7 @@
     }
 
     header {
-        background-color: #2d89ef;
+        background-color: #28a745;
         color: white;
         padding: 20px;
         text-align: center;
@@ -20,13 +20,13 @@
     nav {
         display: flex;
         justify-content: center;
-        background-color: #e3e3e3;
+        background-color: #28a745;
         padding: 10px;
         gap: 15px;
     }
 
     nav button {
-        background-color: #2d89ef;
+        background-color: #28a745;
         color: white;
         border: none;
         padding: 10px 20px;

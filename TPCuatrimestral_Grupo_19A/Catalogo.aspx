@@ -73,6 +73,7 @@
         AutoGenerateColumns="False" 
         CssClass="tabla-catalogo">
         <Columns>
+            <asp:BoundField DataField="IdProveedor" HeaderText="IdProveedor" />
             <asp:BoundField DataField="Marca" HeaderText="Marca" />
             <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
             <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />

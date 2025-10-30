@@ -24,7 +24,8 @@
         <h3>Productos destacados</h3>
         <div class="galeria">
             <div class="card-producto">
-                <p>falta producto</p>
+                 <img src="Imagen\Productos\nievereymomo.jpg" alt="Nieve Rey Momo" class="img-producto" />
+                <p>Nieve Rey Momo x12</p>
             </div>
             <div class="card-producto">
                 <p>falta producto</p>

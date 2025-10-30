@@ -75,6 +75,7 @@
     <Content Include="Imagen\jugueteria.jpg" />
     <Content Include="Imagen\libreria.jpg" />
     <Content Include="Imagen\papelera.png" />
+    <Content Include="Imagen\Productos\Nievereymomo.jpg" />
     <Content Include="Imagen\reposteria.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Pagina_Ppal.aspx" />

@@ -19,14 +19,14 @@
            <%-- Barra de navegacion--%>
             <nav class="navbar bg-success" data-bs-theme="dark" >
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="Default.aspx">ShopThings</a>
+                    <a class="navbar-brand" href="Default.aspx">FiestaSoft</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             <a class="nav-link active" aria-current="page" href="login.aspx">Iniciar Sesion</a>
-                            <a class="nav-link" href="Pagina_Ppal.aspx">Pagina Principal</a>
+                            <a class="nav-link" href="Pagina_Ppal.aspx">Gestion de Ventas y compras</a>
                             <a class="nav-link" href="Catalogo.aspx">Catalogo de productos</a>
                             <a class="nav-link" href="Clientes.aspx">Clientes</a>
                             <a class="nav-link" href="Proveedores.aspx">Proveedores</a>

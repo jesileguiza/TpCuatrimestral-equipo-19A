@@ -35,6 +35,7 @@
             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
         </div>
 
-        <asp:ListBox ID="lstProveedores" runat="server" CssClass="listbox"></asp:ListBox>
+        <%--<asp:ListBox ID="lstProveedores" runat="server" CssClass="listbox"></asp:ListBox>--%>
+        <asp:GridView ID="dgvProveedores" runat="server" CssClass="table"></asp:GridView>
     </div>
 </asp:Content>

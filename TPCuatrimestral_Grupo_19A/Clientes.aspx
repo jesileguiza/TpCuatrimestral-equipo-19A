@@ -36,7 +36,22 @@
          <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
      </div>
 
-     <asp:ListBox ID="lstClientes" runat="server" CssClass="listbox"></asp:ListBox>
+
+      <asp:GridView 
+    ID="dgvClientes" 
+    runat="server" 
+    AutoGenerateColumns="False" 
+    CssClass="table table-bordered table-striped"
+    Width="100%">
+    <Columns>
+        <asp:BoundField DataField="IdCliente" HeaderText="ID Cliente" />
+        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+        <asp:BoundField DataField="DNI" HeaderText="DNI" />
+        <asp:BoundField DataField="CantidadCompras" HeaderText="Compras" />
+        <asp:BoundField DataField="UltimaCompra" HeaderText="Última Compra" DataFormatString="{0:dd/MM/yyyy}" />
+        <asp:BoundField DataField="MontoMaximo" HeaderText="Monto Máximo" DataFormatString="{0:C}" />
+    </Columns>
+</asp:GridView>
  </div>
 
 

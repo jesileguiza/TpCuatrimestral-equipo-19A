@@ -14,11 +14,11 @@ namespace Negocio
         {
             return new List<Producto>
             {
-                new Producto { Marca = "Samsung", Descripcion = "Smartphone Galaxy S22", Precio = 899.99m, Stock = 15 },
-                new Producto { Marca = "Apple", Descripcion = "iPhone 15 Pro", Precio = 1299.00m, Stock = 8 },
-                new Producto { Marca = "Sony", Descripcion = "Auriculares WH-1000XM5", Precio = 399.50m, Stock = 25 },
-                new Producto { Marca = "HP", Descripcion = "Notebook Pavilion 14\"", Precio = 750.00m, Stock = 12 },
-                new Producto { Marca = "LG", Descripcion = "Monitor 27'' UltraGear", Precio = 299.99m, Stock = 10 }
+                new Producto { Marca = "Hawaiano", Descripcion = "COLLAR HAWAIANO FLUO CON FLECOS SURTIDOSx10 u.\r\n", Precio = 1918.00m, Stock = 15 },
+                new Producto { Marca = "Rayban", Descripcion = "ANTEOJO RAYBAN LISO BLANCO  x1 LE12/01360 PS\r\n", Precio = 1093.26m, Stock = 8 },
+                new Producto { Marca = "Rayban", Descripcion = "ANTEOJO RAYBAN BICOLOR AMARILLO x1 LE17AM  PS\r\n", Precio = 1126.83m, Stock = 25 },
+                new Producto { Marca = "Generico", Descripcion = "GORRO PAÑO ARGENTINA (varios modelos) x1\r\n", Precio = 1246.20m, Stock = 12 },
+                new Producto { Marca = "RM", Descripcion = "CORONA REY BOCA RMx1\r\n", Precio = 9750m, Stock = 10 }
             };
         }
     }

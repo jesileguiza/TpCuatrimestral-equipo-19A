@@ -8,12 +8,7 @@ namespace TPCuatrimestral_Grupo_19A
     public partial class Proveedores : Page
     {
 
-        //private static List<string> listaProveedores = new List<string>
-        //{
-        //    "Proveedor A",
-        //    "Proveedor B",
-        //    "Proveedor C"
-        //};
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {

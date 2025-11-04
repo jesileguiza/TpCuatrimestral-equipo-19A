@@ -51,12 +51,12 @@ namespace TPCuatrimestral_Grupo_19A
         protected global::System.Web.UI.WebControls.Button btnBuscar;
 
         /// <summary>
-        /// Control dgvClientes.
+        /// Control dgvProveedores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvClientes;
+        protected global::System.Web.UI.WebControls.GridView dgvProveedores;
     }
 }

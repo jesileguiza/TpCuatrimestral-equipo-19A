@@ -122,13 +122,7 @@
         <h1>Panel Principal - Sistema de Ventas y Compras</h1>
     </header>
 
-        <nav>     
-           <button onclick="mostrarSeccion('inicio')">Inicio</button>
-        <button onclick="mostrarSeccion('clientes')">Clientes</button>
-        <button onclick="mostrarSeccion('proveedores')">Proveedores</button>
-        <button onclick="mostrarSeccion('informes')">Informes</button>
-        <button onclick="mostrarSeccion('productos')">Productos</button>
-    </nav>
+       
 
          <main id="contenido">
         <!-- Sección principal -->

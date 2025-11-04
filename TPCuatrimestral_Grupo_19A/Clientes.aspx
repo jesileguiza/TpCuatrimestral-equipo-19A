@@ -36,7 +36,7 @@
          <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
      </div>
 
-
+<%--<
       <asp:GridView 
     ID="dgvClientes" 
     runat="server" 
@@ -51,7 +51,11 @@
         <asp:BoundField DataField="UltimaCompra" HeaderText="Última Compra" DataFormatString="{0:dd/MM/yyyy}" />
         <asp:BoundField DataField="MontoMaximo" HeaderText="Monto Máximo" DataFormatString="{0:C}" />
     </Columns>
-</asp:GridView>
+</asp:GridView> 
+    --%>
+
+<asp:GridView ID="dgvProveedores" runat="server" CssClass="table"></asp:GridView>
+
  </div>
 
 

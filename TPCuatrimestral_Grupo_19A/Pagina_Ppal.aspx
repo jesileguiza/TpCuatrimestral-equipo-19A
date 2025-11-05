@@ -128,50 +128,39 @@
         <!-- Sección principal -->
         <section id="inicio">
 
-             <button class="boton-agregar" onclick="mostrarFormulario('formVenta')">➕ Agregar Venta</button>
+             
+
+            <asp:Button ID="btnMostrarFormulario" runat="server" Text="➕ Agregar Venta" CssClass="boton-agregar" OnClick="btnMostrarFormulario_Click"/>
+
+            <asp:Panel ID="PnlFormularioVenta" runat="server" Visible="false" CssClass="formulario-venta">
+            <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Visible="false"></asp:Label>  
+                
+                <h3>Agregar Venta</h3>
+
+         <asp:Label Text="Cliente: " AssociatedControlID="txtCliente" runat="server" />
+         <asp:TextBox ID="txtCliente" runat="server"></asp:TextBox>
+           <br />
+
+
+        <asp:Label Text="Fecha:" AssociatedControlID="txtFecha" runat="server" />
+        <asp:TextBox ID="txtFecha" runat="server" TextMode="Date"></asp:TextBox>
+        <br />
+
+        <asp:Label Text="Total:" AssociatedControlID="txtTotal" runat="server" />
+        <asp:TextBox ID="txtTotal" runat="server"></asp:TextBox>
+        <br />
+
+     <asp:Button ID="btnGuardarVenta" runat="server" Text="Guardar" OnClick="btnGuardarVenta_Click" CssClass="btn-guardar" />
+        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" CssClass="btn-cancelar" />
+        </asp:Panel>
+
+        <hr />
 
             <h2>Lista de Ventas</h2>
-            <table id="tablaVentas">
-                <tr>
-                    <th>ID Venta</th>
-                    <th>Cliente</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                </tr>
-                <tr>
-                    <td>001</td>
-                    <td>Juan Pérez</td>
-                    <td>25/10/2025</td>
-                    <td>$250.00</td>
-                </tr>
-                <tr>
-                    <td>002</td>
-                    <td>María Gómez</td>
-                    <td>24/10/2025</td>
-                    <td>$420.00</td>
-                </tr>
-                <tr>
-                    <td>003</td>
-                    <td>Julian Sanchez</td>
-                    <td>25/10/2025</td>
-                    <td>$600.00</td>
-                </tr> 
-                <tr>
-                    <td>004</td>
-                    <td>Marcos Tano</td>
-                    <td>25/10/2025</td>
-                    <td>$550.00</td>
-                </tr>
-            </table>
+            <asp:GridView ID="dgvVentas" runat="server" CssClass="table" ></asp:GridView>
 
-            <div id="formVenta" class="formulario">
-                <h3>Nueva Venta</h3>
-                <input type="text" id="idVenta" placeholder="ID Venta"/>
-                <input type="text" id="clienteVenta" placeholder="Cliente"/>
-                <input type="date" id="fechaVenta"/>
-                <input type="number" id="totalVenta" placeholder="Total"/>
-                <button class="boton-agregar" onclick="agregarVenta()">Guardar Venta</button>
-            </div>
+
+
 
             <hr style="margin: 30px 0;"/>
 

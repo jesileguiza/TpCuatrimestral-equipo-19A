@@ -47,6 +47,31 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public int ObtenerIdPorNombre(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT ClientesId FROM Clientes WHERE Nombre = @Nombre");
+                datos.setearParametro("@Nombre", nombre);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector["ClientesId"];
+                else
+                    return 0; // No encontrado
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
 

@@ -15,16 +15,25 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void Page_Load(object sender, EventArgs e)
         {
+           /* 
             if (!IsPostBack)
             {
                 CargarCatalogo();
+            } 
+           */
+
+            if (!IsPostBack)
+            {
+                ProductoNegocio negocio = new ProductoNegocio();
+                dgvProductos.DataSource = negocio.listar();
+                dgvProductos.DataBind();
             }
         }
 
         private void CargarCatalogo()
         {
             ProductoNegocio negocio = new ProductoNegocio();
-            dgvCatalogo.DataSource = negocio.Listar();
+            dgvCatalogo.DataSource = negocio.listar();
             dgvCatalogo.DataBind();
         }
 

@@ -10,16 +10,42 @@ namespace Negocio
 {
     public class ProductoNegocio
     {
-        public List<Producto> Listar()
+        public List<Producto> listar()
         {
-            return new List<Producto>
+
+            AccesoDatos datos = new AccesoDatos();
+            List<Producto> lista = new List<Producto>();
+
+
+            try
             {
-                new Producto { IdProveedor = 100, Marca = "Hawaiano", Descripcion = "COLLAR HAWAIANO FLUO CON FLECOS SURTIDOSx10 u.\r\n", Precio = 1918.00m, Stock = 15 },
-                new Producto { IdProveedor = 101,Marca = "Rayban", Descripcion = "ANTEOJO RAYBAN LISO BLANCO  x1 LE12/01360 PS\r\n", Precio = 1093.26m, Stock = 8 },
-                new Producto { IdProveedor = 102,Marca = "Rayban", Descripcion = "ANTEOJO RAYBAN BICOLOR AMARILLO x1 LE17AM  PS\r\n", Precio = 1126.83m, Stock = 25 },
-                new Producto { IdProveedor = 103,Marca = "Generico", Descripcion = "GORRO PAÑO ARGENTINA (varios modelos) x1\r\n", Precio = 1246.20m, Stock = 12 },
-                new Producto { IdProveedor = 104,Marca = "RM", Descripcion = "CORONA REY BOCA RMx1\r\n", Precio = 9750m, Stock = 10 }
-            };
+
+                datos.setearConsulta("SELECT ProductoId, Nombre, Proveedor, Stock, Valor FROM Productos");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Producto aux = new Producto();
+
+                    aux.IdProducto = (int)datos.Lector["ProductoId"];
+                    aux.Nombre = datos.Lector["Nombre"].ToString();
+                    aux.Proveedor = datos.Lector["Proveedor"].ToString();
+                    aux.Stock = (int)datos.Lector["Stock"];
+                    aux.Precio = Convert.ToDecimal(datos.Lector["Valor"]);
+
+                    lista.Add(aux);
+                } 
+                return lista;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

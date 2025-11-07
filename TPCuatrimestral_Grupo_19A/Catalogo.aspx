@@ -67,6 +67,7 @@
 
     <asp:Button ID="btnAgregar" runat="server" CssClass="boton-agregar" Text="➕ Agregar Producto" OnClick="btnAgregar_Click" />
 
+    <!--
     <asp:GridView 
         ID="dgvCatalogo" 
         runat="server" 
@@ -80,4 +81,7 @@
             <asp:BoundField DataField="Stock" HeaderText="Stock" />
         </Columns>
     </asp:GridView>
+    -->
+    <asp:GridView ID="dgvProductos" runat="server" CssClass="table"></asp:GridView>
+
 </asp:Content>

@@ -28,10 +28,10 @@
                 <p>Nieve Rey Momo x12</p>
             </div>
             <div class="card-producto">
-                <p>falta producto</p>
+                <p>falta productos</p>
             </div>
             <div class="card-producto">
-                <p>falta producto</p>
+                <p>falta productos</p>
             </div>
         </div>
     </section>

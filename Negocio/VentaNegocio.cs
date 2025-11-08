@@ -27,8 +27,8 @@ namespace Negocio
                         VentaId = (int)datos.Lector["VentaId"],
                         ClienteId = (int)datos.Lector["ClienteId"],
                         ClienteNombre = (string)datos.Lector["ClienteNombre"],
-                        DNI = (string)datos.Lector["DNI"],
-                        Email = (string)datos.Lector["Email"],
+                        DNI = (string)datos.Lector["DNI"].ToString(),
+                        Email = (string)datos.Lector["Email"].ToString(),
                         Fecha = (DateTime)datos.Lector["FechaVenta"],
                         Total = (decimal)datos.Lector["Total"]
                     };

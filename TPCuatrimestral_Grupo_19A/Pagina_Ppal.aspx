@@ -141,6 +141,14 @@
          <asp:TextBox ID="txtCliente" runat="server"></asp:TextBox>
            <br />
 
+          <asp:Label Text="DNI: " AssociatedControlID="txtDNI" runat="server" />
+        <asp:TextBox ID="txtDNI" runat="server"></asp:TextBox>
+        <br />
+
+         <asp:Label Text="Email: " AssociatedControlID="txtEmail" runat="server" />
+        <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+        <br />
+
 
         <asp:Label Text="Fecha:" AssociatedControlID="txtFecha" runat="server" />
         <asp:TextBox ID="txtFecha" runat="server" TextMode="Date"></asp:TextBox>
@@ -160,7 +168,7 @@
             <asp:GridView ID="dgvVentas" runat="server" CssClass="table" ></asp:GridView>
 
 
-
+            <!-- fin ventas y comienzo compras -->
 
             <hr style="margin: 30px 0;"/>
 
@@ -219,6 +227,7 @@
             <h2>Gestión de Productos</h2>
             <p>Aquí podrás ver y modificar los productos disponibles.</p>
         </section>
+
     </main>
 
     <footer>

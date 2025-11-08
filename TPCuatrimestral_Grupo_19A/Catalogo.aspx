@@ -59,29 +59,80 @@
         .boton-agregar:hover {
             background-color: #1e7e34;
         }
+
+
+
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Catálogo de Productos</h1>
 
-    <asp:Button ID="btnAgregar" runat="server" CssClass="boton-agregar" Text="➕ Agregar Producto" OnClick="btnAgregar_Click" />
+    <p style="font-weight:bold; margin-bottom:5px;">Recordatorio de Categorías</p>
 
-    <!--
-    <asp:GridView 
-        ID="dgvCatalogo" 
-        runat="server" 
-        AutoGenerateColumns="False" 
-        CssClass="tabla-catalogo">
-        <Columns>
-            <asp:BoundField DataField="IdProveedor" HeaderText="IdProveedor" />
-            <asp:BoundField DataField="Marca" HeaderText="Marca" />
-            <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
-            <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
-            <asp:BoundField DataField="Stock" HeaderText="Stock" />
-        </Columns>
-    </asp:GridView>
-    -->
+<div style="display:flex; justify-content:space-around; max-width:600px; margin-bottom:20px; background-color:#5bed55; padding:10px; border-radius:5px;">
+    <div>1 - Cotillón</div>
+    <div>2 - Papelería</div>
+    <div>3 - Juguetería</div>
+    <div>4 - Repostería</div>
+    <div>5 - Librería</div>
+</div>
+
+   <button type="button" class="btn btn-primary mt-3" onclick="mostrarFormulario()">➕ Agregar Producto</button>
+
+<div id="formAgregar" style="display:none; margin-top:20px;">
+
+    <h3>Nuevo Producto</h3>
+    <div class="form-group">
+        <label>Nombre:</label>
+        <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group">
+        <label>Descripción:</label>
+        <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group">
+        <label>Proveedor:</label>
+        <asp:TextBox ID="txtProveedor" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group">
+        <label>ID Marca:</label>
+        <asp:TextBox ID="txtIdMarca" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group">
+        <label>ID Categoría:</label>
+        <asp:TextBox ID="txtIdCategoria" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group">
+        <label>Stock:</label>
+        <asp:TextBox ID="txtStock" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group">
+        <label>Precio:</label>
+        <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+
+    <asp:Button ID="btnGuardar" runat="server" Text="Guardar Producto" CssClass="btn btn-success mt-3" OnClick="btnAgregar_Click" />
+    <button type="button" class="btn btn-secondary mt-3" onclick="ocultarFormulario()">Cancelar</button>
+
+    <br />
+    <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
+</div>    
+
     <asp:GridView ID="dgvProductos" runat="server" CssClass="table"></asp:GridView>
+
+
+    
+        <script>
+function mostrarFormulario() {
+    document.getElementById("formAgregar").style.display = "block";
+}
+
+function ocultarFormulario() {
+    document.getElementById("formAgregar").style.display = "none";
+}
+        </script>
+    
+
 
 </asp:Content>

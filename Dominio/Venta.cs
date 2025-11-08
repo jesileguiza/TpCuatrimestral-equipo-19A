@@ -10,7 +10,9 @@ namespace Dominio
     {
         public int VentaId { get; set; }
         public int ClienteId { get; set; }
-        public string ClienteNombre { get; set; } 
+        public string ClienteNombre { get; set; }
+        public string DNI { get; set; }
+        public string Email { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
 

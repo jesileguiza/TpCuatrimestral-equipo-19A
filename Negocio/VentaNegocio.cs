@@ -13,9 +13,11 @@ namespace Negocio
             List<Venta> lista = new List<Venta>();
             AccesoDatos datos = new AccesoDatos();
         try{
-                datos.setearConsulta(@"SELECT V.VentaId, V.ClienteId, C.Nombre AS ClienteNombre, V.Fecha, V.Total
-                                       FROM Ventas V
-                                       INNER JOIN Clientes C ON V.ClienteId = C.ClientesId");
+                datos.setearConsulta(@"SELECT V.VentaId, V.ClienteId, 
+                                     C.Nombre AS ClienteNombre, C.Email,
+                                     C.DNI, V.FechaVenta, V.Total
+                                     FROM Ventas V
+                                     INNER JOIN Clientes C ON V.ClienteId = C.ClientesId");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -25,7 +27,9 @@ namespace Negocio
                         VentaId = (int)datos.Lector["VentaId"],
                         ClienteId = (int)datos.Lector["ClienteId"],
                         ClienteNombre = (string)datos.Lector["ClienteNombre"],
-                        Fecha = (DateTime)datos.Lector["Fecha"],
+                        DNI = (string)datos.Lector["DNI"],
+                        Email = (string)datos.Lector["Email"],
+                        Fecha = (DateTime)datos.Lector["FechaVenta"],
                         Total = (decimal)datos.Lector["Total"]
                     };
                     lista.Add(v);
@@ -51,6 +55,8 @@ namespace Negocio
             {
                 datos.setearConsulta("INSERT INTO Ventas (ClienteId, Fecha, Total) VALUES (@ClienteId, @Fecha, @Total)");
                 datos.setearParametro("@ClienteId", venta.ClienteId);
+                datos.setearParametro("@DNI", venta.DNI);
+                datos.setearParametro("@Email", venta.Email);
                 datos.setearParametro("@Fecha", venta.Fecha);
                 datos.setearParametro("@Total", venta.Total);
                 datos.ejecutarAccion();

@@ -20,7 +20,7 @@ namespace Negocio
             try
             {
 
-                datos.setearConsulta("SELECT ProductoId, Nombre, Proveedor, Stock, Valor FROM Productos");
+                datos.setearConsulta("SELECT ProductoId, Nombre, Descripcion, Proveedor, IdMarca, IdCategoria, Stock, Precio FROM Productos");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -31,7 +31,7 @@ namespace Negocio
                     aux.Nombre = datos.Lector["Nombre"].ToString();
                     aux.Proveedor = datos.Lector["Proveedor"].ToString();
                     aux.Stock = (int)datos.Lector["Stock"];
-                    aux.Precio = Convert.ToDecimal(datos.Lector["Valor"]);
+                    aux.Precio = Convert.ToDecimal(datos.Lector["Precio"]);
 
                     lista.Add(aux);
                 } 
@@ -47,5 +47,50 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void Agregar(Producto nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(@"
+            INSERT INTO Productos (Nombre, Descripcion, Proveedor, IdMarca, IdCategoria, Stock, Precio)
+            VALUES (@Nombre, @Descripcion, @Proveedor, @IdMarca, @IdCategoria, @Stock, @Precio)
+        ");
+
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Descripcion", nuevo.Descripcion ?? (object)DBNull.Value);
+                datos.setearParametro("@Proveedor", nuevo.Proveedor);
+                datos.setearParametro("@IdMarca", nuevo.IdMarca.HasValue ? (object)nuevo.IdMarca.Value : DBNull.Value);
+                datos.setearParametro("@IdCategoria", nuevo.IdCategoria.HasValue ? (object)nuevo.IdCategoria.Value : DBNull.Value);
+                datos.setearParametro("@Stock", nuevo.Stock);
+                datos.setearParametro("@Precio", nuevo.Precio);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

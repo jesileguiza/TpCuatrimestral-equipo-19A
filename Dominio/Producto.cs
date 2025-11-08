@@ -16,6 +16,8 @@ namespace Dominio
 
         public Categoria categoria { get; set; }
         public Marca Marca { get; set; }
+        public int? IdMarca { get; set; }
+        public int? IdCategoria { get; set; }
         public string Descripcion { get; set; }
         public int Stock { get; set; }
         public Decimal Precio { get; set; }

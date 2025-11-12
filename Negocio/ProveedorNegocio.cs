@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Dominio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dominio;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Negocio
 {
@@ -51,6 +52,83 @@ namespace Negocio
                 datos.cerrarConexion();
             }
 
+        }
+
+        public void agregar(Proveedor nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into Proveedores(RazonSocial, Nombre, Cuit, Telefono, Email, Direccion, Localidad) values(@RazonSocial, @Nombre, @Cuit, @Telefono, @Email, @Direccion, @Localidad);");
+                datos.setearParametro("@RazonSocial", nuevo.RazonSocial);
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Cuit", nuevo.Cuit);
+                datos.setearParametro("@Telefono", nuevo.Telefono);
+                datos.setearParametro("@Email", nuevo.Email);
+                datos.setearParametro("@Direccion", nuevo.Direccion);
+                datos.setearParametro("@Localidad", nuevo.Localidad);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void modificarProveedor(Proveedor modificado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("update Proveedores set RazonSocial = @RazonSocial, Nombre = @Nombre, Cuit = @Cuit, Telefono = @Telefono, Email = @Email, Direccion = @Direccion, Localidad = @Localidad where id = @id;");
+                datos.setearParametro("@RazonSocial", modificado.RazonSocial);
+                datos.setearParametro("@Nombre", modificado.Nombre);
+                datos.setearParametro("@Cuit", modificado.Cuit);
+                datos.setearParametro("@Telefono", modificado.Telefono);
+                datos.setearParametro("@Email", modificado.Email);
+                datos.setearParametro("@Direccion", modificado.Direccion);
+                datos.setearParametro("@Localidad", modificado.Localidad);
+                datos.setearParametro("@Localidad", modificado.IdProveedor);
+                datos.ejecutarAccion();
+
+
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void eliminar(int id)
+        {
+
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+
+                datos.setearConsulta("delete from Proveedores Where id_Proveedor = @id_Proveedor;");
+                datos.setearParametro("@Id", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
     }

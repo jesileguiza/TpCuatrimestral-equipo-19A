@@ -16,7 +16,7 @@ namespace Negocio
 
             try
             {
-                datos.setearConsulta("select ClientesId,Nombre, Apellido, Telefono, Email from Clientes");
+                datos.setearConsulta("select ClientesId,Nombre, Apellido, DNI, Email from Clientes");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -25,11 +25,10 @@ namespace Negocio
                     aux.ClientesId = datos.Lector["ClientesId"] != DBNull.Value ? (int)datos.Lector["ClientesId"] : 0;
                     aux.Nombre = datos.Lector["Nombre"] != DBNull.Value ? (string)datos.Lector["Nombre"] : "VACIO";
                     aux.Apellido = datos.Lector["Apellido"] != DBNull.Value ? (string)datos.Lector["Apellido"] : "VACIO";
-                    aux.Telefono = datos.Lector["Telefono"] != DBNull.Value ? (string)datos.Lector["Telefono"] : "VACIO";
+                    aux.DNI = datos.Lector["DNI"] != DBNull.Value ? (string)datos.Lector["DNI"] : "VACIO";
                     aux.Email = datos.Lector["Email"] != DBNull.Value ? (string)datos.Lector["Email"] : "VACIO";
 
-                    //aux. = (int)datos.Lector["Id"];
-                    //aux.Descripcion = (string)datos.Lector["Descripcion"];
+
 
                     lista.Add(aux);
                 }
@@ -41,6 +40,77 @@ namespace Negocio
             {
 
                 throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void agregar(Cliente nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into Clientes (Nombre, Apellido, DNI, Email) values (@Nombre, @Apellido, @DNI, @Email)");
+                datos.setearParametro("@Nombre", nuevo.Nombre);
+                datos.setearParametro("@Apellido", nuevo.Apellido);
+                datos.setearParametro("@DNI", nuevo.DNI);
+                datos.setearParametro("@Email", nuevo.Email);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void modificarCliente(Cliente modificado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("update Clientes set Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Email = @Email where ClientesId = @ClientesId");
+                datos.setearParametro("@Nombre", modificado.Nombre);
+                datos.setearParametro("@Apellido", modificado.Apellido);
+                datos.setearParametro("@Email", modificado.Email);
+                datos.setearParametro("@ClientesId", modificado.ClientesId);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+
+                datos.setearConsulta("Delete Clientes where ClientesId = @ClientesId");
+                datos.setearParametro("@ClientesId", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
             finally
             {

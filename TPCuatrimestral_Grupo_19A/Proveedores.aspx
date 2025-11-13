@@ -37,34 +37,34 @@
 
         <%--<asp:ListBox ID="lstProveedores" runat="server" CssClass="listbox"></asp:ListBox>--%>
         <asp:GridView ID="dgvProveedores" runat="server"
-    AutoGenerateColumns="False"
-    CssClass="table table-striped table-bordered"
-    DataKeyNames="IdProveedor"
-    OnSelectedIndexChanged="dgvProveedores_SelectedIndexChanged">
-    <Columns>
-        
-        <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
+            AutoGenerateColumns="False"
+            CssClass="table table-striped table-bordered"
+            DataKeyNames="IdProveedor"
+            OnSelectedIndexChanged="dgvProveedores_SelectedIndexChanged">
+            <Columns>
 
-        
-        <asp:BoundField DataField="IdProveedor" HeaderText="ID" />
-        <asp:BoundField DataField="RazonSocial" HeaderText="Razón Social" />
-        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-        <asp:BoundField DataField="Cuit" HeaderText="CUIT" />
-        <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
-        <asp:BoundField DataField="Email" HeaderText="Email" />
-        <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
-        <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
-        <asp:CheckBoxField DataField="Activo" HeaderText="Activo" />
-    </Columns>
-</asp:GridView>
+                <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
 
-<asp:Button ID="btnEliminar" runat="server" Text="Eliminar seleccionado" CssClass="btn btn-danger mt-3"
-    OnClientClick="return confirm('¿Seguro que querés eliminar este proveedor?');"
-    OnClick="btnEliminar_Click" />
-    <asp:Button ID="BtnAlta" runat="server" Text="Dar de alta seleccionado" CssClass="btn btn-success mt-3"
-    OnClientClick="return confirm('¿Seguro que querés dar de alta este proveedor?');"
-    OnClick="btnAlta_Click" />
+
+                <asp:BoundField DataField="IdProveedor" HeaderText="ID" />
+                <asp:BoundField DataField="RazonSocial" HeaderText="Razón Social" />
+                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                <asp:BoundField DataField="Cuit" HeaderText="CUIT" />
+                <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+                <asp:BoundField DataField="Email" HeaderText="Email" />
+                <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
+                <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
+                <asp:CheckBoxField DataField="Activo" HeaderText="Activo" />
+            </Columns>
+        </asp:GridView>
+
+        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar seleccionado" CssClass="btn btn-danger mt-3"
+            OnClientClick="return confirm('¿Seguro que querés eliminar este proveedor?');"
+            OnClick="btnEliminar_Click" />
+        <asp:Button ID="BtnAlta" runat="server" Text="Dar de alta seleccionado" CssClass="btn btn-success mt-3"
+            OnClientClick="return confirm('¿Seguro que querés dar de alta este proveedor?');"
+            OnClick="btnAlta_Click" />
     </div>
 
-   
+
 </asp:Content>

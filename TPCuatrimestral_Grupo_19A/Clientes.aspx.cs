@@ -11,44 +11,61 @@ namespace TPCuatrimestral_Grupo_19A
 {
     public partial class Clientes : System.Web.UI.Page
     {
-        // private static List<Cliente> listaclientes = new List<Cliente>
-        // {
-        //   new Cliente { IdCliente = 1, Nombre = "Cliente A", DNI = "30123456", CantidadCompras = 5, UltimaCompra = DateTime.Now, MontoMaximo = 1200 },
-        //     new Cliente { IdCliente = 2, Nombre = "Cliente B", DNI = "30999888", CantidadCompras = 2, UltimaCompra = DateTime.Now.AddDays(-5), MontoMaximo = 800 },
-        //     new Cliente { IdCliente = 3, Nombre = "Cliente C", DNI = "30111222", CantidadCompras = 7, UltimaCompra = DateTime.Now.AddDays(-2), MontoMaximo = 1500 }
-        //  };
+
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            ClienteNegocio negocio = new ClienteNegocio();
-            dgvProveedores.DataSource = negocio.Listar();
-            dgvProveedores.DataBind();
+            if (!IsPostBack)
+            {
 
+                CargarClientes();
+            }
         }
 
-        //private void CargarClientes()
-        //{
-        //dgvClientes.DataSource = listaclientes;
-        //dgvClientes.DataBind();
-        //}
-
-
-        protected void btnAlta_Click(object sender, EventArgs e)
+        protected void dgvClientes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // int nuevoID = listaclientes.Count + 1;
-            //  listaclientes.Add(new Cliente
-            //  {
-            //   IdCliente = nuevoID,
-            //     Nombre = "Nuevo Cliente " + nuevoID,
-            //  DNI = "30" + new Random().Next(1000000, 9999999).ToString(),
-            //  CantidadCompras = 0,
-            //  UltimaCompra = DateTime.Now,
-            //   MontoMaximo = 0
-            // });
+            int idSeleccionado = Convert.ToInt32(dgvClientes.SelectedDataKey.Value);
+            ViewState["IdSeleccionado"] = idSeleccionado;
+        }
 
-            //  CargarClientes();
-            //   ScriptManager.RegisterStartupScript(this, GetType(), "msg", "alert('Cliente agregado exitosamente');", true);
-             }
+        private void CargarClientes()
+        {
+            ClienteNegocio negocio = new ClienteNegocio();
+            dgvClientes.DataSource = negocio.Listar();
+            dgvClientes.DataBind();
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (ViewState["IdSeleccionado"] == null)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un proveedor antes de eliminar.');", true);
+                return;
+            }
+
+            int id = (int)ViewState["IdSeleccionado"];
+
+            try
+            {
+                ClienteNegocio negocio = new ClienteNegocio();
+                negocio.eliminar(id);
+
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Proveedor eliminado correctamente.');", true);
+
+                CargarClientes(); // recarga la grilla
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al eliminar: {ex.Message}');", true);
+            }
+        }
+
+
+
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("abmCliente.aspx");
+        }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {

@@ -64,6 +64,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="abmCliente.aspx" />
     <Content Include="abmProducto.aspx" />
     <Content Include="abmProveedor.aspx" />
     <Content Include="AboutUs.aspx" />
@@ -85,6 +86,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="abmCliente.aspx.cs">
+      <DependentUpon>abmCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="abmCliente.aspx.designer.cs">
+      <DependentUpon>abmCliente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="abmProducto.aspx.cs">
       <DependentUpon>abmProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -27,36 +27,35 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
      <div class="contenedor">
-     <h1>Gestión de Clientes</h1>
+         <h1>Gestión de Clientes</h1>
 
-     <div class="botonera">
-         <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn btn-success" OnClick="btnAlta_Click" />
-         <asp:Button ID="btnModificar" runat="server" Text="Modificación" CssClass="btn btn-success" OnClick="btnModificar_Click" />
-         <asp:TextBox ID="txtBuscar" runat="server" placeholder="Buscar Cliente..." CssClass="form-control" Style="display:inline-block; width:200px; margin-left:10px;" />
-         <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+         <div class="botonera">
+             <asp:Button ID="btnAgregar" runat="server" Text="Alta" CssClass="btn btn-success" OnClick="btnAgregar_Click" />
+             <asp:Button ID="btnModificar" runat="server" Text="Modificación" CssClass="btn btn-success" OnClick="btnModificar_Click" />
+             <asp:TextBox ID="txtBuscar" runat="server" placeholder="Buscar Cliente..." CssClass="form-control" Style="display: inline-block; width: 200px; margin-left: 10px;" />
+             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+         </div>
+
+         <asp:GridView ID="dgvClientes" runat="server"
+             AutoGenerateColumns="False"
+             DataKeyNames="ClientesId"
+              CssClass="table table-striped table-bordered"
+             OnSelectedIndexChanged="dgvClientes_SelectedIndexChanged">
+             <Columns>
+                 <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="👆" />
+                 <asp:BoundField DataField="ClientesId" HeaderText="ClientesId" />
+                 <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                 <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                 <asp:BoundField DataField="DNI" HeaderText="DNI" />
+                 <asp:BoundField DataField="Email" HeaderText="Email" />
+             </Columns>
+         </asp:GridView>
+
+        <asp:Button ID="btnEliminarCliente" runat="server" Text="Eliminar seleccionado" CssClass="btn btn-danger mt-3"
+            OnClientClick="return confirm('¿Seguro que querés eliminar este proveedor?');"
+            OnClick="btnEliminar_Click" />
+
      </div>
-
-<%--<
-      <asp:GridView 
-    ID="dgvClientes" 
-    runat="server" 
-    AutoGenerateColumns="False" 
-    CssClass="table table-bordered table-striped"
-    Width="100%">
-    <Columns>
-        <asp:BoundField DataField="IdCliente" HeaderText="ID Cliente" />
-        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-        <asp:BoundField DataField="DNI" HeaderText="DNI" />
-        <asp:BoundField DataField="CantidadCompras" HeaderText="Compras" />
-        <asp:BoundField DataField="UltimaCompra" HeaderText="Última Compra" DataFormatString="{0:dd/MM/yyyy}" />
-        <asp:BoundField DataField="MontoMaximo" HeaderText="Monto Máximo" DataFormatString="{0:C}" />
-    </Columns>
-</asp:GridView> 
-    --%>
-
-<asp:GridView ID="dgvProveedores" runat="server" CssClass="table"></asp:GridView>
-
- </div>
 
 
     </asp:Content>

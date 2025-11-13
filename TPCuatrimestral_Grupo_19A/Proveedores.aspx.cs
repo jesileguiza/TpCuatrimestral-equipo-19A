@@ -26,25 +26,33 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void dgvProveedores_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Guarda el ID del proveedor seleccionado en el ViewState
+            
             int idSeleccionado = Convert.ToInt32(dgvProveedores.SelectedDataKey.Value);
             ViewState["IdSeleccionado"] = idSeleccionado;
         }
 
-        protected void btnAlta_Click(object sender, EventArgs e)
+        protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("agregarProveedor.aspx");
+            Response.Redirect("abmProveedor.aspx",false);
         }
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            // Acá la lógica para modificar un proveedor
-            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Botón Modificar presionado');", true);
+            if (dgvProveedores.SelectedDataKey == null)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un proveedor para modificar.');", true);
+            }
+            else
+            {
+            int idProveedor = Convert.ToInt32(dgvProveedores.SelectedDataKey.Value);
+            Response.Redirect("abmProveedor.aspx?IdProveedor=" + idProveedor);
+
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            // Acá la lógica para modificar un proveedor
+           
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Botón Modificar presionado');", true);
         }
 
@@ -68,6 +76,29 @@ namespace TPCuatrimestral_Grupo_19A
             catch (Exception ex)
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al eliminar: {ex.Message}');", true);
+            }
+        }
+
+        protected void btnAlta_Click(object sender, EventArgs e)
+        {
+            if (ViewState["IdSeleccionado"] == null)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un proveedor antes de Dar de alta.');", true);
+                return;
+            }
+
+            int id = (int)ViewState["IdSeleccionado"];
+
+            try
+            {
+                ProveedorNegocio negocio = new ProveedorNegocio();
+                negocio.darAlta(id);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Proveedor dado de alta correctamente.');", true);
+                CargarProveedores();
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al dar de alta: {ex.Message}');", true);
             }
         }
     }

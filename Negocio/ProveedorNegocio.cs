@@ -1,6 +1,7 @@
 ﻿using Dominio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +11,26 @@ namespace Negocio
 {
     public class ProveedorNegocio
     {
-        public List<Proveedor> listar()
+        public List<Proveedor> listar(string IdProveedor = "")
         {
             List<Proveedor> lista = new List<Proveedor>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("select id_Proveedor,RazonSocial, Nombre, Cuit, Telefono, Email, Direccion, Localidad, Activo from Proveedores");
+                string consulta = "SELECT id_Proveedor, RazonSocial, Nombre, Cuit, Telefono, Email, Direccion, Localidad, Activo FROM Proveedores";
+
+                if (!string.IsNullOrEmpty(IdProveedor))
+                {
+                    consulta += " WHERE id_Proveedor = @IdProveedor";
+                    datos.setearConsulta(consulta);
+                    datos.setearParametro("@IdProveedor", IdProveedor);
+                }
+                else
+                {
+                    datos.setearConsulta(consulta);
+                }
+
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -33,25 +46,19 @@ namespace Negocio
                     aux.Localidad = datos.Lector["Localidad"] != DBNull.Value ? (string)datos.Lector["Localidad"] : "VACIO";
                     aux.Activo = (bool)datos.Lector["Activo"];
 
-                    //aux. = (int)datos.Lector["Id"];
-                    //aux.Descripcion = (string)datos.Lector["Descripcion"];
-
                     lista.Add(aux);
                 }
-
 
                 return lista;
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
             {
                 datos.cerrarConexion();
             }
-
         }
 
         public void agregar(Proveedor nuevo)
@@ -84,7 +91,7 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("update Proveedores set RazonSocial = @RazonSocial, Nombre = @Nombre, Cuit = @Cuit, Telefono = @Telefono, Email = @Email, Direccion = @Direccion, Localidad = @Localidad where id = @id;");
+                datos.setearConsulta("update Proveedores set RazonSocial = @RazonSocial, Nombre = @Nombre, Cuit = @Cuit, Telefono = @Telefono, Email = @Email, Direccion = @Direccion, Localidad = @Localidad where id_Proveedor = @id_Proveedor;");
                 datos.setearParametro("@RazonSocial", modificado.RazonSocial);
                 datos.setearParametro("@Nombre", modificado.Nombre);
                 datos.setearParametro("@Cuit", modificado.Cuit);
@@ -92,12 +99,12 @@ namespace Negocio
                 datos.setearParametro("@Email", modificado.Email);
                 datos.setearParametro("@Direccion", modificado.Direccion);
                 datos.setearParametro("@Localidad", modificado.Localidad);
-                datos.setearParametro("@Localidad", modificado.IdProveedor);
+                datos.setearParametro("@id_Proveedor", modificado.IdProveedor);
                 datos.ejecutarAccion();
 
 
 
-                datos.ejecutarAccion();
+                
 
             }
             catch (Exception ex)
@@ -119,6 +126,30 @@ namespace Negocio
                 
 
                 datos.setearConsulta("UPDATE Proveedores SET Activo = 0 WHERE id_Proveedor = @id_Proveedor;");
+                datos.setearParametro("@id_Proveedor", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void darAlta(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+
+                datos.setearConsulta("UPDATE Proveedores SET Activo = 1 WHERE id_Proveedor = @id_Proveedor;");
                 datos.setearParametro("@id_Proveedor", id);
 
                 datos.ejecutarAccion();

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterComercio.Master" AutoEventWireup="true" CodeBehind="agregarProveedor.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.abmProveedor" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterComercio.Master" AutoEventWireup="true" CodeBehind="abmProveedor.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.abmProveedor" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
      <style>
      body {
@@ -78,7 +78,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
-        <h2 class="form-title">Agregar Proveedor</h2>
+        <h2 id="tituloProveedor" runat="server">Agregar Proveedor</h2>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="TxtRazonSocialPROV">Razon Social</label>
@@ -120,5 +120,6 @@
         <asp:Button ID="btnAgregarPROV" runat="server" Text="Agregar" OnClick="btnAgregarPROV_Click" />
         <asp:Button ID="btnCancelarPROV" runat="server" Text="Cancelar" OnClick="btnCancelarPROV_Click" />
         <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label>
+        <asp:Label ID="Label1" runat="server" />
     </div>
 </asp:Content>

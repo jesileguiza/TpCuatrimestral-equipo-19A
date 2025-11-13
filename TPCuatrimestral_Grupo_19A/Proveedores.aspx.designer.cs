@@ -15,13 +15,13 @@ namespace TPCuatrimestral_Grupo_19A
     {
 
         /// <summary>
-        /// Control btnAlta.
+        /// Control btnAgregar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAlta;
+        protected global::System.Web.UI.WebControls.Button btnAgregar;
 
         /// <summary>
         /// Control btnModificar.
@@ -67,5 +67,14 @@ namespace TPCuatrimestral_Grupo_19A
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEliminar;
+
+        /// <summary>
+        /// Control BtnAlta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnAlta;
     }
 }

@@ -28,8 +28,8 @@
         <h1>Gestión de Proveedores</h1>
 
         <div class="botonera">
-            <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn btn-success" OnClick="btnAlta_Click" />
-            <%--<asp:Button ID="btnBaja" runat="server" Text="Baja" CssClass="btn btn-success" OnClick="btnBaja_Click" />--%>
+            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success" OnClick="btnAgregar_Click" />
+         
             <asp:Button ID="btnModificar" runat="server" Text="Modificación" CssClass="btn btn-success" OnClick="btnModificar_Click" />
             <asp:TextBox ID="txtBuscar" runat="server" placeholder="Buscar proveedor..." CssClass="form-control" Style="display:inline-block; width:200px; margin-left:10px;" />
             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
@@ -43,7 +43,7 @@
     OnSelectedIndexChanged="dgvProveedores_SelectedIndexChanged">
     <Columns>
         
-        <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
+        <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
 
         
         <asp:BoundField DataField="IdProveedor" HeaderText="ID" />
@@ -61,5 +61,10 @@
 <asp:Button ID="btnEliminar" runat="server" Text="Eliminar seleccionado" CssClass="btn btn-danger mt-3"
     OnClientClick="return confirm('¿Seguro que querés eliminar este proveedor?');"
     OnClick="btnEliminar_Click" />
+    <asp:Button ID="BtnAlta" runat="server" Text="Dar de alta seleccionado" CssClass="btn btn-success mt-3"
+    OnClientClick="return confirm('¿Seguro que querés dar de alta este proveedor?');"
+    OnClick="btnAlta_Click" />
     </div>
+
+   
 </asp:Content>

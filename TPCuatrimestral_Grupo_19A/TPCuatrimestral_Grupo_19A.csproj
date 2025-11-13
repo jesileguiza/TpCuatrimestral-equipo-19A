@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abmProducto.aspx" />
-    <Content Include="agregarProveedor.aspx" />
+    <Content Include="abmProveedor.aspx" />
     <Content Include="AboutUs.aspx" />
     <Content Include="Catalogo.aspx" />
     <Content Include="Clientes.aspx" />
@@ -92,12 +92,12 @@
     <Compile Include="abmProducto.aspx.designer.cs">
       <DependentUpon>abmProducto.aspx</DependentUpon>
     </Compile>
-    <Compile Include="agregarProveedor.aspx.cs">
-      <DependentUpon>agregarProveedor.aspx</DependentUpon>
+    <Compile Include="abmProveedor.aspx.cs">
+      <DependentUpon>abmProveedor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="agregarProveedor.aspx.designer.cs">
-      <DependentUpon>agregarProveedor.aspx</DependentUpon>
+    <Compile Include="abmProveedor.aspx.designer.cs">
+      <DependentUpon>abmProveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="AboutUs.aspx.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>

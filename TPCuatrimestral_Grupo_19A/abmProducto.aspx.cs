@@ -50,6 +50,7 @@ namespace TPCuatrimestral_Grupo_19A
                 Producto nuevo = new Producto();
                 ProductoNegocio negocio = new ProductoNegocio();
 
+
                 nuevo.Nombre = TxtNombre.Text;
                 nuevo.Descripcion= TxtDescripcion.Text;
                 nuevo.Proveedor= TxtProvedores.Text;

@@ -15,6 +15,15 @@ namespace TPCuatrimestral_Grupo_19A
     {
 
         /// <summary>
+        /// Control tituloProveedor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloProveedor;
+
+        /// <summary>
         /// Control TxtRazonSocialPROV.
         /// </summary>
         /// <remarks>
@@ -103,5 +112,14 @@ namespace TPCuatrimestral_Grupo_19A
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
+
+        /// <summary>
+        /// Control Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }

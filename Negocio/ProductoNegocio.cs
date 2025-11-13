@@ -132,8 +132,8 @@ namespace Negocio
             try
             {
                
-                datos.setearConsulta("DELETE FROM Productos WHERE IdProducto = @IdProducto");
-                datos.setearParametro("@IdProducto", id);
+                datos.setearConsulta("DELETE FROM Productos WHERE ProductoId = @ProductoId");
+                datos.setearParametro("@ProductoId", id);
 
                 datos.ejecutarAccion();
 

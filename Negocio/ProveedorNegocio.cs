@@ -102,10 +102,6 @@ namespace Negocio
                 datos.setearParametro("@id_Proveedor", modificado.IdProveedor);
                 datos.ejecutarAccion();
 
-
-
-                
-
             }
             catch (Exception ex)
             {

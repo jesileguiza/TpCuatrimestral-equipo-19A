@@ -41,6 +41,7 @@ namespace Negocio
 
                     aux.IdProducto = (int)lector["ProductoId"];
                     aux.Nombre = lector["Nombre"].ToString();
+                    aux.Descripcion = lector["Descripcion"].ToString();
                     aux.Proveedor = lector["Proveedor"].ToString();
                     aux.Stock = (int)lector["Stock"];
                     aux.Precio = Convert.ToDecimal(lector["Precio"]);
@@ -67,12 +68,12 @@ namespace Negocio
         {
             AccesoDatos datos = new AccesoDatos();
 
-            try
+          try
             {
-                datos.setearConsulta(@"
-            INSERT INTO Productos (Nombre, Descripcion, Proveedor, IdMarca, IdCategoria, Stock, Precio)
-            VALUES (@Nombre, @Descripcion, @Proveedor, @IdMarca, @IdCategoria, @Stock, @Precio)
-        ");
+             datos.setearConsulta(@"
+                   INSERT INTO Productos (Nombre, Descripcion, Proveedor, IdMarca, IdCategoria, Stock, Precio)
+                  (@Nombre, @Descripcion, @Proveedor, @IdMarca, @IdCategoria, @Stock, @Precio)
+                   ");
 
                 datos.setearParametro("@Nombre", nuevo.Nombre);
                 datos.setearParametro("@Descripcion", nuevo.Descripcion);
@@ -101,20 +102,8 @@ namespace Negocio
             try
             {
              
-                 datos.setearConsulta(@"
-                 UPDATE Productos 
-                 SET 
-                 Nombre = @Nombre, 
-                 Descripcion = @Descripcion, 
-                 Proveedor = @Proveedor, 
-                 IdMarca = @IdMarca, 
-                 IdCategoria = @IdCategoria, 
-                 Stock = @Stock, 
-                 Precio = @Precio
-                 WHERE ProductoId = @ProductoId;
-        ");
-
-                
+         
+                datos.setearConsulta("UPDATE Productos SET Nombre = @Nombre, Descripcion = @Descripcion, Proveedor = @Proveedor, IdMarca = @IdMarca, IdCategoria = @IdCategoria, Stock = @Stock, Precio = @Precio WHERE ProductoId = @ProductoId;");
 
                 datos.setearParametro("@Nombre", modificado.Nombre);
                 datos.setearParametro("@Descripcion", modificado.Descripcion);
@@ -137,16 +126,32 @@ namespace Negocio
             }
         }
 
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+               
+                datos.setearConsulta("DELETE FROM Productos WHERE IdProducto = @IdProducto");
+                datos.setearParametro("@IdProducto", id);
 
+                datos.ejecutarAccion();
 
-
-
-
-
-
-
-
-
-
+            }
+            catch (Exception ex)
+            {
+                
+                throw new Exception("Error al intentar eliminar el producto. Verifica si está asociado a ventas o movimientos de stock.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
+
+
+
+
+

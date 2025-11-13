@@ -44,7 +44,7 @@
         .form-group {
             margin-bottom: 20px; 
         }
-        input[type="submit"] {
+        input[type="submit"], .aspNetButton {
             padding: 10px 20px;
             font-weight: 600;
             border-radius: 5px;
@@ -69,11 +69,27 @@
             border-color: #6c757d;
             color: white;
         }
-        
         #btnCancelar:hover {
             background-color: #5a6268;
             border-color: #545b62;
             transform: translateY(-1px);
+        }
+        #btnEliminar {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+        #btnEliminar:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: translateY(-1px);
+        }
+        #lblMensaje {
+            display: block;
+            margin-top: 25px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.1em;
         }
     </style>
 </asp:Content>
@@ -86,11 +102,11 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="TxtNombre">Nombre</label>
-                <asp:TextBox ID="TxtNombre" runat="server" CssClass="form-control" ></asp:TextBox>
+                <asp:TextBox ID="TxtNombre" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group col-md-6">
-                <label for="TxtDescripcion">Descripcion</label>
-                <asp:TextBox ID="TxtDescripcion" runat="server" CssClass="form-control" ></asp:TextBox>
+                <label for="TxtDescripcion">Descripción</label>
+                <asp:TextBox ID="TxtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
         </div>
 
@@ -106,7 +122,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="txtCategoria">Categoria /*Desplegable*/</label>
+                <label for="txtCategoria">Categoría</label>
                 <asp:TextBox ID="txtCategoria" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             <div class="form-group col-md-4">
@@ -115,16 +131,18 @@
             </div>
             <div class="form-group col-md-2">
                 <label for="TxtPrecio">Precio</label>
-                <asp:TextBox ID="TxtPrecio" runat="server" CssClass="form-control" ></asp:TextBox>
+                <asp:TextBox ID="TxtPrecio" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
         </div>
         
         <hr style="margin-top: 30px; margin-bottom: 25px; border-top: 1px solid #e0e0e0;" />
-        
-        <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
-        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
-        <asp:Button ID="btnEliminar" Text="Eliminar" runat="server" OnClick="btnEliminar_Click" />
-       
+
+        <div class="text-center">
+            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="aspNetButton" />
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" CssClass="aspNetButton" />
+            <asp:Button ID="btnEliminar" Text="Eliminar" runat="server" OnClick="btnEliminar_Click" CssClass="btn btn-danger" />
+        </div>
+        <asp:Label ID="lblMensaje" runat="server" Text="" ForeColor="Red"></asp:Label>
+
     </div>
 </asp:Content>
-

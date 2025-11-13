@@ -16,26 +16,20 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void Page_Load(object sender, EventArgs e)
         {
-          
-          ProductoNegocio negocio = new ProductoNegocio();
+
+            if (!IsPostBack)
+            {
+                CargarProductos();
+            }
+        }
+   
+        private void CargarProductos()
+        {
+            ProductoNegocio negocio = new ProductoNegocio();
             dgvProductos.DataSource = negocio.listar();
             dgvProductos.DataBind();
         }
 
-
-
-        private void CargarProductos()
-        {
-           
-        }
-
-        protected void btnAgregar_Click(object sender, EventArgs e)
-        {
-
-
-
-
-        }
 
         protected void btnAgregarProducto_Click(object sender, EventArgs e)
         {
@@ -44,8 +38,12 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void dgvProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string IdProducto = dgvProductos.SelectedDataKey.Value.ToString();
-            Response.Redirect("abmProducto.aspx?IdProducto=" + IdProducto );
+            if (dgvProductos.SelectedDataKey != null)
+            {
+                int idProducto = Convert.ToInt32(dgvProductos.SelectedDataKey.Value);
+                Response.Redirect("abmProducto.aspx?IdProducto=" + idProducto, false);
+            }
         }
+
     }
 }

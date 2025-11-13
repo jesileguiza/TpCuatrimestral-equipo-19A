@@ -83,6 +83,7 @@
             <div class="form-group col-md-6">
                 <label for="TxtRazonSocialPROV">Razon Social</label>
                 <asp:TextBox ID="TxtRazonSocialPROV" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:Label ID="lblFaltaRazonSocial" runat="server" ForeColor="Green"></asp:Label>
             </div>
             <div class="form-group col-md-6">
                 <label for="TxtNombre">Nombre</label>

@@ -20,7 +20,6 @@ namespace TPCuatrimestral_Grupo_19A
 
 
 
-
             if (!IsPostBack)
             {
 
@@ -76,8 +75,22 @@ namespace TPCuatrimestral_Grupo_19A
         {
             try
             {
+
+                if (string.IsNullOrWhiteSpace(TxtRazonSocialPROV.Text) ||
+                string.IsNullOrWhiteSpace(TxtNombrePROV.Text) ||
+                string.IsNullOrWhiteSpace(TxtCuitPROV.Text) ||
+                string.IsNullOrWhiteSpace(TxtTelefonoPROV.Text) ||
+                string.IsNullOrWhiteSpace(txtEmailPROV.Text) ||
+                string.IsNullOrWhiteSpace(TxtDireccionPROV.Text) ||
+                string.IsNullOrWhiteSpace(TxtLocalidadPROV.Text))
+                {
+                    lblMensaje.Text = "Por favor, completá todos los campos antes de continuar.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    return;
+                }
                 ProveedorNegocio negocio = new ProveedorNegocio();
                 Proveedor nuevo = new Proveedor();
+                
                 nuevo.RazonSocial = TxtRazonSocialPROV.Text;
                 nuevo.Nombre = TxtNombrePROV.Text;
                 nuevo.Cuit = TxtCuitPROV.Text;

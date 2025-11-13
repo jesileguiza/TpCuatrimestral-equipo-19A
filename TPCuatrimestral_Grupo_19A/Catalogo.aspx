@@ -126,6 +126,10 @@
         <div>5 - Librería</div>
     </div>
 
-    <asp:GridView runat="server" ID="dgvProductos" CssClass="tabla-catalogo"></asp:GridView>
+    <asp:GridView runat="server" ID="dgvProductos" CssClass="tabla-catalogo" DataKeyNames="IdProducto" OnSelectedIndexChanged="dgvProductos_SelectedIndexChanged">
+        <Columns>
+            <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
+        </Columns>
+    </asp:GridView>
     <asp:Button runat="server" ID="btnAgregarProducto" Text="Agregar Nuevo Producto" CssClass="btn-accion" onclick="btnAgregarProducto_Click" />
 </asp:Content>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,33 +11,44 @@ namespace Negocio
 {
     public class ProductoNegocio
     {
-        public List<Producto> listar()
+        public List<Producto> listar(string IdProducto = "")
         {
-
-            AccesoDatos datos = new AccesoDatos();
             List<Producto> lista = new List<Producto>();
+            SqlConnection conexion = new SqlConnection();
+            SqlCommand comando = new SqlCommand();
+            SqlDataReader lector;
 
 
             try
             {
+                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TPCuatri_DB ; integrated security=true";
+                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandText = "SELECT ProductoId, Nombre, Descripcion, Proveedor, IdMarca, IdCategoria, Stock, Precio FROM Productos ";
 
-                datos.setearConsulta("SELECT ProductoId, Nombre, Descripcion, Proveedor, IdMarca, IdCategoria, Stock, Precio FROM Productos");
-                datos.ejecutarLectura();
+                if (IdProducto != "")
+                {
+                    
+                    comando.CommandText += "where ProductoId = " + IdProducto;
+                }
 
-                while (datos.Lector.Read())
+                comando.Connection = conexion;
+                conexion.Open();
+                lector = comando.ExecuteReader();
+
+                while (lector.Read())
                 {
                     Producto aux = new Producto();
 
-                    aux.IdProducto = (int)datos.Lector["ProductoId"];
-                    aux.Nombre = datos.Lector["Nombre"].ToString();
-                    aux.Proveedor = datos.Lector["Proveedor"].ToString();
-                    aux.Stock = (int)datos.Lector["Stock"];
-                    aux.Precio = Convert.ToDecimal(datos.Lector["Precio"]);
+                    aux.IdProducto = (int)lector["ProductoId"];
+                    aux.Nombre = lector["Nombre"].ToString();
+                    aux.Proveedor = lector["Proveedor"].ToString();
+                    aux.Stock = (int)lector["Stock"];
+                    aux.Precio = Convert.ToDecimal(lector["Precio"]);
+
 
                     lista.Add(aux);
-                } 
+                }
                 return lista;
-
             }
             catch (Exception ex)
             {
@@ -44,7 +56,10 @@ namespace Negocio
             }
             finally
             {
-                datos.cerrarConexion();
+                if (conexion != null)
+                {
+                    conexion.Close();
+                }
             }
         }
 
@@ -60,10 +75,10 @@ namespace Negocio
         ");
 
                 datos.setearParametro("@Nombre", nuevo.Nombre);
-                datos.setearParametro("@Descripcion", nuevo.Descripcion ?? (object)DBNull.Value);
+                datos.setearParametro("@Descripcion", nuevo.Descripcion);
                 datos.setearParametro("@Proveedor", nuevo.Proveedor);
-                datos.setearParametro("@IdMarca", nuevo.IdMarca.HasValue ? (object)nuevo.IdMarca.Value : DBNull.Value);
-                datos.setearParametro("@IdCategoria", nuevo.IdCategoria.HasValue ? (object)nuevo.IdCategoria.Value : DBNull.Value);
+                datos.setearParametro("@IdMarca", nuevo.IdMarca);
+                datos.setearParametro("@IdCategoria", nuevo.IdCategoria);
                 datos.setearParametro("@Stock", nuevo.Stock);
                 datos.setearParametro("@Precio", nuevo.Precio);
 
@@ -79,7 +94,48 @@ namespace Negocio
             }
         }
 
+        public void modificarProducto(Producto modificado)
+        {
+            AccesoDatos datos = new AccesoDatos();
 
+            try
+            {
+             
+                 datos.setearConsulta(@"
+                 UPDATE Productos 
+                 SET 
+                 Nombre = @Nombre, 
+                 Descripcion = @Descripcion, 
+                 Proveedor = @Proveedor, 
+                 IdMarca = @IdMarca, 
+                 IdCategoria = @IdCategoria, 
+                 Stock = @Stock, 
+                 Precio = @Precio
+                 WHERE ProductoId = @ProductoId;
+        ");
+
+                
+
+                datos.setearParametro("@Nombre", modificado.Nombre);
+                datos.setearParametro("@Descripcion", modificado.Descripcion);
+                datos.setearParametro("@Proveedor", modificado.Proveedor);
+                datos.setearParametro("@IdMarca", modificado.IdMarca);
+                datos.setearParametro("@IdCategoria", modificado.IdCategoria);
+                datos.setearParametro("@Stock", modificado.Stock);
+                datos.setearParametro("@Precio", modificado.Precio);
+                datos.setearParametro("@ProductoId", modificado.IdProducto);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
 

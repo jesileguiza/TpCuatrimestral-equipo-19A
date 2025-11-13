@@ -41,5 +41,11 @@ namespace TPCuatrimestral_Grupo_19A
         {
             Response.Redirect("abmProducto.aspx" ,false);
         }
+
+        protected void dgvProductos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string IdProducto = dgvProductos.SelectedDataKey.Value.ToString();
+            Response.Redirect("abmProducto.aspx?IdProducto=" + IdProducto );
+        }
     }
 }

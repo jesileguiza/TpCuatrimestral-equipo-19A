@@ -29,13 +29,37 @@
 
         <div class="botonera">
             <asp:Button ID="btnAlta" runat="server" Text="Alta" CssClass="btn btn-success" OnClick="btnAlta_Click" />
-            <asp:Button ID="btnBaja" runat="server" Text="Baja" CssClass="btn btn-success" OnClick="btnBaja_Click" />
+            <%--<asp:Button ID="btnBaja" runat="server" Text="Baja" CssClass="btn btn-success" OnClick="btnBaja_Click" />--%>
             <asp:Button ID="btnModificar" runat="server" Text="Modificación" CssClass="btn btn-success" OnClick="btnModificar_Click" />
             <asp:TextBox ID="txtBuscar" runat="server" placeholder="Buscar proveedor..." CssClass="form-control" Style="display:inline-block; width:200px; margin-left:10px;" />
             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
         </div>
 
         <%--<asp:ListBox ID="lstProveedores" runat="server" CssClass="listbox"></asp:ListBox>--%>
-        <asp:GridView ID="dgvProveedores" runat="server" CssClass="table"></asp:GridView>
+        <asp:GridView ID="dgvProveedores" runat="server"
+    AutoGenerateColumns="False"
+    CssClass="table table-striped table-bordered"
+    DataKeyNames="IdProveedor"
+    OnSelectedIndexChanged="dgvProveedores_SelectedIndexChanged">
+    <Columns>
+        
+        <asp:CommandField ShowSelectButton="True" SelectText="Seleccionar" />
+
+        
+        <asp:BoundField DataField="IdProveedor" HeaderText="ID" />
+        <asp:BoundField DataField="RazonSocial" HeaderText="Razón Social" />
+        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+        <asp:BoundField DataField="Cuit" HeaderText="CUIT" />
+        <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+        <asp:BoundField DataField="Email" HeaderText="Email" />
+        <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
+        <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
+        <asp:CheckBoxField DataField="Activo" HeaderText="Activo" />
+    </Columns>
+</asp:GridView>
+
+<asp:Button ID="btnEliminar" runat="server" Text="Eliminar seleccionado" CssClass="btn btn-danger mt-3"
+    OnClientClick="return confirm('¿Seguro que querés eliminar este proveedor?');"
+    OnClick="btnEliminar_Click" />
     </div>
 </asp:Content>

@@ -113,13 +113,13 @@ namespace Negocio
 
         public void eliminar(int id)
         {
-
+            AccesoDatos datos = new AccesoDatos();
             try
             {
-                AccesoDatos datos = new AccesoDatos();
+                
 
-                datos.setearConsulta("delete from Proveedores Where id_Proveedor = @id_Proveedor;");
-                datos.setearParametro("@Id", id);
+                datos.setearConsulta("UPDATE Proveedores SET Activo = 0 WHERE id_Proveedor = @id_Proveedor;");
+                datos.setearParametro("@id_Proveedor", id);
 
                 datos.ejecutarAccion();
 
@@ -128,6 +128,10 @@ namespace Negocio
             {
 
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
 

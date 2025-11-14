@@ -3,42 +3,90 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-  <header class="encabezado">
-        <h1 class="logo-text">Nombre proyecto</h1>
-        <h2 class="subtitulo">Librería · Juguetería · Reposteria · Papelera </h2>
-    </header>
+   
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url("Imagen/fondo login.png") no-repeat center center fixed;
+        background-size: cover; 
+    }
 
-    <section class="banner">
-        <h3>¡Aca encontras todo lo que necesitas!</h3>
-    </section>
+    .login-box {
+        background-color: #3B7A57;
+        color: white;
+        padding: 40px 45px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        width: 320px;
+        backdrop-filter: blur(5px); 
+    }
 
-    <section class="categorias">
-        <div class="card cat1">Papelería</div>
-        <div class="card cat2">Librería</div>
-        <div class="card cat3">Reposteria</div>
-        <div class="card cat4">Juguetería</div>
-        <div class="card cat5">Cotillon</div>
-    </section>
+    .login-box h1 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
 
-    <section class="productos">
-        <h3>Productos destacados</h3>
-        <div class="galeria">
-            <div class="card-producto">
-                 <img src="Imagen\Productos\nievereymomo.jpg" alt="Nieve Rey Momo" class="img-producto" />
-                <p>Nieve Rey Momo x12</p>
+    .login-box input[type="text"],
+    .login-box input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .login-box button,
+    .login-box input[type="submit"],
+    .login-box asp\:Button {
+        background-color: #C46210;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 15px;
+        margin-top: 10px;
+    }
+
+    .login-box button:hover,
+    .login-box input[type="submit"]:hover {
+        background-color: #3a1c86;
+    }
+
+</style>
+
+
+
+    
+        <div class="login-box">
+            <h1>Bienvenido, ingrese usuario y contraseña</h1>
+            
+            <div>
+                <asp:Label ID="Usu" runat="server" Text="Usuario: "></asp:Label>
+                <asp:TextBox ID="TxtUsuario" runat="server"></asp:TextBox>
             </div>
-            <div class="card-producto">
-                <p>falta productos</p>
+
+            <div>
+                <asp:Label ID="Contr" runat="server" Text="Contraseña: "></asp:Label>
+                <asp:TextBox ID="TxtContra" runat="server" TextMode="Password" ViewStateMode="Enabled"></asp:TextBox>
+                <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"></asp:Label>
             </div>
-            <div class="card-producto">
-                <p>falta productos</p>
+            string 
+            <div>
+                <asp:Button ID="Ingreso" runat="server" Text="Ingresar" OnClick="btnIniciarSesion_Click" />
             </div>
         </div>
-    </section>
-
-    <footer class="footer">
-        <p>Trabajo Cuatrimestral Programacion 3 - Universidad Tecnologica Nacional © 2025</p>
-    </footer>
+    
 
    
 </asp:Content>

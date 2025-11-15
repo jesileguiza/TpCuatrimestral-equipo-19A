@@ -38,11 +38,7 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void dgvProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (dgvProductos.SelectedDataKey != null)
-            {
-                int idProducto = Convert.ToInt32(dgvProductos.SelectedDataKey.Value);
-                Response.Redirect("abmProducto.aspx?IdProducto=" + idProducto, false);
-            }
+          
         }
 
     }

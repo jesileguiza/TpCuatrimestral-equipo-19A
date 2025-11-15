@@ -100,41 +100,46 @@
         <h2 class="form-title">Agregar Producto</h2>
 
         <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="TxtNombre">Nombre</label>
-                <asp:TextBox ID="TxtNombre" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="TxtDescripcion">Descripción</label>
-                <asp:TextBox ID="TxtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-        </div>
+    <div class="form-group col-md-6">
+        <label for="TxtNombre">Nombre</label>
+        <asp:TextBox ID="TxtNombre" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="TxtDescripcion">Descripción</label>
+        <asp:TextBox ID="TxtDescripcion" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+   </div>
 
-        <div class="form-group">
-            <label for="TxtProvedores">Proveedor</label>
-            <asp:TextBox ID="TxtProvedores" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
+  <div class="form-row">
+    <div class="form-group col-md-12">
+        <label for="TxtProvedores">Proveedor</label>
+        <asp:TextBox ID="TxtProvedores" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
 
-        <div class="form-group">
-            <label for="TxtMarca">ID Marca</label>
-            <asp:TextBox ID="TxtMarca" runat="server" CssClass="form-control"></asp:TextBox>
-        </div>
+   </div>
+  
+   <div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="ddlCategoria">Categoría</label>
+        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control"></asp:DropDownList>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="ddlMarca">Marca</label>
+        <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-control"></asp:DropDownList>
+    </div>
+    </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="txtCategoria">Categoría</label>
-                <asp:TextBox ID="txtCategoria" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="TxtStock">Stock</label>
-                <asp:TextBox ID="TxtStock" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-            <div class="form-group col-md-2">
-                <label for="TxtPrecio">Precio</label>
-                <asp:TextBox ID="TxtPrecio" runat="server" CssClass="form-control"></asp:TextBox>
-            </div>
-        </div>
-        
+     <div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="TxtStock">Stock</label>
+        <asp:TextBox ID="TxtStock" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    <div class="form-group col-md-6">
+        <label for="TxtPrecio">Precio</label>
+        <asp:TextBox ID="TxtPrecio" runat="server" CssClass="form-control"></asp:TextBox>
+    </div>
+    </div>
+         </div>
         <hr style="margin-top: 30px; margin-bottom: 25px; border-top: 1px solid #e0e0e0;" />
 
         <div class="text-center">
@@ -144,5 +149,5 @@
         </div>
         <asp:Label ID="lblMensaje" runat="server" Text="" ForeColor="Red"></asp:Label>
 
-    </div>
+    
 </asp:Content>

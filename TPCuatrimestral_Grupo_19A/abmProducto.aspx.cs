@@ -54,6 +54,39 @@ namespace TPCuatrimestral_Grupo_19A
             try
             {
 
+                if (string.IsNullOrWhiteSpace(TxtNombre.Text) ||
+                    string.IsNullOrWhiteSpace(TxtDescripcion.Text) ||
+                    string.IsNullOrWhiteSpace(TxtProvedores.Text) ||
+                    string.IsNullOrWhiteSpace(TxtStock.Text) ||
+                    string.IsNullOrWhiteSpace(TxtPrecio.Text))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                        "alert",
+                        "alert('Por favor complete todos los campos antes de agregar.');",
+                        true);
+
+                        return; 
+                }
+                    int stock;
+                if (!int.TryParse(TxtStock.Text, out stock))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                        "alert",
+                        "alert('El campo Stock debe contener solo números.');",
+                        true);
+                    return;
+                }
+
+                decimal precio;
+                if (!decimal.TryParse(TxtPrecio.Text, out precio))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                        "alert",
+                        "alert('El campo Precio debe contener un número válido.');",
+                        true);
+                    return;
+                }
+
                 Producto nuevo= new Producto();
                 ProductoNegocio negocio= new ProductoNegocio();
 

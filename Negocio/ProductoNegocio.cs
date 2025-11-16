@@ -16,54 +16,54 @@ namespace Negocio
         public List<Producto> listar(string IdProducto = "")
         {
             List<Producto> lista = new List<Producto>();
-            SqlConnection conexion = new SqlConnection();
-            SqlCommand comando = new SqlCommand();
-            SqlDataReader lector;
+            AccesoDatos datos = new AccesoDatos();
 
 
             try
             {
-                conexion.ConnectionString = "server=.\\SQLEXPRESS; database=TPCuatri_DB ; integrated security=true";
-                comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.Proveedor,P.Stock,P.Precio, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id;";
+                string consulta = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.Proveedor,P.Stock,P.Precio, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id;";
 
+                if (!string.IsNullOrEmpty(IdProducto))
+                {
+                    consulta += " WHERE IdProducto = @ProductoId";
+                    datos.setearConsulta(consulta);
+                    datos.setearParametro("@ProductoId", IdProducto);
+                }
+                else
+                {
+                    datos.setearConsulta(consulta);
+                }
 
-                comando.Connection = conexion;
-                conexion.Open();
-                lector = comando.ExecuteReader();
-
-                while (lector.Read())
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
                 {
                     Producto aux = new Producto();
 
-                    aux.IdProducto = (int)lector["ProductoId"];
-                    aux.Nombre = lector["Nombre"].ToString();
-                    aux.Descripcion = lector["Descripcion"].ToString();
-                    aux.Proveedor = lector["Proveedor"].ToString();
+                    aux.IdProducto = (int)datos.Lector["ProductoId"];
+                    aux.Nombre = datos.Lector["Nombre"].ToString();
+                    aux.Descripcion = datos.Lector["Descripcion"].ToString();
+                    aux.Proveedor = datos.Lector["Proveedor"].ToString();
                     aux.categoria = new Categoria();
-                    aux.categoria.IdCategoria =(int)lector["IdCategoria"];
-                    aux.categoria.Descripcion = lector["categoria"].ToString();
+                    aux.categoria.IdCategoria =(int)datos.Lector["IdCategoria"];
+                    aux.categoria.Descripcion = datos.Lector["categoria"].ToString();
                     aux.Marca = new Marca();
-                    aux.Marca.IdMarca = (int)lector["IdMarca"];
-                    aux.Marca.Descripcion = lector["marca"].ToString();
-                    aux.Stock = (int)lector["Stock"];
-                    aux.Precio = Convert.ToDecimal(lector["Precio"]);
+                    aux.Marca.IdMarca = (int)datos.Lector["IdMarca"];
+                    aux.Marca.Descripcion = datos.Lector["marca"].ToString();
+                    aux.Stock = (int)datos.Lector["Stock"];
+                    aux.Precio = Convert.ToDecimal(datos.Lector["Precio"]);
 
 
                     lista.Add(aux);
                 }
                 return lista;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
             finally
             {
-                if (conexion != null)
-                {
-                    conexion.Close();
-                }
+                datos.cerrarConexion();
             }
         }
 

@@ -16,10 +16,22 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!IsPostBack)
+            try
             {
-                CargarProductos();
+               
+
+                if (!IsPostBack)
+                {
+                    CargarProductos();
+                    
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
    

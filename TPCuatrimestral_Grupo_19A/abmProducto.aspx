@@ -121,7 +121,7 @@
    <div class="form-row">
     <div class="form-group col-md-6">
         <label for="ddlCategoria">Categoría</label>
-        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control"></asp:DropDownList>
+        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control" ></asp:DropDownList>
     </div>
     <div class="form-group col-md-6">
         <label for="ddlMarca">Marca</label>

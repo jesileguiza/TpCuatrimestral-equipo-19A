@@ -21,13 +21,13 @@ namespace Negocio
 
             try
             {
-                string consulta = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.Proveedor,P.Stock,P.Precio, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id;";
+                string consulta = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.Proveedor,P.Stock,P.Precio, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id  ";
 
                 if (!string.IsNullOrEmpty(IdProducto))
                 {
-                    consulta += " WHERE IdProducto = @ProductoId";
+                    consulta += " WHERE ProductoId = @IdProducto"; 
                     datos.setearConsulta(consulta);
-                    datos.setearParametro("@ProductoId", IdProducto);
+                    datos.setearParametro("@IdProducto", IdProducto);
                 }
                 else
                 {
@@ -99,8 +99,48 @@ namespace Negocio
 
 
         }
-        
-        
+
+        public void modificarProducto(Producto modificado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("update Productos set Nombre = @Nombre, Proveedor = @proveedor, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, stock = @stock, precio=@precio where IdProducto = @ProductoId;");
+                datos.setearParametro("@Nombre", modificado.Nombre);
+                datos.setearParametro("@Proveedor", modificado.Proveedor);
+                datos.setearParametro("@Descripcion", modificado.Descripcion);
+                datos.setearParametro("@IdMarca", modificado.Marca.IdMarca);
+                datos.setearParametro("@IdCategoria", modificado.categoria.IdCategoria);
+                datos.setearParametro("@stock", modificado.Stock);
+                datos.setearParametro("@precio", modificado.Precio);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 

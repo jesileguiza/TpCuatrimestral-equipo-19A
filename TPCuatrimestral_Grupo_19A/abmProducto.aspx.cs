@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Negocio;
-using Dominio;
+using System.Web.UI.WebControls.WebParts;
 
 namespace TPCuatrimestral_Grupo_19A
 {
@@ -15,8 +16,9 @@ namespace TPCuatrimestral_Grupo_19A
         protected void Page_Load(object sender, EventArgs e)
         {
           
-            CategoriaNegocio negocio = new CategoriaNegocio();
-            MarcaNegocio negocio1 = new MarcaNegocio();
+            CategoriaNegocio negocioCategoria = new CategoriaNegocio();
+            MarcaNegocio negocioMarca = new MarcaNegocio();
+           
 
             try
             {
@@ -24,20 +26,42 @@ namespace TPCuatrimestral_Grupo_19A
 
                 if (!IsPostBack)
                 {
-                    List<Categoria> lista = negocio.Listar();
+                    List<Categoria> lista = negocioCategoria.Listar();
 
                     ddlCategoria.DataSource = lista;
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataTextField= "Descripcion";
                     ddlCategoria.DataBind();
 
-                    List<Marca> listaMarca = negocio1.Listar();
+                    List<Marca> listaMarca = negocioMarca.Listar();
                     ddlMarca.DataSource = listaMarca;
                     ddlMarca.DataValueField= "IdMarca";
                     ddlMarca.DataTextField = "Descripcion";
                     ddlMarca.DataBind();
 
                 }
+
+                ProductoNegocio negocio = new ProductoNegocio();
+                string IdProducto = Request.QueryString["IdProducto"] != null ? Request.QueryString["IdProducto"].ToString() : "";
+               
+                if (IdProducto != "")
+                {
+                    Producto seleccionado = (negocio.listar(IdProducto))[0];
+
+                    //precargo la informacion
+                    TxtNombre.Text = seleccionado.Nombre;
+                    TxtDescripcion.Text = seleccionado.Descripcion;
+                    TxtProvedores.Text = seleccionado.Proveedor;
+                    TxtStock.Text = seleccionado.Stock.ToString();
+                    TxtPrecio.Text = seleccionado.Precio.ToString();
+
+
+                    //precargo los desplegables
+                    ddlMarca.SelectedValue = seleccionado.Marca.IdMarca.ToString();
+                    ddlCategoria.SelectedValue = seleccionado.categoria.IdCategoria.ToString();
+
+                }
+
 
             }
             catch (Exception ex)
@@ -107,14 +131,20 @@ namespace TPCuatrimestral_Grupo_19A
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(),"alert","alert('Producto agregado correctamente'); window.location='catalogo.aspx';",true);
 
+
+                string IdProducto = Request.QueryString["IdProducto"] != null ? Request.QueryString["IdProducto"].ToString() : "";
+
+             
     
             }
+
+
             catch (Exception ex)
             {
 
                 throw ex;
             }
-
+       
         }
 
 

@@ -72,6 +72,7 @@
     <Content Include="Clientes.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Estilos\estilos.css" />
+    <Content Include="Gestion_Compras.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Imagen\cotillon.jpg" />
     <Content Include="Imagen\fondo login.png" />
@@ -134,6 +135,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Gestion_Compras.aspx.cs">
+      <DependentUpon>Gestion_Compras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Gestion_Compras.aspx.designer.cs">
+      <DependentUpon>Gestion_Compras.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

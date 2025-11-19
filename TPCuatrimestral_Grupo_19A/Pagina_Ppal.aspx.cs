@@ -14,6 +14,17 @@ namespace TPCuatrimestral_Grupo_19A
         VentaNegocio Negocio = new VentaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
+/*
+            if (Session["RolUsuario"] == null)
+                Response.Redirect("Default.aspx");
+
+            string rol = Session["RolUsuario"].ToString();
+
+            if (rol != "ADMIN" && rol != "OPERADOR")
+                Response.Redirect("NoAutorizado.aspx");
+        }
+*/
+
             if (!IsPostBack)
             {
                 CargarVentas();

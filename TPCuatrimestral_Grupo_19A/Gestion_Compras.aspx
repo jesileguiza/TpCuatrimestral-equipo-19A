@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterComercio.Master" CodeBehind="Pagina_Ppal.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.Pagina_Ppal"  %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterComercio.Master" CodeBehind="Gestion_Compras.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.Gestion_Compras" %>
+
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -119,7 +120,7 @@
 
 
           <header>
-        <h1>Panel Principal - Sistema de Ventas y Compras</h1>
+        <h1>Panel Principal - Sistema de Compras</h1>
     </header>
 
        
@@ -130,45 +131,50 @@
 
              
 
-            <asp:Button ID="btnMostrarFormulario" runat="server" Text="➕ Agregar Venta" CssClass="boton-agregar" OnClick="btnMostrarFormulario_Click"/>
-
-            <asp:Panel ID="PnlFormularioVenta" runat="server" Visible="false" CssClass="formulario-venta">
-            <asp:Label ID="lblMensaje" runat="server" ForeColor="Red" Visible="false"></asp:Label>  
-                
-                <h3>Agregar Venta</h3>
-
-         <asp:Label Text="Cliente: " AssociatedControlID="txtCliente" runat="server" />
-         <asp:TextBox ID="txtCliente" runat="server"></asp:TextBox>
-           <br />
-
-          <asp:Label Text="DNI: " AssociatedControlID="txtDNI" runat="server" />
-        <asp:TextBox ID="txtDNI" runat="server"></asp:TextBox>
-        <br />
-
-         <asp:Label Text="Email: " AssociatedControlID="txtEmail" runat="server" />
-        <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
-        <br />
-
-
-        <asp:Label Text="Fecha:" AssociatedControlID="txtFecha" runat="server" />
-        <asp:TextBox ID="txtFecha" runat="server" TextMode="Date"></asp:TextBox>
-        <br />
-
-        <asp:Label Text="Total:" AssociatedControlID="txtTotal" runat="server" />
-        <asp:TextBox ID="txtTotal" runat="server"></asp:TextBox>
-        <br />
-
-     <asp:Button ID="btnGuardarVenta" runat="server" Text="Guardar" OnClick="btnGuardarVenta_Click" CssClass="btn-guardar" />
-        <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" CssClass="btn-cancelar" />
-        </asp:Panel>
+           
 
         <hr />
 
-            <h2>Lista de Ventas</h2>
-            <asp:GridView ID="dgvVentas" runat="server" CssClass="table" ></asp:GridView>
 
+            <hr style="margin: 30px 0;"/>
 
-           
+            <button class="boton-agregar" onclick="mostrarFormulario('formCompra')">➕ Agregar Compra</button>
+
+            <h2>Lista de Compras</h2>
+            <table id="tablaCompras">
+                <tr>
+                    <th>ID Compra</th>
+                    <th>Proveedor</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <td>101</td>
+                    <td>Proveedor A</td>
+                    <td>23/10/2025</td>
+                    <td>$320.00</td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>Proveedor B</td>
+                    <td>22/10/2025</td>
+                    <td>$150.00</td>
+                </tr>
+            </table>
+
+            <div id="formCompra" class="formulario">
+                <h3>Nueva Compra</h3>
+                <input type="text" id="idCompra" placeholder="ID Compra"/>
+                <input type="text" id="proveedorCompra" placeholder="Proveedor"/>
+                <input type="date" id="fechaCompra"/>
+                <input type="number" id="totalCompra" placeholder="Total"/>
+                <button class="boton-agregar" onclick="agregarCompra()">Guardar Compra</button>
+            </div>
+
+        </section>
+
+        
+
     </main>
 
     <footer>

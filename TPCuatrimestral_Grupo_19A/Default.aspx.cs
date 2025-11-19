@@ -75,20 +75,22 @@ namespace TPCuatrimestral_Grupo_19A
 
             try
             {
-                datos.setearConsulta("SELECT Usuario, Password FROM Usuarios WHERE Usuario = @Usuario AND Pass = @Password");
+                datos.setearConsulta("SELECT Usuario, Password, Rol FROM Usuarios WHERE Usuario = @Usuario AND Password = @Password");
                 datos.setearParametro("@Usuario", User);
                 datos.setearParametro("@Password", Pass);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
                 {
-                    string passwordReal = datos.Lector.GetString(0);
+                    string passwordReal = datos.Lector.GetString(1);
+                    string rol = datos.Lector.GetString(2);
 
-                    // Comparar tal cual si no usás encriptación (TP simple)
                     if (passwordReal == Pass)
-                        return true;
 
-                    return false;
+                        Session["RolUsuario"] = rol;
+                    
+                    return true;
+
                 }
                 else
                 {

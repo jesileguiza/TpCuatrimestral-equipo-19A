@@ -128,7 +128,12 @@
 
     <asp:GridView runat="server" ID="dgvProductos" AutoGenerateColumns="False" CssClass="tabla-catalogo" DataKeyNames="IdProducto" OnSelectedIndexChanged="dgvProductos_SelectedIndexChanged">
        <Columns>
-       <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
+       <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="👆" />
+       <asp:TemplateField HeaderText="Activo">
+       <ItemTemplate>
+       <asp:CheckBox ID="chkActivo" runat="server" Checked='<%# Eval("Activo") %>' AutoPostBack="true"  OnCheckedChanged="chkActivo_CheckedChanged" />
+       </ItemTemplate>
+       </asp:TemplateField>
        <asp:BoundField DataField="IdProducto" HeaderText="ID" />
        <asp:BoundField DataField="Nombre" HeaderText="Producto" />
        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
@@ -141,5 +146,7 @@
        <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
        </Columns>
     </asp:GridView>
+
     <asp:Button runat="server" ID="btnAgregarProducto" Text="Agregar Nuevo Producto" CssClass="btn-accion" onclick="btnAgregarProducto_Click" />
+
 </asp:Content>

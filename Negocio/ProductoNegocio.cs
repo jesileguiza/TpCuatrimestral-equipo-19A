@@ -131,16 +131,74 @@ namespace Negocio
 
 
 
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
 
 
+                datos.setearConsulta("UPDATE Productos SET Activo = 0 WHERE ProductoId = @IdProducto;");
+                datos.setearParametro("@IdProducto", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
+        public void darAlta(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
 
 
+                datos.setearConsulta("UPDATE Productos SET Activo = 1 WHERE ProductoId = @IdProducto;");
+                datos.setearParametro("@IdProducto", id);
 
+                datos.ejecutarAccion();
 
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
+        public void darBaja(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Productos SET Activo = 0 WHERE ProductoId = @IdProducto;");
+                datos.setearParametro("@IdProducto", id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
     }

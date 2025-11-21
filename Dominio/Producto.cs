@@ -17,5 +17,6 @@ namespace Dominio
         public string Descripcion { get; set; }
         public int Stock { get; set; }
         public Decimal Precio { get; set; }
+        public bool Activo { get; set; }
     }
 }

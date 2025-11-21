@@ -55,5 +55,34 @@ namespace TPCuatrimestral_Grupo_19A
                 
         }
 
+        protected void chkActivo_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox chk = (CheckBox)sender;
+            GridViewRow row = (GridViewRow)chk.NamingContainer;
+
+            int IdProducto = Convert.ToInt32(dgvProductos.DataKeys[row.RowIndex].Value);
+
+            ProductoNegocio negocio = new ProductoNegocio();
+
+            if (chk.Checked)
+            {
+
+                negocio.darAlta(IdProducto);
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+               "alertAlta",
+               "alert('El producto fue dado de alta correctamente.');",
+               true);
+
+
+            }
+            else
+            {
+                negocio.darBaja(IdProducto);
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+              "alertBaja",
+              "alert('El producto fue dado de baja correctamente.');",
+              true);
+            }
+        }
     }
 }

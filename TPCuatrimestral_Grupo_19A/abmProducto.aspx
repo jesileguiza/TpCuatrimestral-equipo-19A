@@ -97,7 +97,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
         
-        <h2 class="form-title">Agregar Producto</h2>
+        <h2 id="tituloProducto"  runat="server">Agregar Producto</h2>
 
         <div class="form-row">
     <div class="form-group col-md-6">

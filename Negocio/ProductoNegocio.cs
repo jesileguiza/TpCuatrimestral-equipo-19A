@@ -83,6 +83,7 @@ namespace Negocio
                 datos.setearParametro("@IdCategoria", nuevo.categoria.IdCategoria);
                 datos.setearParametro("@stock", nuevo.Stock);
                 datos.setearParametro("@precio", nuevo.Precio);
+
                 datos.ejecutarAccion();
 
 
@@ -105,7 +106,7 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("update Productos set Nombre = @Nombre, Proveedor = @proveedor, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, stock = @stock, precio=@precio where IdProducto = @ProductoId;");
+                datos.setearConsulta("update Productos set Nombre = @Nombre, Proveedor = @proveedor, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, stock = @stock, precio=@precio where ProductoId = @IdProducto;");
                 datos.setearParametro("@Nombre", modificado.Nombre);
                 datos.setearParametro("@Proveedor", modificado.Proveedor);
                 datos.setearParametro("@Descripcion", modificado.Descripcion);
@@ -113,6 +114,7 @@ namespace Negocio
                 datos.setearParametro("@IdCategoria", modificado.categoria.IdCategoria);
                 datos.setearParametro("@stock", modificado.Stock);
                 datos.setearParametro("@precio", modificado.Precio);
+                datos.setearParametro("@IdProducto", modificado.IdProducto);
                 datos.ejecutarAccion();
 
             }

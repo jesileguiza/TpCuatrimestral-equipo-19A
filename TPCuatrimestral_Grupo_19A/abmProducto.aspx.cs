@@ -2,82 +2,89 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
 
 namespace TPCuatrimestral_Grupo_19A
 {
     public partial class abmProducto : System.Web.UI.Page
     {
-
         protected void Page_Load(object sender, EventArgs e)
         {
-          
-            CategoriaNegocio negocioCategoria = new CategoriaNegocio();
-            MarcaNegocio negocioMarca = new MarcaNegocio();
-           
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
 
             try
             {
-
-
                 if (!IsPostBack)
                 {
-                    List<Categoria> lista = negocioCategoria.Listar();
+                    string IdProducto = Request.QueryString["IdProducto"];
+                    CategoriaNegocio negocioCategoria = new CategoriaNegocio();
+                    MarcaNegocio negocioMarca = new MarcaNegocio();
 
-                    ddlCategoria.DataSource = lista;
+                    
+                    ddlCategoria.DataSource = negocioCategoria.Listar();
                     ddlCategoria.DataValueField = "IdCategoria";
-                    ddlCategoria.DataTextField= "Descripcion";
+                    ddlCategoria.DataTextField = "Descripcion";
                     ddlCategoria.DataBind();
 
-                    List<Marca> listaMarca = negocioMarca.Listar();
-                    ddlMarca.DataSource = listaMarca;
-                    ddlMarca.DataValueField= "IdMarca";
+                    ddlMarca.DataSource = negocioMarca.Listar();
+                    ddlMarca.DataValueField = "IdMarca";
                     ddlMarca.DataTextField = "Descripcion";
                     ddlMarca.DataBind();
 
+                   
+                    if (!string.IsNullOrEmpty(IdProducto))
+                    {
+                        btnAgregar.Text = "Modificar";
+                        tituloProducto.InnerText = "Modificar producto";
+
+                        try
+                        {
+                            ProductoNegocio negocio = new ProductoNegocio();
+                            List<Producto> lista = negocio.listar(IdProducto);
+
+                            if (lista != null && lista.Count > 0)
+                            {
+                                Producto seleccionado = lista[0];
+
+                                TxtNombre.Text = seleccionado.Nombre;
+                                TxtDescripcion.Text = seleccionado.Descripcion;
+                                TxtProvedores.Text = seleccionado.Proveedor;
+                                TxtStock.Text = seleccionado.Stock.ToString();
+                                TxtPrecio.Text = seleccionado.Precio.ToString();
+
+                               
+                                ddlCategoria.SelectedValue = seleccionado.categoria.IdCategoria.ToString();
+                                ddlMarca.SelectedValue = seleccionado.Marca.IdMarca.ToString();
+                            }
+                            else
+                            {
+                                lblMensaje.Text = "No se encontró el producto especificado.";
+                                lblMensaje.ForeColor = System.Drawing.Color.Red;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            lblMensaje.Text = "Ocurrió un error al cargar los datos: " + ex.Message;
+                            lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        }
+                    }
                 }
-
-                ProductoNegocio negocio = new ProductoNegocio();
-                string IdProducto = Request.QueryString["IdProducto"] != null ? Request.QueryString["IdProducto"].ToString() : "";
-               
-                if (IdProducto != "")
-                {
-                    Producto seleccionado = (negocio.listar(IdProducto))[0];
-
-                    //precargo la informacion
-                    TxtNombre.Text = seleccionado.Nombre;
-                    TxtDescripcion.Text = seleccionado.Descripcion;
-                    TxtProvedores.Text = seleccionado.Proveedor;
-                    TxtStock.Text = seleccionado.Stock.ToString();
-                    TxtPrecio.Text = seleccionado.Precio.ToString();
-
-
-                    //precargo los desplegables
-                    ddlMarca.SelectedValue = seleccionado.Marca.IdMarca.ToString();
-                    ddlCategoria.SelectedValue = seleccionado.categoria.IdCategoria.ToString();
-
-                }
-
-
             }
             catch (Exception ex)
             {
-
-                throw ex ;
+                lblMensaje.Text = "Error inesperado: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
-
         }
+
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
             try
             {
-
                 if (string.IsNullOrWhiteSpace(TxtNombre.Text) ||
                     string.IsNullOrWhiteSpace(TxtDescripcion.Text) ||
                     string.IsNullOrWhiteSpace(TxtProvedores.Text) ||
@@ -88,10 +95,10 @@ namespace TPCuatrimestral_Grupo_19A
                         "alert",
                         "alert('Por favor complete todos los campos antes de agregar.');",
                         true);
-
-                        return; 
+                    return;
                 }
-                    int stock;
+
+                int stock;
                 if (!int.TryParse(TxtStock.Text, out stock))
                 {
                     ScriptManager.RegisterStartupScript(this, this.GetType(),
@@ -111,12 +118,14 @@ namespace TPCuatrimestral_Grupo_19A
                     return;
                 }
 
-                Producto nuevo= new Producto();
-                ProductoNegocio negocio= new ProductoNegocio();
+                Producto nuevo = new Producto();
+                ProductoNegocio negocio = new ProductoNegocio();
 
-                nuevo.Nombre= TxtNombre.Text;
-                nuevo.Descripcion= TxtDescripcion.Text;
-                nuevo.Proveedor= TxtProvedores.Text;
+               
+
+                nuevo.Nombre = TxtNombre.Text;
+                nuevo.Descripcion = TxtDescripcion.Text;
+                nuevo.Proveedor = TxtProvedores.Text;
 
                 nuevo.categoria = new Categoria();
                 nuevo.categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);
@@ -124,29 +133,37 @@ namespace TPCuatrimestral_Grupo_19A
                 nuevo.Marca = new Marca();
                 nuevo.Marca.IdMarca = int.Parse(ddlMarca.SelectedValue);
 
-                nuevo.Stock = int.Parse(TxtStock.Text);
-                nuevo.Precio= int.Parse(TxtPrecio.Text);
-
-                negocio.agregar(nuevo);
-
-                ScriptManager.RegisterStartupScript(this, this.GetType(),"alert","alert('Producto agregado correctamente'); window.location='catalogo.aspx';",true);
+                nuevo.Stock = stock;
+                nuevo.Precio = precio;
 
 
-                string IdProducto = Request.QueryString["IdProducto"] != null ? Request.QueryString["IdProducto"].ToString() : "";
+                if (!string.IsNullOrEmpty(Request.QueryString["IdProducto"]))
+                {
+                    nuevo.IdProducto = int.Parse(Request.QueryString["IdProducto"].ToString());
+                    negocio.modificarProducto(nuevo);
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   "alert('Producto Modificado correctamente'); window.location='catalogo.aspx';",
+                   true);
 
-             
-    
+                }
+                else
+                {
+                    negocio.agregar(nuevo);
+
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "alert",
+                    "alert('Producto agregado correctamente'); window.location='catalogo.aspx';",
+                    true);
+                }
+
             }
-
-
             catch (Exception ex)
             {
-
-                throw ex;
+                lblMensaje.Text = "Error al agregar: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
-       
         }
-
 
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -154,18 +171,13 @@ namespace TPCuatrimestral_Grupo_19A
             Response.Redirect("Catalogo.aspx", false);
         }
 
-
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-           
+            // Acción eliminar (a completar)
         }
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
     }
-
-
-
 }

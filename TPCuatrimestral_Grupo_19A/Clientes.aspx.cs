@@ -40,7 +40,7 @@ namespace TPCuatrimestral_Grupo_19A
         private void CargarClientes()
         {
             ClienteNegocio negocio = new ClienteNegocio();
-            dgvClientes.DataSource = negocio.Listar();
+            dgvClientes.DataSource = negocio.listar();
             dgvClientes.DataBind();
         }
 
@@ -48,7 +48,7 @@ namespace TPCuatrimestral_Grupo_19A
         {
             if (ViewState["IdSeleccionado"] == null)
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un proveedor antes de eliminar.');", true);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un Cliente antes de eliminar.');", true);
                 return;
             }
 
@@ -59,13 +59,38 @@ namespace TPCuatrimestral_Grupo_19A
                 ClienteNegocio negocio = new ClienteNegocio();
                 negocio.eliminar(id);
 
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Proveedor eliminado correctamente.');", true);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Cliente eliminado correctamente.');", true);
 
                 CargarClientes(); // recarga la grilla
             }
             catch (Exception ex)
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al eliminar: {ex.Message}');", true);
+            }
+        }
+
+        protected void btnDarAlta_Click(object sender, EventArgs e)
+        {
+            if (ViewState["IdSeleccionado"] == null)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un Cliente antes de dar de alta.');", true);
+                return;
+            }
+
+            int id = (int)ViewState["IdSeleccionado"];
+
+            try
+            {
+                ClienteNegocio negocio = new ClienteNegocio();
+                negocio.darAlta(id);
+
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Cliente dado de alta correctamente.');", true);
+
+                CargarClientes();
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al dar de alta: {ex.Message}');", true);
             }
         }
 
@@ -79,12 +104,16 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void btnModificar_Click(object sender, EventArgs e)
         {
-            // if (listaclientes.Any())
-            // {
-            //  listaclientes[0].Nombre += " (Modificado)";
-            //  CargarClientes();
-            //     ScriptManager.RegisterStartupScript(this, GetType(), "msg", "alert('Cliente modificado correctamente');", true);
-            // }
+            if (dgvClientes.SelectedDataKey == null)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un proveedor para modificar.');", true);
+            }
+            else
+            {
+                int idCliente = Convert.ToInt32(dgvClientes.SelectedDataKey.Value);
+                Response.Redirect("abmCliente.aspx?IdCliente=" + idCliente);
+
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

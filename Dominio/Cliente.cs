@@ -14,6 +14,8 @@ namespace Dominio
         public string DNI { get; set; }
         public string Email { get; set; }
 
+        public bool Activo { get; set; }
+
         public int CantidadCompras { get; set; }
         public DateTime UltimaCompra { get; set; }
         public decimal MontoMaximo { get; set; }

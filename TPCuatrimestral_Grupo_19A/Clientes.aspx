@@ -43,17 +43,21 @@
              OnSelectedIndexChanged="dgvClientes_SelectedIndexChanged">
              <Columns>
                  <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="👆" />
-                 <asp:BoundField DataField="ClientesId" HeaderText="ClientesId" />
+                 <asp:BoundField DataField="ClientesId" HeaderText="Id" />
                  <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                  <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
                  <asp:BoundField DataField="DNI" HeaderText="DNI" />
                  <asp:BoundField DataField="Email" HeaderText="Email" />
+                 <asp:CheckBoxField DataField="Activo" HeaderText="Estado" />
              </Columns>
          </asp:GridView>
 
-        <asp:Button ID="btnEliminarCliente" runat="server" Text="Eliminar seleccionado" CssClass="btn btn-danger mt-3"
-            OnClientClick="return confirm('¿Seguro que querés eliminar este proveedor?');"
+        <asp:Button ID="btnEliminarCliente" runat="server" Text="Dar de baja Cliente" CssClass="btn btn-danger mt-3"
+            OnClientClick="return confirm('¿Seguro que querés eliminar este Cliente?');"
             OnClick="btnEliminar_Click" />
+         <asp:Button ID="btnDarAlta" runat="server" Text="Dar de Alta Cliente" CssClass="btn btn-success mt-3"
+            OnClientClick="return confirm('¿Seguro que querés dar de alta este Cliente?');"
+            OnClick="btnDarAlta_Click" />
 
      </div>
 

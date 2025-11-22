@@ -9,14 +9,25 @@ namespace Negocio
 {
     public class ClienteNegocio
     {
-        public List<Cliente> Listar()
+        public List<Cliente> listar(string IdCliente = "")
         {
             List<Cliente> lista = new List<Cliente>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("select ClientesId,Nombre, Apellido, DNI, Email from Clientes");
+                string consulta = "select ClientesId,Nombre, Apellido, DNI, Email , Activo from Clientes";
+                
+                if (!string.IsNullOrEmpty(IdCliente))
+                {
+                    consulta += " WHERE ClientesId = @ClientesId";
+                    datos.setearConsulta(consulta);
+                    datos.setearParametro("@ClientesId", IdCliente);
+                }
+                else
+                {
+                    datos.setearConsulta(consulta);
+                }
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -27,6 +38,7 @@ namespace Negocio
                     aux.Apellido = datos.Lector["Apellido"] != DBNull.Value ? (string)datos.Lector["Apellido"] : "VACIO";
                     aux.DNI = datos.Lector["DNI"] != DBNull.Value ? (string)datos.Lector["DNI"] : "VACIO";
                     aux.Email = datos.Lector["Email"] != DBNull.Value ? (string)datos.Lector["Email"] : "VACIO";
+                    aux.Activo = (bool)datos.Lector["Activo"];
 
 
 
@@ -77,6 +89,7 @@ namespace Negocio
                 datos.setearConsulta("update Clientes set Nombre = @Nombre, Apellido = @Apellido, DNI = @DNI, Email = @Email where ClientesId = @ClientesId");
                 datos.setearParametro("@Nombre", modificado.Nombre);
                 datos.setearParametro("@Apellido", modificado.Apellido);
+                datos.setearParametro("@DNI", modificado.DNI);
                 datos.setearParametro("@Email", modificado.Email);
                 datos.setearParametro("@ClientesId", modificado.ClientesId);
                 datos.ejecutarAccion();
@@ -101,7 +114,31 @@ namespace Negocio
             {
 
 
-                datos.setearConsulta("Delete Clientes where ClientesId = @ClientesId");
+                datos.setearConsulta("update Clientes set Activo = 0 where ClientesId = @ClientesId;");
+                datos.setearParametro("@ClientesId", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void darAlta(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+
+                datos.setearConsulta("update Clientes set Activo = 1 where ClientesId = @ClientesId;");
                 datos.setearParametro("@ClientesId", id);
 
                 datos.ejecutarAccion();

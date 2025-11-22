@@ -13,7 +13,54 @@ namespace TPCuatrimestral_Grupo_19A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
 
+            if (!IsPostBack)
+            {
+
+
+                string idCliente = Request.QueryString["IdCliente"];
+
+
+                if (!string.IsNullOrEmpty(idCliente))
+                {
+                    //modo modificar
+                    btnAgregarCliente.Text = "Modificar";
+                    tituloCliente.InnerText = "Modificar proveedor";
+
+                    try
+                    {
+                        ClienteNegocio negocio = new ClienteNegocio();
+                        List<Cliente> lista = negocio.listar(idCliente);
+
+
+                        if (lista != null && lista.Count > 0)
+                        {
+                            Cliente seleccionado = lista[0];
+
+
+                            TxtNombreCliente.Text = seleccionado.Nombre;
+                            TxtApellidoCliente.Text = seleccionado.Apellido;
+                            TxtDNICliente.Text = seleccionado.DNI;
+                            TxtEmailCliente.Text = seleccionado.Email;
+
+                        }
+                        else
+                        {
+
+                            lblMensaje.Text = "No se encontró el Cliente especificado.";
+                            lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        lblMensaje.Text = "Ocurrió un error al cargar los datos: " + ex.Message;
+                        lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    }
+                }
+            }
         }
         protected void btnAgregarCliente_Click(object sender, EventArgs e)
         {
@@ -38,18 +85,18 @@ namespace TPCuatrimestral_Grupo_19A
                 nuevo.Email = TxtEmailCliente.Text;
 
 
-                //if (Request.QueryString["IdCliente"] != null)
-                //{
-                //    nuevo.ClientesId = int.Parse(Request.QueryString["IdProveedor"].ToString());
-                //    negocio.modificarCliente(nuevo);
-                //    lblMensaje.Text = "Proveedor Modificado correctamente.";
-                //}
-                //else
-                //{
+                if (Request.QueryString["IdCliente"] != null)
+                {
+                    nuevo.ClientesId = int.Parse(Request.QueryString["IdCliente"].ToString());
+                    negocio.modificarCliente(nuevo);
+                    lblMensaje.Text = "Cliente Modificado correctamente.";
+                }
+                else
+                {
                     negocio.agregar(nuevo);
-                    lblMensaje.Text = "Proveedor agregado correctamente.";
+                    lblMensaje.Text = "Cliente agregado correctamente.";
 
-                //}
+                }
             }
             catch (Exception ex)
             {

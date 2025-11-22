@@ -54,7 +54,7 @@
                 <asp:BoundField DataField="Email" HeaderText="Email" />
                 <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
                 <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
-                <asp:CheckBoxField DataField="Activo" HeaderText="Activo" />
+                <asp:CheckBoxField DataField="Activo" HeaderText="Estado" />
             </Columns>
         </asp:GridView>
 

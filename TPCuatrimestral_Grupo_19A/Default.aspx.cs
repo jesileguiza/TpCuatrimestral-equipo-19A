@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 using Negocio;
+using System.Collections.Specialized;
 
 namespace TPCuatrimestral_Grupo_19A
 {
@@ -26,12 +27,12 @@ namespace TPCuatrimestral_Grupo_19A
             // Por ejemplo, podrías consultar una base de datos para verificar las credenciales
             if (ValidarCredenciales(usuario, contrasena))
             {
-                
-                Response.Redirect("Pagina_Ppal.aspx");
+
+                Response.Redirect("Gestion_Ventas.aspx");
             }
             else
             {
-                MostrarError( "Usuario o contraseña incorrectos.");
+                MostrarError("Usuario o contraseña incorrectos.");
             }
         }
 
@@ -48,17 +49,6 @@ namespace TPCuatrimestral_Grupo_19A
         {
             AccesoDatos datos = new AccesoDatos();
 
-            if (string.IsNullOrWhiteSpace(User))
-            {
-                MostrarError("Ingrese un usuario.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(Pass))
-            {
-                MostrarError("Ingrese una contraseña.");
-                return false;
-            }
 
             if (Pass.Length < 4)
             {
@@ -75,20 +65,20 @@ namespace TPCuatrimestral_Grupo_19A
 
             try
             {
-                datos.setearConsulta("SELECT Usuario, Password, Rol FROM Usuarios WHERE Usuario = @Usuario AND Password = @Password");
+                datos.setearConsulta("SELECT Usuario, Password, Rol FROM Usuario WHERE Usuario = @Usuario AND Password = @Password");
                 datos.setearParametro("@Usuario", User);
                 datos.setearParametro("@Password", Pass);
                 datos.ejecutarLectura();
 
                 if (datos.Lector.Read())
                 {
-                    string passwordReal = datos.Lector.GetString(1);
-                    string rol = datos.Lector.GetString(2);
+                    string passwordReal = datos.Lector["Password"].ToString().Trim();
+                    string rol = datos.Lector["Rol"].ToString();
 
-                    if (passwordReal == Pass)
+                    if (passwordReal == Pass.Trim())
 
                         Session["RolUsuario"] = rol;
-                    
+
                     return true;
 
                 }
@@ -98,7 +88,7 @@ namespace TPCuatrimestral_Grupo_19A
                     return false;
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return false;
             }
@@ -110,7 +100,6 @@ namespace TPCuatrimestral_Grupo_19A
     }
 
 
-        }
+}
 
 
-    

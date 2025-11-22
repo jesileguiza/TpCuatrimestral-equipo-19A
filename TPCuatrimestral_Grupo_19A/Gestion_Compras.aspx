@@ -117,7 +117,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
    
 
-
+    <!-- se agrega stock, marca, categoria -->
 
           <header>
         <h1>Panel Principal - Sistema de Compras</h1>
@@ -135,46 +135,33 @@
 
         <hr />
 
+            
 
-            <hr style="margin: 30px 0;"/>
+ <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="False" CssClass="tabla-Compras" DataKeyNames="CompraId" OnSelectedIndexChanged="DgvCompras_SelectedIndexChanged">
+    <Columns>
+    <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
+    <asp:BoundField DataField="IdCompra" HeaderText="ID" />
+    <asp:BoundField DataField="Nombre" HeaderText="Producto" />
+    <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+    <asp:BoundField DataField="Proveedor" HeaderText="Proveedor" />
+    <asp:BoundField DataField="categoria.IdCategoria" HeaderText="ID Categoría" />
+    <asp:BoundField DataField="categoria.Descripcion" HeaderText="Categoría" />
+    <asp:BoundField DataField="Marca.IdMarca" HeaderText="ID Marca" />
+     <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
+    <asp:BoundField DataField="Stock" HeaderText="Stock" />
+    <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
+    </Columns>
+ </asp:GridView>
+ <asp:Button runat="server" ID="btnAgregarCompra" Text="Agregar Nueva compra" CssClass="btn-accion" onclick="btnAgregarCompra_Click" />
 
-            <button class="boton-agregar" onclick="mostrarFormulario('formCompra')">➕ Agregar Compra</button>
 
-            <h2>Lista de Compras</h2>
-            <table id="tablaCompras">
-                <tr>
-                    <th>ID Compra</th>
-                    <th>Proveedor</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                </tr>
-                <tr>
-                    <td>101</td>
-                    <td>Proveedor A</td>
-                    <td>23/10/2025</td>
-                    <td>$320.00</td>
-                </tr>
-                <tr>
-                    <td>102</td>
-                    <td>Proveedor B</td>
-                    <td>22/10/2025</td>
-                    <td>$150.00</td>
-                </tr>
-            </table>
 
-            <div id="formCompra" class="formulario">
-                <h3>Nueva Compra</h3>
-                <input type="text" id="idCompra" placeholder="ID Compra"/>
-                <input type="text" id="proveedorCompra" placeholder="Proveedor"/>
-                <input type="date" id="fechaCompra"/>
-                <input type="number" id="totalCompra" placeholder="Total"/>
-                <button class="boton-agregar" onclick="agregarCompra()">Guardar Compra</button>
-            </div>
 
-        </section>
 
-        
 
+
+
+</section>
     </main>
 
     <footer>
@@ -247,4 +234,5 @@
 
 
 </asp:Content>
+
 

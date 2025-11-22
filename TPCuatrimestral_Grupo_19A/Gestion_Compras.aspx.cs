@@ -20,5 +20,17 @@ namespace TPCuatrimestral_Grupo_19A
                 Response.Redirect("NoAutorizado.aspx");
         }
 
+        protected void btnAgregarCompra_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("abmCompras.aspx", false);
+        }
+
+        protected void DgvCompras_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string CompraId = dgvCompras.SelectedDataKey.Value.ToString();
+            Response.Redirect("abmCompras.aspx?IdCompra=" + CompraId);
+
+        }
+
     }
-    }
+}

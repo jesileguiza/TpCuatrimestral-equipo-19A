@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="abmCliente.aspx" />
+    <Content Include="abmCompras.aspx" />
     <Content Include="abmProducto.aspx" />
     <Content Include="abmProveedor.aspx" />
     <Content Include="AboutUs.aspx" />
@@ -73,6 +74,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Estilos\estilos.css" />
     <Content Include="Gestion_Compras.aspx" />
+    <Content Include="Gestion_Ventas.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Imagen\cotillon.jpg" />
     <Content Include="Imagen\fondo login.png" />
@@ -81,8 +83,6 @@
     <Content Include="Imagen\papelera.png" />
     <Content Include="Imagen\Productos\Nievereymomo.jpg" />
     <Content Include="Imagen\reposteria.jpg" />
-    <Content Include="Login.aspx" />
-    <Content Include="Pagina_Ppal.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -93,6 +93,13 @@
     </Compile>
     <Compile Include="abmCliente.aspx.designer.cs">
       <DependentUpon>abmCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="abmCompras.aspx.cs">
+      <DependentUpon>abmCompras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="abmCompras.aspx.designer.cs">
+      <DependentUpon>abmCompras.aspx</DependentUpon>
     </Compile>
     <Compile Include="abmProducto.aspx.cs">
       <DependentUpon>abmProducto.aspx</DependentUpon>
@@ -143,15 +150,15 @@
     <Compile Include="Gestion_Compras.aspx.designer.cs">
       <DependentUpon>Gestion_Compras.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="Gestion_Ventas.aspx.cs">
+      <DependentUpon>Gestion_Ventas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
+    <Compile Include="Gestion_Ventas.aspx.designer.cs">
+      <DependentUpon>Gestion_Ventas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MasterComercio.Master.cs">
       <DependentUpon>MasterComercio.Master</DependentUpon>
@@ -159,13 +166,6 @@
     </Compile>
     <Compile Include="MasterComercio.Master.designer.cs">
       <DependentUpon>MasterComercio.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Pagina_Ppal.aspx.cs">
-      <DependentUpon>Pagina_Ppal.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pagina_Ppal.aspx.designer.cs">
-      <DependentUpon>Pagina_Ppal.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proveedores.aspx.cs">

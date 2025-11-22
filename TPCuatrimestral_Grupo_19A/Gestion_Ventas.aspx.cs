@@ -9,12 +9,12 @@ using System.Web.UI.WebControls;
 
 namespace TPCuatrimestral_Grupo_19A
 {
-    public partial class Pagina_Ppal : System.Web.UI.Page
+    public partial class Gestion_Ventas : System.Web.UI.Page
     {
         VentaNegocio Negocio = new VentaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
-/*
+
             if (Session["RolUsuario"] == null)
                 Response.Redirect("Default.aspx");
 
@@ -22,15 +22,16 @@ namespace TPCuatrimestral_Grupo_19A
 
             if (rol != "ADMIN" && rol != "OPERADOR")
                 Response.Redirect("NoAutorizado.aspx");
-        }
-*/
+
 
             if (!IsPostBack)
             {
                 CargarVentas();
-                
             }
+
         }
+
+
 
         private void CargarVentas()
         {
@@ -38,7 +39,7 @@ namespace TPCuatrimestral_Grupo_19A
             dgvVentas.DataBind();
         }
 
-       
+
 
 
         protected void btnMostrarFormulario_Click(object sender, EventArgs e)
@@ -99,7 +100,7 @@ namespace TPCuatrimestral_Grupo_19A
                 if (datos.Lector.Read())
                     return (int)datos.Lector["ClientesId"];
                 else
-                    return 0; 
+                    return 0;
             }
             catch (Exception ex)
             {
@@ -111,6 +112,7 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
     }
-    }
+}
+
 
 

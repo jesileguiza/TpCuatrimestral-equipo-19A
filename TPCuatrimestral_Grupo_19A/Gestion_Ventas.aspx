@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterComercio.Master" CodeBehind="Pagina_Ppal.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.Pagina_Ppal"  %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterComercio.Master" CodeBehind="Gestion_Ventas.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.Gestion_Ventas"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -119,7 +119,7 @@
 
 
           <header>
-        <h1>Panel Principal - Sistema de Ventas y Compras</h1>
+        <h1>Panel Principal - Sistema de Ventas</h1>
     </header>
 
        
@@ -167,7 +167,7 @@
             <h2>Lista de Ventas</h2>
             <asp:GridView ID="dgvVentas" runat="server" CssClass="table" ></asp:GridView>
 
-
+           </section>
            
     </main>
 
@@ -241,4 +241,5 @@
 
 
 </asp:Content>
+
 

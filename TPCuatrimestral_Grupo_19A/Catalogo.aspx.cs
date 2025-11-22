@@ -16,6 +16,17 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["RolUsuario"] == null)
+                Response.Redirect("Default.aspx");
+
+            string rol = Session["RolUsuario"].ToString();
+
+            if (rol != "ADMIN")
+                Response.Redirect("NoAutorizado.aspx");
+
+
+
             try
             {
                

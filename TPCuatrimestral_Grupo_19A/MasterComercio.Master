@@ -31,6 +31,7 @@
                             <a class="nav-link" href="Catalogo.aspx">Catalogo de productos</a>
                             <a class="nav-link" href="Clientes.aspx">Clientes</a>
                             <a class="nav-link" href="Proveedores.aspx">Proveedores</a>
+                            <a class="nav-link" href="Marcas.aspx">Marcas</a>
                             <a class="nav-link" href="AboutUs.aspx">Sobre nosotros</a>
                 
                         </div>

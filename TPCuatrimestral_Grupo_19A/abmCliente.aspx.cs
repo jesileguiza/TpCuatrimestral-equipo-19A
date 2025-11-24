@@ -27,7 +27,7 @@ namespace TPCuatrimestral_Grupo_19A
                 {
                     //modo modificar
                     btnAgregarCliente.Text = "Modificar";
-                    tituloCliente.InnerText = "Modificar proveedor";
+                    tituloCliente.InnerText = "Modificar Marca";
 
                     try
                     {

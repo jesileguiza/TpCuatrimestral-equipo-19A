@@ -66,6 +66,7 @@
   <ItemGroup>
     <Content Include="abmCliente.aspx" />
     <Content Include="abmCompras.aspx" />
+    <Content Include="abmMarcas.aspx" />
     <Content Include="abmProducto.aspx" />
     <Content Include="abmProveedor.aspx" />
     <Content Include="AboutUs.aspx" />
@@ -83,6 +84,7 @@
     <Content Include="Imagen\papelera.png" />
     <Content Include="Imagen\Productos\Nievereymomo.jpg" />
     <Content Include="Imagen\reposteria.jpg" />
+    <Content Include="Marcas.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -100,6 +102,13 @@
     </Compile>
     <Compile Include="abmCompras.aspx.designer.cs">
       <DependentUpon>abmCompras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="abmMarcas.aspx.cs">
+      <DependentUpon>abmMarcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="abmMarcas.aspx.designer.cs">
+      <DependentUpon>abmMarcas.aspx</DependentUpon>
     </Compile>
     <Compile Include="abmProducto.aspx.cs">
       <DependentUpon>abmProducto.aspx</DependentUpon>
@@ -159,6 +168,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Marcas.aspx.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Marcas.aspx.designer.cs">
+      <DependentUpon>Marcas.aspx</DependentUpon>
     </Compile>
     <Compile Include="MasterComercio.Master.cs">
       <DependentUpon>MasterComercio.Master</DependentUpon>

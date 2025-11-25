@@ -18,25 +18,31 @@ namespace Negocio
             try
             {
                 string consulta = @"
-    SELECT 
+                                  SELECT 
     C.CompraId,
     C.Fecha,
     C.Stock,
     C.Total,
-    P.IdProducto,
-    P.Nombre AS Producto,
-    Prov.ProveedorId,
-    Prov.Nombre AS Proveedor
+    P.ProductoId,
+    P.Nombre AS Nombre,
+    P.Descripcion AS Descripcion,
+    Prov.id_Proveedor AS IdProveedor,
+    Prov.Nombre AS ProveedorNombre,
+    Cat.Id AS IdCategoria,
+    Cat.Descripcion AS CategoriaNombre,
+    M.Id AS IdMarca,
+    M.Descripcion AS MarcaNombre
 FROM Compras C
-LEFT JOIN Productos P ON C.IdProducto = P.IdProducto
-LEFT JOIN Proveedores Prov ON C.ProveedorId = Prov.ProveedorId
-";
+LEFT JOIN Productos P ON C.IdProducto = P.ProductoId
+LEFT JOIN Proveedores Prov ON C.ProveedorId = Prov.id_Proveedor
+LEFT JOIN CATEGORIAS Cat ON P.IdCategoria = Cat.Id
+LEFT JOIN MARCAS M ON P.IdMarca = M.Id";
 
                 if (!string.IsNullOrEmpty(CompraId))
                 {
                     consulta += " WHERE CompraId = @CompraId";
                     datos.setearConsulta(consulta);
-                    datos.setearParametro("@IdProducto", CompraId);
+                    datos.setearParametro("@CompraId", CompraId);
                 }
                 else
                 {
@@ -49,17 +55,26 @@ LEFT JOIN Proveedores Prov ON C.ProveedorId = Prov.ProveedorId
                     Compra aux = new Compra();
 
                     aux.CompraId = (int)datos.Lector["CompraId"];
-                    aux.idProducto = (int)datos.Lector["IdProducto"];
-                    aux.ProveedorId = (int)datos.Lector["ProveedorId"];
-                    aux.categoria = new Categoria();
-                    aux.categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
-                    aux.categoria.Descripcion = datos.Lector["categoria"].ToString();
-                    aux.Marca = new Marca();
-                    aux.Marca.IdMarca = (int)datos.Lector["IdMarca"];
-                    aux.Marca.Descripcion = datos.Lector["marca"].ToString();
-                    aux.Stock = (int)datos.Lector["Stock"];
-                    aux.Total = Convert.ToDecimal(datos.Lector["Total"]);
+                    aux.idProducto = datos.Lector["ProductoId"] != DBNull.Value ? (int)datos.Lector["ProductoId"] : 0;
+                    aux.ProveedorNombre = datos.Lector["ProveedorNombre"].ToString();
+                    aux.ProveedorId = datos.Lector["IdProveedor"] != DBNull.Value ? (int)datos.Lector["IdProveedor"] : 0;
+                    aux.Nombre = datos.Lector["Nombre"].ToString();
+                    aux.Descripcion = datos.Lector["Descripcion"].ToString();
 
+                    aux.categoria = new Categoria
+                    {
+                        IdCategoria = datos.Lector["IdCategoria"] != DBNull.Value ? (int)datos.Lector["IdCategoria"] : 0,
+                        Descripcion = datos.Lector["CategoriaNombre"].ToString()
+                    };
+
+                    aux.Marca = new Marca
+                    {
+                        IdMarca = datos.Lector["IdMarca"] != DBNull.Value ? (int)datos.Lector["IdMarca"] : 0,
+                        Descripcion = datos.Lector["MarcaNombre"].ToString()
+                    };
+
+                    aux.Stock = datos.Lector["Stock"] != DBNull.Value ? (int)datos.Lector["Stock"] : 0;
+                    aux.Total = datos.Lector["Total"] != DBNull.Value ? Convert.ToDecimal(datos.Lector["Total"]) : 0;
 
                     lista.Add(aux);
                 }

@@ -140,16 +140,16 @@
  <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="False" CssClass="tabla-Compras" DataKeyNames="CompraId" OnSelectedIndexChanged="DgvCompras_SelectedIndexChanged">
     <Columns>
     <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
-    <asp:BoundField DataField="IdCompra" HeaderText="ID" />
+    <asp:BoundField DataField="CompraId" HeaderText="ID" />
     <asp:BoundField DataField="Nombre" HeaderText="Producto" />
     <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
-    <asp:BoundField DataField="Proveedor" HeaderText="Proveedor" />
+    <asp:BoundField DataField="ProveedorNombre" HeaderText="Proveedor" />
     <asp:BoundField DataField="categoria.IdCategoria" HeaderText="ID Categoría" />
     <asp:BoundField DataField="categoria.Descripcion" HeaderText="Categoría" />
     <asp:BoundField DataField="Marca.IdMarca" HeaderText="ID Marca" />
      <asp:BoundField DataField="Marca.Descripcion" HeaderText="Marca" />
     <asp:BoundField DataField="Stock" HeaderText="Stock" />
-    <asp:BoundField DataField="Precio" HeaderText="Precio" DataFormatString="{0:C}" />
+    <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" />
     </Columns>
  </asp:GridView>
  <asp:Button runat="server" ID="btnAgregarCompra" Text="Agregar Nueva compra" CssClass="btn-accion" onclick="btnAgregarCompra_Click" />
@@ -234,5 +234,3 @@
 
 
 </asp:Content>
-
-

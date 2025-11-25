@@ -69,6 +69,7 @@
     <Content Include="abmMarcas.aspx" />
     <Content Include="abmProducto.aspx" />
     <Content Include="abmProveedor.aspx" />
+    <Content Include="abmVentas.aspx" />
     <Content Include="AboutUs.aspx" />
     <Content Include="Catalogo.aspx" />
     <Content Include="Clientes.aspx" />
@@ -123,6 +124,13 @@
     </Compile>
     <Compile Include="abmProveedor.aspx.designer.cs">
       <DependentUpon>abmProveedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="abmVentas.aspx.cs">
+      <DependentUpon>abmVentas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="abmVentas.aspx.designer.cs">
+      <DependentUpon>abmVentas.aspx</DependentUpon>
     </Compile>
     <Compile Include="AboutUs.aspx.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>

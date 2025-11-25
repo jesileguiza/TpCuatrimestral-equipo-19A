@@ -28,6 +28,8 @@ namespace TPCuatrimestral_Grupo_19A
                 {
                     List<Categoria> lista = negocioCategoria.Listar();
 
+
+
                     ddlCategoria.DataSource = lista;
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataTextField = "Descripcion";
@@ -38,6 +40,37 @@ namespace TPCuatrimestral_Grupo_19A
                     ddlMarca.DataValueField = "IdMarca";
                     ddlMarca.DataTextField = "Descripcion";
                     ddlMarca.DataBind();
+
+                    CargarProximoIdCompra();
+
+                    AccesoDatos datosProveedor = new AccesoDatos();
+                    datosProveedor.setearConsulta("SELECT id_Proveedor, Nombre FROM Proveedores");
+                    datosProveedor.ejecutarLectura();
+
+                    ddlProveedor.DataSource = datosProveedor.Lector;
+                    ddlProveedor.DataValueField = "id_Proveedor";
+                    ddlProveedor.DataTextField = "Nombre";
+                    ddlProveedor.DataBind();
+                    datosProveedor.cerrarConexion();
+
+
+                    AccesoDatos datosProducto = new AccesoDatos();
+                    datosProducto.setearConsulta("SELECT ProductoId, Nombre FROM Productos");
+                    datosProducto.ejecutarLectura();
+
+                    ddlProducto.DataSource = datosProducto.Lector;
+                    ddlProducto.DataValueField = "ProductoId";
+                    ddlProducto.DataTextField = "Nombre";
+                    ddlProducto.DataBind();
+                    datosProducto.cerrarConexion();
+
+                    CargarProductos();
+
+                    if (Request.QueryString["nuevoProductoId"] != null)
+                    {
+                        string nuevoId = Request.QueryString["nuevoProductoId"].ToString();
+                        ddlProducto.SelectedValue = nuevoId;
+                    }
 
                 }
 
@@ -50,9 +83,9 @@ namespace TPCuatrimestral_Grupo_19A
 
                     //precargo la informacion
                     TxtCompraId.Text = seleccionado.CompraId.ToString();
-                    TxtProveedorId.Text = seleccionado.ProveedorId.ToString();
+                    ddlProveedor.SelectedValue = seleccionado.ProveedorId.ToString();
                     TxtStock.Text = seleccionado.Stock.ToString();
-                    TxtIdProducto.Text = seleccionado.idProducto.ToString();
+                    ddlProducto.SelectedValue = seleccionado.idProducto.ToString();
                     TxtFecha.Text = seleccionado.Fecha.ToString("yyyy-MM-dd");
                     TxtPrecio.Text = seleccionado.Total.ToString();
 
@@ -76,12 +109,11 @@ namespace TPCuatrimestral_Grupo_19A
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
 
+
             try
             {
 
                 if (string.IsNullOrWhiteSpace(TxtCompraId.Text) ||
-                    string.IsNullOrWhiteSpace(TxtProveedorId.Text) ||
-                    string.IsNullOrWhiteSpace(TxtIdProducto.Text) ||
                     string.IsNullOrWhiteSpace(TxtStock.Text) ||
                     string.IsNullOrWhiteSpace(TxtPrecio.Text))
                 {
@@ -92,6 +124,25 @@ namespace TPCuatrimestral_Grupo_19A
 
                     return;
                 }
+
+                int stock;
+                decimal precio;
+                DateTime fecha;
+
+                if (
+                    !int.TryParse(TxtStock.Text, out stock) ||
+                    !decimal.TryParse(TxtPrecio.Text, out precio) ||
+                    !DateTime.TryParse(TxtFecha.Text, out fecha))
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alert",
+                        "alert('Revise que todos los campos numéricos y la fecha sean válidos.');", true);
+                    return;
+                }
+
+
+
+
+                /*
                 int stock;
                 if (!int.TryParse(TxtStock.Text, out stock))
                 {
@@ -110,7 +161,40 @@ namespace TPCuatrimestral_Grupo_19A
                         "alert('El campo Precio debe contener un número válido.');",
                         true);
                     return;
-                }
+                }*/
+
+
+                AccesoDatos datos = new AccesoDatos();
+                datos.setearConsulta(@"INSERT INTO Compras (ProveedorId, Stock, IdProducto, Fecha, Total) VALUES (@ProveedorId, @Stock, @IdProducto, @Fecha, @Total)");
+
+                datos.setearParametro("@ProveedorId", int.Parse(ddlProveedor.SelectedValue));
+                datos.setearParametro("@Stock", int.Parse(TxtStock.Text));
+                datos.setearParametro("@IdProducto", int.Parse(ddlProducto.SelectedValue));
+                datos.setearParametro("@Fecha", DateTime.Parse(TxtFecha.Text));
+                datos.setearParametro("@Total", decimal.Parse(TxtPrecio.Text));
+
+                datos.ejecutarAccion();
+
+                string script = @"
+                                Swal.fire({
+                                icon: 'success',
+                                title: '¡Compra registrada!' ,
+                                text: 'La compra se ha agregado correctamente al sistema.' ,
+                                confirmButtonText: 'Aceptar' 
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                window.location.href = 'Gestion_Compras.aspx';
+                                }
+                                });
+                                ";
+
+                ClientScript.RegisterStartupScript(this.GetType(), "CompraExitosa", script, true);
+
+
+                TxtStock.Text = "";
+                TxtFecha.Text = "";
+                TxtPrecio.Text = "";
+
 
 
                 /// modificar
@@ -140,13 +224,15 @@ namespace TPCuatrimestral_Grupo_19A
 
 
                 */
+                //Response.Redirect(Gestion_Ventas.aspx);
             }
 
 
             catch (Exception ex)
             {
 
-                throw ex;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+                lblMensaje.Text = "Error al agregar la compra: " + ex.Message;
             }
 
         }
@@ -162,9 +248,54 @@ namespace TPCuatrimestral_Grupo_19A
 
         }
 
-        /*protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        private void CargarProximoIdCompra()
         {
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+                datos.setearConsulta("SELECT ISNULL(MAX(CompraId), 0) + 1 AS ProximoId FROM Compras");
+                datos.ejecutarLectura();
 
-        }*/
+                if (datos.Lector.Read())
+                {
+                    TxtCompraId.Text = datos.Lector["ProximoId"].ToString();
+                    TxtCompraId.ReadOnly = true;  // evita modificarlo
+                }
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error cargando ID automático: " + ex.Message;
+            }
+
+        }
+
+        private void CargarProductos()
+        {
+            try
+            {
+                AccesoDatos datos = new AccesoDatos();
+                datos.setearConsulta("SELECT ProductoId, Nombre FROM Productos");
+                datos.ejecutarLectura();
+
+                ddlProducto.DataSource = datos.Lector;
+                ddlProducto.DataValueField = "ProductoId";
+                ddlProducto.DataTextField = "Nombre";
+                ddlProducto.DataBind();
+
+                datos.cerrarConexion();
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = "Error cargando productos: " + ex.Message;
+            }
+        }
+        protected void btnNuevoProducto_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("abmProducto.aspx?volverA=Compras");
+        }
+
+
+
+
     }
 }

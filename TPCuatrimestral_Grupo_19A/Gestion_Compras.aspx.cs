@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,13 @@ namespace TPCuatrimestral_Grupo_19A
 
             if (rol != "ADMIN" && rol != "OPERADOR")
                 Response.Redirect("NoAutorizado.aspx");
+
+
+            if (!IsPostBack)
+            {
+                CargarCompras();
+            }
+
         }
 
         protected void btnAgregarCompra_Click(object sender, EventArgs e)
@@ -30,6 +38,13 @@ namespace TPCuatrimestral_Grupo_19A
             string CompraId = dgvCompras.SelectedDataKey.Value.ToString();
             Response.Redirect("abmCompras.aspx?IdCompra=" + CompraId);
 
+        }
+
+        private void CargarCompras()
+        {
+            CompraNegocio negocio = new CompraNegocio();
+            dgvCompras.DataSource = negocio.listar();
+            dgvCompras.DataBind();
         }
 
     }

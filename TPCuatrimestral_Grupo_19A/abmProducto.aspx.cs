@@ -155,6 +155,19 @@ namespace TPCuatrimestral_Grupo_19A
                     "alert",
                     "alert('Producto agregado correctamente'); window.location='catalogo.aspx';",
                     true);
+
+                    if (Request.QueryString["volverA"] == "Compras")
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect",
+                            "alert('Producto agregado correctamente'); window.location='abmCompras.aspx';", true);
+                    }
+                    else
+                    {
+                        Response.Redirect("Catalogo.aspx");
+                    }
+                    Response.Redirect("abmCompras.aspx?nuevoProductoId=" + nuevo.IdProducto);
+
+
                 }
 
             }

@@ -1,7 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterComercio.Master" CodeBehind="abmCompras.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.abmCompras" %>
-
-
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/MasterComercio.Master" CodeBehind="abmVentas.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.abmVentas" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -100,66 +97,49 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
         
-        <h2 class="form-title">Agregar Compra</h2>
+        <h2 class="form-title">Agregar / Modificar Venta</h2>
 
         <div class="form-row">
-        
-    <div class="form-group col-md-6">
-        <label for="TxtCompraid">ID Compra</label>
-        <asp:TextBox ID="TxtCompraId" runat="server" CssClass="form-control"></asp:TextBox> 
-
-    </div>
-    <div class="form-group col-md-6">
-        <label for="TxtProveedorid">Proveedor</label>
-        <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-control"></asp:DropDownList>
-    </div>
-   </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-12">
-        <label for="TxtidProducto">Producto</label>
-        <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-control"></asp:DropDownList>
-        <asp:Button ID="btnNuevoProducto" runat="server" Text="Nuevo Producto" CssClass="btn btn-primary" OnClick="btnNuevoProducto_Click" />
-    </div>
-
-   </div>
-  
-   <div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="ddlCategoria">Categoría</label>
-        <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-control" ></asp:DropDownList>
-    </div>
-    <div class="form-group col-md-6">
-        <label for="ddlMarca">Marca</label>
-        <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-control"></asp:DropDownList>
-    </div>
-    </div>
-
-     <div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="TxtStock">Stock</label>
-        <asp:TextBox ID="TxtStock" runat="server" CssClass="form-control"></asp:TextBox>
-    </div>
-    <div class="form-group col-md-6">
-        <label for="TxtPrecio">Precio</label>
-        <asp:TextBox ID="TxtPrecio" runat="server" CssClass="form-control"></asp:TextBox>
-    </div>
-    </div>
-         
-        <div class="form-row">
-<div class="form-group col-md-6">
-    <label for="TxtFecha">Fecha</label>
-    <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control"></asp:TextBox>
-</div>
+            <div class="form-group col-md-6">
+                <label for="TxtVentaId">ID Venta</label>
+                <asp:TextBox ID="TxtVentaId" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox> 
             </div>
+            <div class="form-group col-md-6">
+                <label for="ddlCliente">Cliente</label>
+                <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-control"></asp:DropDownList>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="TxtDNI">DNI</label>
+                <asp:TextBox ID="TxtDNI" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="TxtEmail">Email</label>
+                <asp:TextBox ID="TxtEmail" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="TxtFecha">Fecha</label>
+                <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="TxtTotal">Total</label>
+                <asp:TextBox ID="TxtTotal" runat="server" CssClass="form-control"></asp:TextBox>
+            </div>
+        </div>
+
         <hr style="margin-top: 30px; margin-bottom: 25px; border-top: 1px solid #e0e0e0;" />
 
         <div class="text-center">
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="aspNetButton" />
+            <asp:Button ID="btnAgregar" runat="server" Text="Guardar" OnClick="btnAgregar_Click" CssClass="aspNetButton" />
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" CssClass="aspNetButton" />
-            <asp:Button ID="btnEliminar" Text="Eliminar" runat="server" OnClick="btnEliminar_Click" CssClass="btn btn-danger" />
+            <asp:Button ID="btnEliminar" Text="Eliminar" runat="server" OnClick="btnEliminar_Click" CssClass="aspNetButton" />
         </div>
         <asp:Label ID="lblMensaje" runat="server" Text="" ForeColor="Red"></asp:Label>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </asp:Content>
+

@@ -11,6 +11,10 @@ namespace Dominio
 
         public int CompraId { get; set; }
         public int ProveedorId { get; set; }
+        public string ProveedorNombre { get; set; }
+        public string Nombre { get; set; }  /// del producto
+        public string Descripcion { get; set; }
+
         public int Stock { get; set; }
         public int idProducto { get; set; }
         public Categoria categoria { get; set; }

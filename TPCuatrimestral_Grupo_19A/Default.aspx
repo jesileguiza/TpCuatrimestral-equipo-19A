@@ -69,7 +69,7 @@
 
     
         <div class="login-box">
-            <h1>Bienvenido, ingrese usuario y contraseña</h1>
+            <h1>Bienvenido/a, ingrese usuario y contraseña</h1>
             
             <div>
                 <asp:Label ID="Usu" runat="server" Text="Usuario: "></asp:Label>
@@ -81,7 +81,6 @@
                 <asp:TextBox ID="TxtContra" runat="server" TextMode="Password" ViewStateMode="Enabled"></asp:TextBox>
                 <asp:Label ID="lblMensaje" runat="server" ForeColor="Red"></asp:Label>
             </div>
-            string 
             <div>
                 <asp:Button ID="Ingreso" runat="server" Text="Ingresar" OnClick="btnIniciarSesion_Click" />
             </div>

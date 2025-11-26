@@ -9,13 +9,24 @@ namespace Negocio
 {
     public class CategoriaNegocio
     {
-        public List<Categoria> Listar()
+        public List<Categoria> Listar(string IdCategoria = "")
         {
             List<Categoria> lista = new List<Categoria>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("SELECT Id, Descripcion, Activo FROM Categorias");
+                string consulta = "SELECT Id, Descripcion, Activo FROM Categorias";
+                if (!string.IsNullOrEmpty(IdCategoria))
+                {
+                    consulta += " WHERE Id = @IdCategoria";
+                    datos.setearConsulta(consulta);
+                    datos.setearParametro("@IdCategoria", IdCategoria);
+
+                }
+                else
+                {
+                    datos.setearConsulta(consulta);
+                }
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -43,9 +54,122 @@ namespace Negocio
             }
 
         }
+        public void agregar(Categoria nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into Categorias (Descripcion) values (@Descripcion);");
+                datos.setearParametro("@Descripcion", nuevo.Descripcion);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void modificarCategoria(Categoria modificado)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("update Categorias set Descripcion = @Descripcion where Id = @IdCategoria");
+                datos.setearParametro("@Descripcion", modificado.Descripcion);
+                datos.setearParametro("@IdCategoria", modificado.IdCategoria);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
 
 
-   
+                datos.setearConsulta("update Categorias set Activo = 0 where Id = @IdCategoria;");
+                datos.setearParametro("@IdCategoria", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void darAlta(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+
+                datos.setearConsulta("update Categorias set Activo = 1 where Id = @IdCategoria;");
+                datos.setearParametro("@IdCategoria", id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public int ObtenerIdPorNombre(string nombre)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT Id FROM Categorias WHERE Descripcion = '@Descripcion'");
+                datos.setearParametro("@Descripcion", nombre);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    return (int)datos.Lector["Id"];
+                else
+                    return 0; // No encontrado
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
 
     }
 }

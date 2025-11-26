@@ -64,6 +64,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="abmCategorias.aspx" />
     <Content Include="abmCliente.aspx" />
     <Content Include="abmCompras.aspx" />
     <Content Include="abmMarcas.aspx" />
@@ -72,6 +73,7 @@
     <Content Include="abmVentas.aspx" />
     <Content Include="AboutUs.aspx" />
     <Content Include="Catalogo.aspx" />
+    <Content Include="Categorias.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Estilos\estilos.css" />
@@ -90,6 +92,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="abmCategorias.aspx.cs">
+      <DependentUpon>abmCategorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="abmCategorias.aspx.designer.cs">
+      <DependentUpon>abmCategorias.aspx</DependentUpon>
+    </Compile>
     <Compile Include="abmCliente.aspx.cs">
       <DependentUpon>abmCliente.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -145,6 +154,13 @@
     </Compile>
     <Compile Include="Catalogo.aspx.designer.cs">
       <DependentUpon>Catalogo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Categorias.aspx.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Categorias.aspx.designer.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
     </Compile>
     <Compile Include="Clientes.aspx.cs">
       <DependentUpon>Clientes.aspx</DependentUpon>

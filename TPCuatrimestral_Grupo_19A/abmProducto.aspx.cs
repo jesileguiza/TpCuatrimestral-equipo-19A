@@ -22,8 +22,14 @@ namespace TPCuatrimestral_Grupo_19A
                     string IdProducto = Request.QueryString["IdProducto"];
                     CategoriaNegocio negocioCategoria = new CategoriaNegocio();
                     MarcaNegocio negocioMarca = new MarcaNegocio();
+                    ProveedorNegocio proveedorNegocio = new ProveedorNegocio();
 
+                    ddlProveedores.DataSource = proveedorNegocio.listar();
+                    ddlProveedores.DataValueField = "IdProveedor";
+                    ddlProveedores.DataTextField = "RazonSocial";
+                    ddlProveedores.DataBind();
                     
+
                     ddlCategoria.DataSource = negocioCategoria.Listar();
                     ddlCategoria.DataValueField = "IdCategoria";
                     ddlCategoria.DataTextField = "Descripcion";
@@ -51,7 +57,7 @@ namespace TPCuatrimestral_Grupo_19A
 
                                 TxtNombre.Text = seleccionado.Nombre;
                                 TxtDescripcion.Text = seleccionado.Descripcion;
-                                TxtProvedores.Text = seleccionado.Proveedor;
+                                ddlProveedores.SelectedValue=seleccionado.proveedor.IdProveedor.ToString();
                                 TxtStock.Text = seleccionado.Stock.ToString();
                                 TxtPrecio.Text = seleccionado.Precio.ToString();
 
@@ -87,7 +93,6 @@ namespace TPCuatrimestral_Grupo_19A
             {
                 if (string.IsNullOrWhiteSpace(TxtNombre.Text) ||
                     string.IsNullOrWhiteSpace(TxtDescripcion.Text) ||
-                    string.IsNullOrWhiteSpace(TxtProvedores.Text) ||
                     string.IsNullOrWhiteSpace(TxtStock.Text) ||
                     string.IsNullOrWhiteSpace(TxtPrecio.Text))
                 {
@@ -125,7 +130,9 @@ namespace TPCuatrimestral_Grupo_19A
 
                 nuevo.Nombre = TxtNombre.Text;
                 nuevo.Descripcion = TxtDescripcion.Text;
-                nuevo.Proveedor = TxtProvedores.Text;
+
+                nuevo.proveedor = new Proveedor();
+                nuevo.proveedor.IdProveedor = int.Parse(ddlProveedores.SelectedValue);
 
                 nuevo.categoria = new Categoria();
                 nuevo.categoria.IdCategoria = int.Parse(ddlCategoria.SelectedValue);

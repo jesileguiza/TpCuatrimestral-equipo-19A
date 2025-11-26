@@ -9,9 +9,9 @@ namespace Dominio
     public class Producto
     {
         public int IdProducto { get; set; }
-        public string IdProveedor { get; set; }
+        //public string IdProveedor { get; set; }
+        public Proveedor proveedor { get; set; }
         public string Nombre { get; set; }
-        public string Proveedor { get; set; }
         public Categoria categoria { get; set; }
         public Marca Marca { get; set; }
         public string Descripcion { get; set; }

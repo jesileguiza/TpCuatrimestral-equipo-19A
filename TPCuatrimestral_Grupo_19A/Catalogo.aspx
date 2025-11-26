@@ -137,7 +137,7 @@
        <asp:BoundField DataField="IdProducto" HeaderText="ID" />
        <asp:BoundField DataField="Nombre" HeaderText="Producto" />
        <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
-       <asp:BoundField DataField="Proveedor" HeaderText="Proveedor" />
+       <asp:BoundField DataField="Proveedor.RazonSocial" HeaderText="Proveedor" />
        <asp:BoundField DataField="categoria.IdCategoria" HeaderText="ID Categoría" />
        <asp:BoundField DataField="categoria.Descripcion" HeaderText="Categoría" />
        <asp:BoundField DataField="Marca.IdMarca" HeaderText="ID Marca" />

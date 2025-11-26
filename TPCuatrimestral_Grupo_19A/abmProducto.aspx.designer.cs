@@ -42,13 +42,13 @@ namespace TPCuatrimestral_Grupo_19A
         protected global::System.Web.UI.WebControls.TextBox TxtDescripcion;
 
         /// <summary>
-        /// Control TxtProvedores.
+        /// Control ddlProveedores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtProvedores;
+        protected global::System.Web.UI.WebControls.DropDownList ddlProveedores;
 
         /// <summary>
         /// Control ddlCategoria.

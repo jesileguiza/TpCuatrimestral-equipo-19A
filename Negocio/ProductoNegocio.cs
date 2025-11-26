@@ -21,7 +21,7 @@ namespace Negocio
 
             try
             {
-                string consulta = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.Proveedor,P.Stock,P.Precio, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id  ";
+                string consulta = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.id_Proveedor,PR.RazonSocial AS RazonSocial,P.Stock,P.Precio, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id LEFT JOIN Proveedores PR ON P.id_Proveedor = PR.id_Proveedor ";
 
                 if (!string.IsNullOrEmpty(IdProducto))
                 {
@@ -42,7 +42,9 @@ namespace Negocio
                     aux.IdProducto = (int)datos.Lector["ProductoId"];
                     aux.Nombre = datos.Lector["Nombre"].ToString();
                     aux.Descripcion = datos.Lector["Descripcion"].ToString();
-                    aux.Proveedor = datos.Lector["Proveedor"].ToString();
+                    aux.proveedor = new Proveedor();
+                    aux.proveedor.IdProveedor = (int)datos.Lector["id_Proveedor"];
+                    aux.proveedor.RazonSocial = datos.Lector["RazonSocial"].ToString();
                     aux.categoria = new Categoria();
                     aux.categoria.IdCategoria =(int)datos.Lector["IdCategoria"];
                     aux.categoria.Descripcion = datos.Lector["Categoria"].ToString();
@@ -77,9 +79,9 @@ namespace Negocio
             try
             {
 
-                datos.setearConsulta("insert into Productos(Nombre, Descripcion,Proveedor,IdMarca,IdCategoria,Stock,Precio) values (@Nombre,@Descripcion,@Proveedor,@IdMarca,@IdCategoria,@stock,@precio);");
+                datos.setearConsulta("insert into Productos(Nombre, Descripcion,id_Proveedor,IdMarca,IdCategoria,Stock,Precio) values (@Nombre,@Descripcion,@id_Proveedor,@IdMarca,@IdCategoria,@stock,@precio);");
                 datos.setearParametro("@Nombre", nuevo.Nombre);
-                datos.setearParametro("@Proveedor" , nuevo.Proveedor);
+                datos.setearParametro("@id_Proveedor" , nuevo.proveedor.IdProveedor);
                 datos.setearParametro("@Descripcion", nuevo.Descripcion);
                 datos.setearParametro("@IdMarca", nuevo.Marca.IdMarca);
                 datos.setearParametro("@IdCategoria", nuevo.categoria.IdCategoria);
@@ -108,9 +110,9 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("update Productos set Nombre = @Nombre, Proveedor = @proveedor, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, stock = @stock, precio=@precio where ProductoId = @IdProducto;");
+                datos.setearConsulta("update Productos set Nombre = @Nombre, id_Proveedor = @id_proveedor, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, stock = @stock, precio=@precio where ProductoId = @IdProducto;");
                 datos.setearParametro("@Nombre", modificado.Nombre);
-                datos.setearParametro("@Proveedor", modificado.Proveedor);
+                datos.setearParametro("@id_Proveedor", modificado.proveedor.IdProveedor);
                 datos.setearParametro("@Descripcion", modificado.Descripcion);
                 datos.setearParametro("@IdMarca", modificado.Marca.IdMarca);
                 datos.setearParametro("@IdCategoria", modificado.categoria.IdCategoria);

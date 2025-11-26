@@ -111,9 +111,9 @@
    </div>
 
   <div class="form-row">
-    <div class="form-group col-md-12">
-        <label for="TxtProvedores">Proveedor</label>
-        <asp:TextBox ID="TxtProvedores" runat="server" CssClass="form-control"></asp:TextBox>
+    <div class="form-group col-md-6">
+        <label for="ddlProvedores">Proveedor</label>
+           <asp:DropDownList ID="ddlProveedores" runat="server" CssClass="form-control" ></asp:DropDownList>
     </div>
 
    </div>

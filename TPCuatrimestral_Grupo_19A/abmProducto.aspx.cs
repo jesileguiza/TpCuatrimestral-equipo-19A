@@ -40,7 +40,7 @@ namespace TPCuatrimestral_Grupo_19A
                     ddlMarca.DataTextField = "Descripcion";
                     ddlMarca.DataBind();
 
-                   
+                   //modificacion
                     if (!string.IsNullOrEmpty(IdProducto))
                     {
                         btnAgregar.Text = "Modificar";
@@ -55,6 +55,11 @@ namespace TPCuatrimestral_Grupo_19A
                             {
                                 Producto seleccionado = lista[0];
 
+                                //guardo producto seleccionado
+
+                                Session.Add("productoSeleccionado",seleccionado);
+
+                                //precargo datos
                                 TxtNombre.Text = seleccionado.Nombre;
                                 TxtDescripcion.Text = seleccionado.Descripcion;
                                 ddlProveedores.SelectedValue=seleccionado.proveedor.IdProveedor.ToString();
@@ -64,6 +69,10 @@ namespace TPCuatrimestral_Grupo_19A
                                
                                 ddlCategoria.SelectedValue = seleccionado.categoria.IdCategoria.ToString();
                                 ddlMarca.SelectedValue = seleccionado.Marca.IdMarca.ToString();
+
+                                //configurar acciones
+                                if (!seleccionado.Activo)
+                                    btnInactivar.Text = "Reactivar";
                             }
                             else
                             {
@@ -198,6 +207,31 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+
+        protected void btnInactivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                ProductoNegocio negocio = new ProductoNegocio();
+                Producto seleccionado = (Producto)Session["productoSeleccionado"];
+
+                negocio.Estado(int.Parse(Request.QueryString["IdProducto"].ToString()), !seleccionado.Activo);
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   "alert('El Producto fue inactivado correctamente'); window.location='catalogo.aspx';",
+                   true);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

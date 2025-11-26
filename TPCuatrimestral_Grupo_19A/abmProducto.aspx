@@ -145,6 +145,7 @@
         <div class="text-center">
             <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" CssClass="aspNetButton" />
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" CssClass="aspNetButton" />
+            <asp:Button ID="btnInactivar" runat="server" Text="Inactivar" Onclick="btnInactivar_Click" CssClass="btn btn-warning" />
         </div>
         <asp:Label ID="lblMensaje" runat="server" Text="" ForeColor="Red"></asp:Label>
 

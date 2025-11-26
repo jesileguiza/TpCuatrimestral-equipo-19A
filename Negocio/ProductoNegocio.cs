@@ -21,7 +21,7 @@ namespace Negocio
 
             try
             {
-                string consulta = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.id_Proveedor,PR.RazonSocial AS RazonSocial,P.Stock,P.Precio, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id LEFT JOIN Proveedores PR ON P.id_Proveedor = PR.id_Proveedor ";
+                string consulta = "SELECT P.ProductoId,P.Nombre,P.Descripcion,P.id_Proveedor,PR.RazonSocial AS RazonSocial,P.Stock,P.Precio,P.Activo, c.Id AS IdCategoria,C.Descripcion AS Categoria,M.Id AS IdMarca,M.Descripcion AS Marca FROM Productos P LEFT JOIN Categorias C ON P.IdCategoria = C.Id LEFT JOIN Marcas M ON P.IdMarca = M.Id LEFT JOIN Proveedores PR ON P.id_Proveedor = PR.id_Proveedor ";
 
                 if (!string.IsNullOrEmpty(IdProducto))
                 {
@@ -55,7 +55,7 @@ namespace Negocio
                     aux.Precio = Convert.ToDecimal(datos.Lector["Precio"]);
                     aux.categoria.IdCategoria = datos.Lector["IdCategoria"] == DBNull.Value ? 0 : (int)datos.Lector["IdCategoria"];
                     aux.Marca.IdMarca = datos.Lector["IdMarca"] == DBNull.Value ? 0 : (int)datos.Lector["IdMarca"];
-
+                    aux.Activo= (bool)datos.Lector["Activo"];
 
                     lista.Add(aux);
                 }
@@ -160,37 +160,14 @@ namespace Negocio
         }
 
 
-        public void darAlta(int id)
+        public void Estado(int id , bool activo= false)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-
-
-                datos.setearConsulta("UPDATE Productos SET Activo = 1 WHERE ProductoId = @IdProducto;");
+                datos.setearConsulta("UPDATE Productos SET Activo = @activo WHERE ProductoId = @IdProducto;");
                 datos.setearParametro("@IdProducto", id);
-
-                datos.ejecutarAccion();
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
-
-        public void darBaja(int id)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("UPDATE Productos SET Activo = 0 WHERE ProductoId = @IdProducto;");
-                datos.setearParametro("@IdProducto", id);
+                datos.setearParametro("@activo", activo);
 
                 datos.ejecutarAccion();
             }

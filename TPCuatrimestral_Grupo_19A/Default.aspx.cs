@@ -23,8 +23,17 @@ namespace TPCuatrimestral_Grupo_19A
             string contrasena = TxtContra.Text.Trim();
 
             AccesoDatos datos = new AccesoDatos();
-            // Aquí deberías implementar la lógica para validar el usuario y la contraseña
-            // Por ejemplo, podrías consultar una base de datos para verificar las credenciales
+
+            string[] peligrosos = { "<", ">", "'", "\"", ";", "--" };
+
+            if (peligrosos.Any(p => usuario.Contains(p)))
+            {
+                MostrarError("El usuario contiene caracteres no permitidos.");
+                return;
+            }
+
+
+
             if (ValidarCredenciales(usuario, contrasena))
             {
 
@@ -61,6 +70,12 @@ namespace TPCuatrimestral_Grupo_19A
                 MostrarError("Usuario inválido.");
                 return false;
             }
+            if (User.Contains("<") || User.Contains(">"))
+            {
+                MostrarError("Usuario inválido.");
+                return false;
+            }
+
 
 
             try

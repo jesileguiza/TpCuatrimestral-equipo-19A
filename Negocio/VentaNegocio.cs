@@ -53,11 +53,11 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("INSERT INTO Ventas (ClienteId, Fecha, Total) VALUES (@ClienteId, @Fecha, @Total)");
+                datos.setearConsulta("INSERT INTO Ventas (ClienteId, FechaVenta, Total) VALUES (@ClienteId, @FechaVenta, @Total)");
                 datos.setearParametro("@ClienteId", venta.ClienteId);
-                datos.setearParametro("@DNI", venta.DNI);
-                datos.setearParametro("@Email", venta.Email);
-                datos.setearParametro("@Fecha", venta.Fecha);
+                //datos.setearParametro("@DNI", venta.DNI);
+                //datos.setearParametro("@Email", venta.Email);
+                datos.setearParametro("@FechaVenta", venta.Fecha);
                 datos.setearParametro("@Total", venta.Total);
                 datos.ejecutarAccion();
             }
@@ -70,6 +70,52 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+
+        public int AgregarVentaConDetalles(Venta venta)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta(
+                    "INSERT INTO Ventas (ClienteId, FechaVenta, Total) OUTPUT INSERTED.VentaId " +
+                    "VALUES (@ClienteId, @Fecha, @Total)");
+
+                datos.setearParametro("@ClienteId", venta.ClienteId);
+                datos.setearParametro("@Fecha", venta.Fecha);
+                datos.setearParametro("@Total", venta.Total);
+
+                int idVenta = (int)datos.ejecutarScalar();
+
+                foreach (var d in venta.Detalles)
+                {
+                    datos.setearConsulta(
+                        "INSERT INTO VentaDetalle (VentaId, ProductoId, Cantidad, PrecioUnitario) " +
+                        "VALUES (@VentaId, @ProductoId, @Cantidad, @Precio)");
+
+                    datos.setearParametro("@VentaId", idVenta);
+                    datos.setearParametro("@ProductoId", d.ProductoId);
+                    datos.setearParametro("@Cantidad", d.Cantidad);
+                    datos.setearParametro("@Precio", d.PrecioUnitario);
+
+                    datos.ejecutarAccion();
+
+                    datos.setearConsulta(
+                        "UPDATE Productos SET Stock = Stock - @cantidad WHERE ProductoId = @id");
+                    datos.setearParametro("@cantidad", d.Cantidad);
+                    datos.setearParametro("@id", d.ProductoId);
+                    datos.ejecutarAccion();
+                }
+
+                return idVenta;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
 
     }

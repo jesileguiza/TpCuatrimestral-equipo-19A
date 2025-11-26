@@ -73,7 +73,7 @@
             
             <div>
                 <asp:Label ID="Usu" runat="server" Text="Usuario: "></asp:Label>
-                <asp:TextBox ID="TxtUsuario" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TxtUsuario" runat="server" ValidateRequestMode="Disabled"></asp:TextBox>
             </div>
 
             <div>

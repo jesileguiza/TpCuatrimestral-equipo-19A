@@ -45,12 +45,14 @@ namespace Negocio
                     aux.Proveedor = datos.Lector["Proveedor"].ToString();
                     aux.categoria = new Categoria();
                     aux.categoria.IdCategoria =(int)datos.Lector["IdCategoria"];
-                    aux.categoria.Descripcion = datos.Lector["categoria"].ToString();
+                    aux.categoria.Descripcion = datos.Lector["Categoria"].ToString();
                     aux.Marca = new Marca();
                     aux.Marca.IdMarca = (int)datos.Lector["IdMarca"];
-                    aux.Marca.Descripcion = datos.Lector["marca"].ToString();
+                    aux.Marca.Descripcion = datos.Lector["Marca"].ToString();
                     aux.Stock = (int)datos.Lector["Stock"];
                     aux.Precio = Convert.ToDecimal(datos.Lector["Precio"]);
+                    aux.categoria.IdCategoria = datos.Lector["IdCategoria"] == DBNull.Value ? 0 : (int)datos.Lector["IdCategoria"];
+                    aux.Marca.IdMarca = datos.Lector["IdMarca"] == DBNull.Value ? 0 : (int)datos.Lector["IdMarca"];
 
 
                     lista.Add(aux);

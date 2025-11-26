@@ -25,7 +25,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                            <a class="nav-link active" aria-current="page" href="Default.aspx">Cerrar Sesion</a>
+                            <asp:LinkButton 
+                             ID="btnLogout" 
+                                runat="server" 
+                                CssClass="nav-link active"
+                                OnClick="btnLogout_Click">
+                                 Cerrar Sesión
+                                </asp:LinkButton>
                             <a class="nav-link" href="Gestion_Ventas.aspx">Gestion de Ventas</a>
                             <a class="nav-link" href="Gestion_Compras.aspx">Gestion de compras</a>
                             <a class="nav-link" href="Catalogo.aspx">Catalogo de productos</a>

@@ -13,12 +13,28 @@ namespace TPCuatrimestral_Grupo_19A
         {
 
             if (Session["RolUsuario"] == null)
-                Response.Redirect("Default.aspx");
+                Response.Redirect("Default.aspx?error=sesion");
 
             string rol = Session["RolUsuario"].ToString();
 
             if (rol != "ADMIN")
-                Response.Redirect("NoAutorizado.aspx");
+            {
+                string script = @"
+            Swal.fire({
+                icon: 'error',
+                title: 'Acceso denegado',
+                text: 'No estás autorizado para acceder a esta sección.',
+                confirmButtonText: 'Aceptar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'Gestion_Ventas.aspx';
+                }
+            });
+             ";
+
+                ClientScript.RegisterStartupScript(this.GetType(), "NoAutorizado", script, true);
+
+            }
 
 
             if (!IsPostBack)

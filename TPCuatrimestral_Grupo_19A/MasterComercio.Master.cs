@@ -13,5 +13,16 @@ namespace TPCuatrimestral_Grupo_19A
         {
 
         }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();        // borra datos de sesión
+            Session.Abandon();      // destruye la sesión
+            Response.Cache.SetNoStore(); // evita volver atrás con el navegador
+
+            Response.Redirect("Default.aspx"); // ajustá al nombre real de tu página de login
+        }
+
+
     }
 }

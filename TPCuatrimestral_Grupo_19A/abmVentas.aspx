@@ -106,7 +106,54 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="ddlCliente">Cliente</label>
-                <asp:DropDownList ID="ddlCliente" runat="server" CssClass="form-control"></asp:DropDownList>
+                <asp:DropDownList 
+                 ID="ddlCliente" 
+                 runat="server" 
+                 CssClass="form-control"
+                 AutoPostBack="true"
+                 OnSelectedIndexChanged="ddlCliente_SelectedIndexChanged">
+                </asp:DropDownList>
+                <asp:Button ID="btnNuevoCliente" runat="server" Text="Nuevo Cliente" CssClass="btn btn-primary mt-2" OnClick="btnNuevoCliente_Click" />
+                <!-- seleccion de productos  -->
+                <h3>Agregar Productos</h3>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label>Producto</label>
+        <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-control"></asp:DropDownList>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>Cantidad</label>
+        <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" Text="1"></asp:TextBox>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label>&nbsp;</label>
+        <asp:Button ID="btnAgregarDetalle" runat="server"
+            Text="Agregar Producto"
+            CssClass="aspNetButton"
+            OnClick="btnAgregarDetalle_Click" />
+    </div>
+</div>
+                <!-- seleccion de productos  -->
+
+                <asp:GridView ID="gvDetalles" OnRowCommand="gvDetalles_RowCommand" runat="server" AutoGenerateColumns="False" CssClass="tabla-catalogo">
+    <Columns>
+        <asp:BoundField DataField="ProductoId" HeaderText="ID" />
+        <asp:BoundField DataField="Nombre" HeaderText="Producto" />
+        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" />
+        <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio" DataFormatString="{0:C}" />
+        <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" />
+
+        <asp:TemplateField HeaderText="Quitar">
+            <ItemTemplate>
+                <asp:Button runat="server" ID="btnQuitar" Text="X" CommandName="Quitar" CommandArgument='<%# Container.DataItemIndex %>' CssClass="btn btn-danger" />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+
             </div>
         </div>
 
@@ -128,7 +175,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="TxtTotal">Total</label>
-                <asp:TextBox ID="TxtTotal" runat="server" CssClass="form-control"></asp:TextBox>
+                <asp:TextBox ID="TxtTotal" runat="server" CssClass="form-control" ReadOnly="true"></asp:TextBox>
             </div>
         </div>
 

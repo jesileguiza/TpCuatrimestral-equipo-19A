@@ -108,6 +108,72 @@
             transform: translateY(-1px); 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+       .filtro-container {
+            width: 90%;
+            max-width: 700px;
+            margin: 0 auto 25px auto;
+            display: flex;
+            align-items: center;
+           justify-content: center;
+           gap: 15px;
+           background-color: #e8f5e9;
+           padding: 15px 20px;
+           border-radius: 8px;
+           border: 1px solid #c5e1a5;
+           box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+       }
+
+       .dropdown-filtro {
+           padding: 8px;
+           border: 1px solid #a5d6a7;
+           border-radius: 5px;
+           background-color: #ffffff;
+           font-size: 1em;
+       }
+
+       .input-search-wrapper {
+           position: relative;
+           width: 50%;
+       }
+
+       .icono-lupa {
+           position: absolute;
+           top: 50%;
+           left: 8px;
+           transform: translateY(-50%);
+           color: #388e3c;
+           font-size: 1.1em;
+       }
+
+       .input-search {
+           width: 100%;
+           padding: 8px 10px 8px 30px;
+           border: 1px solid #a5d6a7;
+           border-radius: 5px;
+           font-size: 1em;
+       }
+
+       .input-search:focus {
+           outline: none;
+           box-shadow: 0 0 6px #66bb6a;
+       } 
+
+       .btn-limpiar {
+           background-color: #ef5350;
+           color: white;
+           border: none;
+           padding: 8px 15px;
+           border-radius: 6px;
+           cursor: pointer;
+           font-size: 1em;
+           font-weight: bold;
+           transition: background-color 0.3s;
+           box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+       }
+
+       .btn-limpiar:hover {
+           background-color: #d32f2f;
+       } 
     </style>
 </asp:Content>
 
@@ -115,16 +181,29 @@
     <div class="header-container">
         <h1>Catálogo de Productos</h1>
     </div>
+<div class="filtro-container">
 
-    <p class="categoria-recordatorio">Recordatorio de Categorías</p>
+    <asp:Label Text="Filtrar por:" runat="server" />
 
-    <div class="div-categorias">
-        <div>1 - Cotillón</div>
-        <div>2 - Papelería</div>
-        <div>3 - Juguetería</div>
-        <div>4 - Repostería</div>
-        <div>5 - Librería</div>
+    <asp:DropDownList ID="ddlFiltro" runat="server" CssClass="dropdown-filtro">
+        <asp:ListItem Value="Nombre">Nombre</asp:ListItem>
+        <asp:ListItem Value="IdProducto">ID Producto</asp:ListItem>
+        <asp:ListItem Value="Descripcion">Descripción</asp:ListItem>
+        <asp:ListItem Value="Proveedor">Proveedor</asp:ListItem>
+        <asp:ListItem Value="Categoria">Categoría</asp:ListItem>
+        <asp:ListItem Value="Marca">Marca</asp:ListItem>
+    </asp:DropDownList>
+
+    <div class="input-search-wrapper">
+        <i class="fa fa-search icono-lupa"></i>
+        <asp:TextBox runat="server" ID="Filtro" CssClass="input-search" AutoPostBack="true" OnTextChanged="Filtro_TextChanged1" />
     </div>
+
+    <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn-limpiar" OnClick="btnLimpiar_Click" />
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 
     <asp:GridView runat="server" ID="dgvProductos" AutoGenerateColumns="False" CssClass="tabla-catalogo" DataKeyNames="IdProducto" OnSelectedIndexChanged="dgvProductos_SelectedIndexChanged">
        <Columns>

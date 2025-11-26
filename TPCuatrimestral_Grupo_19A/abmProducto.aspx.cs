@@ -216,12 +216,18 @@ namespace TPCuatrimestral_Grupo_19A
                 
                 ProductoNegocio negocio = new ProductoNegocio();
                 Producto seleccionado = (Producto)Session["productoSeleccionado"];
+                bool nuevoEstado = !seleccionado.Activo;
 
-                negocio.Estado(int.Parse(Request.QueryString["IdProducto"].ToString()), !seleccionado.Activo);
+
+                negocio.Estado(int.Parse(Request.QueryString["IdProducto"].ToString()), nuevoEstado);
+
+                string mensaje = nuevoEstado ?
+                 "El producto fue reactivado correctamente" :
+                 "El producto fue inactivado correctamente";
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(),
                    "alert",
-                   "alert('El Producto fue inactivado correctamente'); window.location='catalogo.aspx';",
+                   $"alert('{mensaje}'); window.location='catalogo.aspx';",
                    true);
 
 

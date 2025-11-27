@@ -110,7 +110,20 @@
         color: white;
         margin-top: 30px;
     }
-
+.boton-agregar { 
+    margin-top: 10px; 
+    background-color: #28a745; 
+    color: white; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 14px; 
+}
+.boton-agregar:hover { 
+    background-color: #1e7e34; 
+}
+}
 </style>
 
 </asp:Content>
@@ -132,8 +145,9 @@
 
            
 
-        <hr />
+      
 
+<asp:Button ID="btnAgregarCompra" runat="server" Text="➕ Agregar Compra" CssClass="boton-agregar" OnClick="btnAgregarCompra_Click" />
             
 <asp:GridView runat="server" ID="dgvCompras" AutoGenerateColumns="False" 
     CssClass="tabla-Compras" DataKeyNames="CompraId" 
@@ -188,7 +202,6 @@
 
 </asp:GridView>
 
- <asp:Button runat="server" ID="btnAgregarCompra" Text="Agregar Nueva compra" CssClass="btn-accion" onclick="btnAgregarCompra_Click" />
 
 
 

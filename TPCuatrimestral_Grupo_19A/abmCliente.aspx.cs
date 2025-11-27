@@ -79,53 +79,55 @@ namespace TPCuatrimestral_Grupo_19A
         {
             try
             {
-
                 if (string.IsNullOrWhiteSpace(TxtNombreCliente.Text) ||
-                string.IsNullOrWhiteSpace(TxtApellidoCliente.Text) ||
-                string.IsNullOrWhiteSpace(TxtDNICliente.Text) ||
-                string.IsNullOrWhiteSpace(TxtEmailCliente.Text))
+                    string.IsNullOrWhiteSpace(TxtApellidoCliente.Text) ||
+                    string.IsNullOrWhiteSpace(TxtDNICliente.Text) ||
+                    string.IsNullOrWhiteSpace(TxtEmailCliente.Text))
                 {
                     lblMensaje.Text = "Por favor, completá todos los campos antes de continuar.";
                     lblMensaje.ForeColor = System.Drawing.Color.Red;
                     return;
                 }
+
                 ClienteNegocio negocio = new ClienteNegocio();
-                Cliente nuevo = new Cliente();
-
-                nuevo.Nombre = TxtNombreCliente.Text;
-                nuevo.Apellido = TxtApellidoCliente.Text;
-                nuevo.DNI = TxtDNICliente.Text;
-                nuevo.Email = TxtEmailCliente.Text;
-
-
-                if (Request.QueryString["IdCliente"] != null)
+                Cliente nuevo = new Cliente
                 {
-                    nuevo.ClientesId = int.Parse(Request.QueryString["IdCliente"].ToString());
+                    Nombre = TxtNombreCliente.Text,
+                    Apellido = TxtApellidoCliente.Text,
+                    DNI = TxtDNICliente.Text,
+                    Email = TxtEmailCliente.Text
+                };
+
+                // Revisamos si hay un cliente seleccionado en Session
+                if (Session["ClienteSeleccionado"] != null)
+                {
+                    Cliente seleccionado = (Cliente)Session["ClienteSeleccionado"];
+                    nuevo.ClientesId = seleccionado.ClientesId;
                     negocio.modificarCliente(nuevo);
+
                     ScriptManager.RegisterStartupScript(this, this.GetType(),
-                 "alert",
-                 "alert('Cliente Modificado correctamente'); window.location='clientes.aspx';",
-                 true);
+                        "alert",
+                        "alert('Cliente Modificado correctamente'); window.location='clientes.aspx';",
+                        true);
+
+                    Session.Remove("ClienteSeleccionado"); // limpiamos la Session
                 }
                 else
                 {
                     negocio.agregar(nuevo);
                     ScriptManager.RegisterStartupScript(this, this.GetType(),
-                   "alert",
-                   "alert('Cliente agregado correctamente'); window.location='clientes.aspx';",
-                   true);
-
-
+                        "alert",
+                        "alert('Cliente agregado correctamente'); window.location='clientes.aspx';",
+                        true);
                 }
             }
             catch (Exception ex)
             {
-
-                throw ex;
+                lblMensaje.Text = "Ocurrió un error: " + ex.Message;
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
             }
-
-
         }
+
         protected void btnCancelarCliente_Click(object sender, EventArgs e)
         {
             Response.Redirect("Clientes.aspx");

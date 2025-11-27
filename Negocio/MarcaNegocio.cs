@@ -120,15 +120,16 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public void darAlta(int id)
+        public void Estado(int id , bool activo = false)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
 
 
-                datos.setearConsulta("update Marcas set Activo = 1 where Id = @IdMarca;");
+                datos.setearConsulta("update Marcas set Activo = @activo where Id = @IdMarca;");
                 datos.setearParametro("@IdMarca", id);
+                datos.setearParametro("@activo", activo);
 
                 datos.ejecutarAccion();
 

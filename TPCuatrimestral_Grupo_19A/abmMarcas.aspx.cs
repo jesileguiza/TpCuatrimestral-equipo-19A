@@ -40,10 +40,15 @@ namespace TPCuatrimestral_Grupo_19A
                             {
                                 Marca seleccionado = lista[0];
 
+                                //guardo categoria seleccionado
+
+                                Session.Add("MarcaSeleccionado", seleccionado);
 
                                 TxtNombreMarca.Text = seleccionado.Descripcion;
 
-
+                                //configurar acciones
+                                if (!seleccionado.Activo)
+                                    btnInactivar.Text = "Reactivar";
                             }
                             else
                             {
@@ -104,6 +109,41 @@ namespace TPCuatrimestral_Grupo_19A
         protected void btnCancelarMarca_Click(object sender, EventArgs e)
         {
             Response.Redirect("Marcas.aspx");
+        }
+
+        protected void btnInactivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MarcaNegocio negocio = new MarcaNegocio();
+                Marca  seleccionado = (Marca)Session["MarcaSeleccionado"];
+                bool nuevoEstado = !seleccionado.Activo;
+
+
+                negocio.Estado(int.Parse(Request.QueryString["IdMarca"].ToString()), nuevoEstado);
+
+                string mensaje = nuevoEstado ?
+                "La Marca fue reactivada correctamente" :
+                "La Marca fue inactivada correctamente";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   $"alert('{mensaje}'); window.location='Marcas.aspx';",
+                   true);
+
+
+
+
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

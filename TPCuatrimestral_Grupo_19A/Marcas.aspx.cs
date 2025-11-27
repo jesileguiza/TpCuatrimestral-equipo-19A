@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,6 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        protected void dgvMarcas_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int idSeleccionado = Convert.ToInt32(dgvMarcas.SelectedDataKey.Value);
-            ViewState["IdSeleccionado"] = idSeleccionado;
-        }
-
         private void CargarMarcas()
         {
             MarcaNegocio negocio = new MarcaNegocio();
@@ -56,70 +51,56 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        protected void btnAgregarMarca_Click(object sender, EventArgs e)
+        protected void dgvMarcas_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            int IdMarca = Convert.ToInt32(dgvMarcas.SelectedDataKey.Value);
+            Response.Redirect("abmMarcas.aspx?IdMarca=" + IdMarca);
+        }
+
+        protected void btnAgregarMarca_Click1(object sender, EventArgs e)
         {
             Response.Redirect("abmMarcas.aspx");
         }
 
-        protected void btnBuscarMarca_Click(object sender, EventArgs e)
+        protected void Filtro_TextChanged(object sender, EventArgs e)
         {
-            //string filtro = txtBuscar.Text.Trim().ToLower();
-            //  var filtrados = listaclientes
-            //     .Where(c => c.Nombre.ToLower().Contains(filtro) || c.DNI.Contains(filtro))
-            //    .ToList();
+            string filtro = Filtro.Text.Trim();
+            string columna = ddlFiltro.SelectedValue;
 
-            // dgvClientes.DataSource = filtrados;
-            //  dgvClientes.DataBind();
+            MarcaNegocio negocio = new MarcaNegocio();
+ 
+            List<Marca> lista = negocio.Listar();
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                switch (columna)
+                {
+
+                    case "IdMarca":
+                        lista = lista.FindAll(x => x.IdMarca.ToString().Contains(filtro));
+                        break;
+
+                    case "Descripcion":
+                        lista = lista.FindAll(x => x.Descripcion.ToUpper().Contains(filtro.ToUpper()));
+                        break;
+
+                }
+
+            }
+
+            dgvMarcas.DataSource = lista;
+            dgvMarcas.DataBind();
+
         }
 
-        protected void btnDarAltaMarca_Click(object sender, EventArgs e)
+        protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            if (ViewState["IdSeleccionado"] == null)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná una marca antes de dar de alta.');", true);
-                return;
-            }
+            Filtro.Text = "";
+            ddlFiltro.SelectedIndex = 0;
 
-            int id = (int)ViewState["IdSeleccionado"];
-
-            try
-            {
-                MarcaNegocio negocio = new MarcaNegocio();
-                negocio.darAlta(id);
-
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Marca dada de alta correctamente.');", true);
-
-                CargarMarcas();
-            }
-            catch (Exception ex)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al dar de alta: {ex.Message}');", true);
-            }
-        }
-
-        protected void btnEliminarMarca_Click(object sender, EventArgs e)
-        {
-            if (ViewState["IdSeleccionado"] == null)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná una marca antes de eliminar.');", true);
-                return;
-            }
-
-            int id = (int)ViewState["IdSeleccionado"];
-
-            try
-            {
-                MarcaNegocio negocio = new MarcaNegocio();
-                negocio.eliminar(id);
-
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Marca eliminada correctamente.');", true);
-
-                CargarMarcas(); // recarga la grilla
-            }
-            catch (Exception ex)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al eliminar: {ex.Message}');", true);
-            }
+            MarcaNegocio negocio= new MarcaNegocio();
+            dgvMarcas.DataSource = negocio.Listar();
+            dgvMarcas.DataBind();
         }
     }
 }

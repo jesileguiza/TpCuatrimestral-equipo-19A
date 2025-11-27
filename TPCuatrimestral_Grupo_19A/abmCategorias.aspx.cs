@@ -151,12 +151,5 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-
-
-
-
-        }
     }
 }

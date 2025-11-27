@@ -15,40 +15,31 @@ namespace TPCuatrimestral_Grupo_19A
     {
 
         /// <summary>
-        /// Control btnAgregarMarca.
+        /// Control ddlFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarMarca;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltro;
 
         /// <summary>
-        /// Control btnModificarMarca.
+        /// Control Filtro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificarMarca;
+        protected global::System.Web.UI.WebControls.TextBox Filtro;
 
         /// <summary>
-        /// Control txtBuscarMarca.
+        /// Control btnLimpiar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarMarca;
-
-        /// <summary>
-        /// Control btnBuscarMarca.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarMarca;
+        protected global::System.Web.UI.WebControls.Button btnLimpiar;
 
         /// <summary>
         /// Control dgvMarcas.
@@ -60,21 +51,12 @@ namespace TPCuatrimestral_Grupo_19A
         protected global::System.Web.UI.WebControls.GridView dgvMarcas;
 
         /// <summary>
-        /// Control btnEliminarMarca.
+        /// Control btnAgregarMarca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminarMarca;
-
-        /// <summary>
-        /// Control btnDarAltaMarca.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDarAltaMarca;
+        protected global::System.Web.UI.WebControls.Button btnAgregarMarca;
     }
 }

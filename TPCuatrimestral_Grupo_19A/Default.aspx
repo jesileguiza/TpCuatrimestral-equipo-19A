@@ -14,7 +14,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: url("Imagen/fondo login.png") no-repeat center center fixed;
+        background: url("Imagen/fondo-celeste.jpg") no-repeat center center fixed;
         background-size: cover; 
     }
 

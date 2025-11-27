@@ -81,10 +81,11 @@
     <Content Include="Gestion_Ventas.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Imagen\cotillon.jpg" />
-    <Content Include="Imagen\fondo login.png" />
+    <Content Include="Imagen\fondo-celeste.jpg" />
     <Content Include="Imagen\jugueteria.jpg" />
     <Content Include="Imagen\libreria.jpg" />
     <Content Include="Imagen\papelera.png" />
+    <Content Include="Imagen\pexels-adrien-olichon-1257089-2387793.jpg" />
     <Content Include="Imagen\Productos\Nievereymomo.jpg" />
     <Content Include="Imagen\reposteria.jpg" />
     <Content Include="Marcas.aspx" />

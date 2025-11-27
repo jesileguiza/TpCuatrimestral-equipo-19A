@@ -108,12 +108,18 @@ namespace TPCuatrimestral_Grupo_19A
                 {
                     nuevo.IdProveedor = int.Parse(Request.QueryString["IdProveedor"].ToString());
                     negocio.modificarProveedor(nuevo);
-                    lblMensaje.Text = "Proveedor Modificado correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                "alert",
+                "alert('Proveedor modificado correctamente'); window.location='Proveedores.aspx';",
+                true);
                 }
                 else
                 {
                     negocio.agregar(nuevo);
-                    lblMensaje.Text = "Proveedor agregado correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                     "alert",
+                      "alert('Proveedor agregado correctamente'); window.location='Proveedores.aspx';",
+                     true);
 
                 }
             }

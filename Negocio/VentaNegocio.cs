@@ -1,125 +1,124 @@
 ﻿using Dominio;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace Negocio
 {
     public class VentaNegocio
     {
-        public List<Venta> Listar() {
+        // Lista ventas
+        public List<Venta> Listar()
+        {
             List<Venta> lista = new List<Venta>();
-            AccesoDatos datos = new AccesoDatos();
-        try{
-                datos.setearConsulta(@"SELECT V.VentaId, V.ClienteId, 
-                                     C.Nombre AS ClienteNombre, C.Email,
-                                     C.DNI, V.FechaVenta, V.Total
-                                     FROM Ventas V
-                                     INNER JOIN Clientes C ON V.ClienteId = C.ClientesId");
-                datos.ejecutarLectura();
-
-                while (datos.Lector.Read())
+            using (AccesoDatos datos = new AccesoDatos())
+            {
+                try
                 {
-                    Venta v = new Venta
-                    {
-                        VentaId = (int)datos.Lector["VentaId"],
-                        ClienteId = (int)datos.Lector["ClienteId"],
-                        ClienteNombre = (string)datos.Lector["ClienteNombre"],
-                        DNI = (string)datos.Lector["DNI"].ToString(),
-                        Email = (string)datos.Lector["Email"].ToString(),
-                        Fecha = (DateTime)datos.Lector["FechaVenta"],
-                        Total = (decimal)datos.Lector["Total"]
-                    };
-                    lista.Add(v);
-                }
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+                    datos.setearConsulta(@"SELECT V.VentaId, V.ClienteId, 
+                                          C.Nombre AS ClienteNombre, C.Email,
+                                          C.DNI, V.FechaVenta, V.Total
+                                          FROM Ventas V
+                                          INNER JOIN Clientes C ON V.ClienteId = C.ClientesId");
+                    datos.ejecutarLectura();
 
+                    while (datos.Lector.Read())
+                    {
+                        Venta v = new Venta
+                        {
+                            VentaId = (int)datos.Lector["VentaId"],
+                            ClienteId = (int)datos.Lector["ClienteId"],
+                            ClienteNombre = datos.Lector["ClienteNombre"].ToString(),
+                            DNI = datos.Lector["DNI"].ToString(),
+                            Email = datos.Lector["Email"].ToString(),
+                            Fecha = (DateTime)datos.Lector["FechaVenta"],
+                            Total = (decimal)datos.Lector["Total"]
+                        };
+                        lista.Add(v);
+                    }
+                    return lista;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
 
-
+        // Guardar venta simple (solo tabla Ventas)
         public void Agregar(Venta venta)
         {
-            AccesoDatos datos = new AccesoDatos();
-            try
+            using (AccesoDatos datos = new AccesoDatos())
             {
-                datos.setearConsulta("INSERT INTO Ventas (ClienteId, FechaVenta, Total) VALUES (@ClienteId, @FechaVenta, @Total)");
-                datos.setearParametro("@ClienteId", venta.ClienteId);
-                //datos.setearParametro("@DNI", venta.DNI);
-                //datos.setearParametro("@Email", venta.Email);
-                datos.setearParametro("@FechaVenta", venta.Fecha);
-                datos.setearParametro("@Total", venta.Total);
-                datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
-
-
-        public int AgregarVentaConDetalles(Venta venta)
-        {
-            AccesoDatos datos = new AccesoDatos();
-
-            try
-            {
-                datos.setearConsulta(
-                    "INSERT INTO Ventas (ClienteId, FechaVenta, Total) OUTPUT INSERTED.VentaId " +
-                    "VALUES (@ClienteId, @Fecha, @Total)");
-
-                datos.setearParametro("@ClienteId", venta.ClienteId);
-                datos.setearParametro("@Fecha", venta.Fecha);
-                datos.setearParametro("@Total", venta.Total);
-
-                int idVenta = (int)datos.ejecutarScalar();
-
-                foreach (var d in venta.Detalles)
+                try
                 {
-                    datos.setearConsulta(
-                        "INSERT INTO VentaDetalle (VentaId, ProductoId, Cantidad, PrecioUnitario) " +
-                        "VALUES (@VentaId, @ProductoId, @Cantidad, @Precio)");
+                    datos.setearConsulta("INSERT INTO Ventas (ClienteId, FechaVenta, Total) VALUES (@ClienteId, @FechaVenta, @Total)");
+                    datos.setearParametro("@ClienteId", venta.ClienteId);
+                    datos.setearParametro("@FechaVenta", venta.Fecha);
+                    datos.setearParametro("@Total", venta.Total);
 
-                    datos.setearParametro("@VentaId", idVenta);
-                    datos.setearParametro("@ProductoId", d.ProductoId);
-                    datos.setearParametro("@Cantidad", d.Cantidad);
-                    datos.setearParametro("@Precio", d.PrecioUnitario);
-
-                    datos.ejecutarAccion();
-
-                    datos.setearConsulta(
-                        "UPDATE Productos SET Stock = Stock - @cantidad WHERE ProductoId = @id");
-                    datos.setearParametro("@cantidad", d.Cantidad);
-                    datos.setearParametro("@id", d.ProductoId);
                     datos.ejecutarAccion();
                 }
-
-                return idVenta;
-            }
-            finally
-            {
-                datos.cerrarConexion();
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
 
+        // Guardar venta con detalles y stock
+        public int AgregarVentaConDetalles(Venta venta)
+        {
+            int idVenta;
 
+            string connectionString = "server=.\\SQLEXPRESS; database=TPCuatri_DB ; integrated security=true";
 
+            using (SqlConnection conexion = new SqlConnection(connectionString))
+            {
+                conexion.Open();
+
+                // Insert Venta
+                using (SqlCommand cmd = new SqlCommand(
+                    "INSERT INTO Ventas (ClienteId, FechaVenta, Total) OUTPUT INSERTED.VentaId VALUES (@ClienteId, @Fecha, @Total)", conexion))
+                {
+                    cmd.Parameters.AddWithValue("@ClienteId", venta.ClienteId);
+                    cmd.Parameters.AddWithValue("@Fecha", venta.Fecha);
+                    cmd.Parameters.AddWithValue("@Total", venta.Total);
+
+                    idVenta = (int)cmd.ExecuteScalar();
+                }
+
+                // Insert Detalles
+                foreach (var d in venta.Detalles)
+                {
+                    using (SqlCommand cmd = new SqlCommand(
+                        "INSERT INTO VentaDetalle (VentaId, ProductoId, Cantidad, PrecioUnitario, Ganancia, Subtotal) " +
+                        "VALUES (@VentaId, @ProductoId, @Cantidad, @Precio, @Ganancia, @Subtotal)", conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@VentaId", idVenta);
+                        cmd.Parameters.AddWithValue("@ProductoId", d.ProductoId);
+                        cmd.Parameters.AddWithValue("@Cantidad", d.Cantidad);
+                        cmd.Parameters.AddWithValue("@Precio", d.PrecioUnitario);
+                        cmd.Parameters.AddWithValue("@Ganancia", d.Ganancia);
+                        cmd.Parameters.AddWithValue("@Subtotal", d.Subtotal);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Actualizar stock
+                    using (SqlCommand cmd = new SqlCommand(
+                        "UPDATE Productos SET Stock = Stock - @cantidad WHERE ProductoId = @id", conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@cantidad", d.Cantidad);
+                        cmd.Parameters.AddWithValue("@id", d.ProductoId);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                conexion.Close();
+            }
+
+            return idVenta;
+        }
     }
-
-
-    }
-
+}

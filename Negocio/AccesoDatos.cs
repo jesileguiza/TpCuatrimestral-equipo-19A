@@ -1,41 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Negocio
 {
-    public class AccesoDatos
+    public class AccesoDatos : IDisposable
     {
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lector;
 
-        public SqlDataReader Lector
-        {
-            get { return lector; }
-        }
+        public SqlDataReader Lector => lector;
 
         public AccesoDatos()
         {
             conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TPCuatri_DB ; integrated security=true");
             comando = new SqlCommand();
-
         }
 
         public void setearConsulta(string consulta)
         {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
-
         }
 
         public void ejecutarLectura()
         {
             comando.Connection = conexion;
-
             try
             {
                 conexion.Open();
@@ -43,11 +33,8 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-
-
         }
 
         public object ejecutarScalar()
@@ -72,39 +59,43 @@ namespace Negocio
 
         public void ejecutarAccion()
         {
-
-
             comando.Connection = conexion;
-
             try
             {
                 conexion.Open();
                 comando.ExecuteNonQuery();
-
-
             }
             catch (Exception ex)
             {
-
                 throw ex;
+            }
+            finally
+            {
+                conexion.Close();
             }
         }
 
         public void setearParametro(string nombre, object valor)
         {
-
-            comando.Parameters.AddWithValue(nombre, valor);
-
+            comando.Parameters.AddWithValue(nombre, valor ?? DBNull.Value);
         }
 
         public void cerrarConexion()
         {
-            if (lector != null)
+            if (lector != null && !lector.IsClosed)
                 lector.Close();
-            conexion.Close();
 
+            if (conexion.State != System.Data.ConnectionState.Closed)
+                conexion.Close();
         }
 
+        public void Dispose()
+        {
+            cerrarConexion();
+            if (comando != null)
+                comando.Dispose();
+            if (conexion != null)
+                conexion.Dispose();
+        }
     }
-
 }

@@ -10,14 +10,12 @@ namespace TPCuatrimestral_Grupo_19A
 {
     public partial class abmVentas : System.Web.UI.Page
     {
-
         private List<VentaDetalle> ListaDetalles
         {
             get
             {
                 if (Session["DetallesVenta"] == null)
                     Session["DetallesVenta"] = new List<VentaDetalle>();
-
                 return (List<VentaDetalle>)Session["DetallesVenta"];
             }
         }
@@ -29,59 +27,28 @@ namespace TPCuatrimestral_Grupo_19A
                 CargarClientes();
                 CargarProductos();
                 CargarProximoIdVenta();
-
-                ///borrar
-                ProductoNegocio negocio = new ProductoNegocio();
-                var listaProductos = negocio.listar();
-
-                // Mostrar la cantidad de productos encontrados
-                lblMensaje.Text = "Productos encontrados: " + listaProductos.Count;
-
-                // Mostrar nombres de productos encontrados (para debug)
-                if (listaProductos.Count > 0)
-                {
-                    string nombres = string.Join(", ", listaProductos.Select(p => p.Nombre));
-                    lblMensaje.Text += "<br/>Productos: " + nombres;
-                }
-
-                // Asignar al DropDownList solo si hay productos
-                if (listaProductos.Count > 0)
-                {
-                    ddlProducto.DataSource = listaProductos;
-                    ddlProducto.DataTextField = "Nombre";
-                    ddlProducto.DataValueField = "IdProducto"; // recuerda que en tu clase Producto es IdProducto
-                    ddlProducto.DataBind();
-                    ddlProducto.Items.Insert(0, new ListItem("--Seleccione--", "")); // opción inicial
-                }
-                else
-                {
-                    ddlProducto.Items.Clear();
-                    ddlProducto.Items.Add(new ListItem("No hay productos disponibles", ""));
-                }
-                ///borrar
-
-                string ventaId = Request.QueryString["VentaId"];
-                if (!string.IsNullOrEmpty(ventaId))
-                {
-                    CargarVenta(int.Parse(ventaId));
-                }
+                LimpiarMensaje();
             }
         }
+
+        private void LimpiarMensaje() => lblMensaje.Text = "";
 
         private void CargarClientes()
         {
             try
             {
-                AccesoDatos datos = new AccesoDatos();
-                datos.setearConsulta("SELECT ClientesId, Nombre FROM Clientes");
-                datos.ejecutarLectura();
+                using (AccesoDatos datos = new AccesoDatos())
+                {
+                    datos.setearConsulta("SELECT ClientesId, Nombre FROM Clientes");
+                    datos.ejecutarLectura();
 
-                ddlCliente.DataSource = datos.Lector;
-                ddlCliente.DataValueField = "ClientesId";
-                ddlCliente.DataTextField = "Nombre";
-                ddlCliente.DataBind();
-
-                datos.cerrarConexion();
+                    ddlCliente.DataSource = datos.Lector;
+                    ddlCliente.DataValueField = "ClientesId";
+                    ddlCliente.DataTextField = "Nombre";
+                    ddlCliente.DataBind();
+                    ddlCliente.Items.Insert(0, new ListItem("--Seleccione--", ""));
+                    datos.cerrarConexion();
+                }
             }
             catch (Exception ex)
             {
@@ -96,20 +63,23 @@ namespace TPCuatrimestral_Grupo_19A
             ddlProducto.DataTextField = "Nombre";
             ddlProducto.DataValueField = "IdProducto";
             ddlProducto.DataBind();
+            ddlProducto.Items.Insert(0, new ListItem("--Seleccione--", ""));
         }
 
         private void CargarProximoIdVenta()
         {
             try
             {
-                AccesoDatos datos = new AccesoDatos();
-                datos.setearConsulta("SELECT ISNULL(MAX(VentaId), 0) + 1 AS ProximoId FROM Ventas");
-                datos.ejecutarLectura();
+                using (AccesoDatos datos = new AccesoDatos())
+                {
+                    datos.setearConsulta("SELECT ISNULL(MAX(VentaId),0)+1 AS ProximoId FROM Ventas");
+                    datos.ejecutarLectura();
 
-                if (datos.Lector.Read())
-                    TxtVentaId.Text = datos.Lector["ProximoId"].ToString();
+                    if (datos.Lector.Read())
+                        TxtVentaId.Text = datos.Lector["ProximoId"].ToString();
 
-                datos.cerrarConexion();
+                    datos.cerrarConexion();
+                }
             }
             catch (Exception ex)
             {
@@ -117,53 +87,56 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        private void CargarVenta(int ventaId)
+        protected void btnAgregarDetalle_Click(object sender, EventArgs e)
         {
             try
             {
-                VentaNegocio negocio = new VentaNegocio();
-                Venta v = negocio.Listar().Find(x => x.VentaId == ventaId);
+                ProductoNegocio negocio = new ProductoNegocio();
+                if (ddlProducto.SelectedValue == "") return;
 
-                if (v != null)
+                int id = int.Parse(ddlProducto.SelectedValue);
+                int cant = int.Parse(txtCantidad.Text);
+
+                var producto = negocio.listar().First(p => p.IdProducto == id);
+
+                if (cant > producto.Stock)
                 {
-                    TxtVentaId.Text = v.VentaId.ToString();
-                    ddlCliente.SelectedValue = v.ClienteId.ToString();
-                    TxtDNI.Text = v.DNI;
-                    TxtEmail.Text = v.Email;
-                    TxtFecha.Text = v.Fecha.ToString("yyyy-MM-dd");
-                    TxtTotal.Text = v.Total.ToString();
+                    lblMensaje.Text = "No hay stock suficiente.";
+                    return;
                 }
+
+                decimal ganancia = 30; // 30%
+                decimal precioVenta = producto.Precio + (producto.Precio * (ganancia / 100));
+                decimal subtotal = precioVenta * cant;
+
+                VentaDetalle det = new VentaDetalle
+                {
+                    ProductoId = producto.IdProducto,
+                    Nombre = producto.Nombre,
+                    Cantidad = cant,
+                    PrecioUnitario = producto.Precio,
+                    Ganancia = ganancia,
+                    Subtotal = subtotal
+                };
+
+                ListaDetalles.Add(det);
+                ActualizarGrillaYTotal();
             }
             catch (Exception ex)
             {
-                lblMensaje.Text = "Error cargando venta: " + ex.Message;
+                lblMensaje.Text = "Error agregando producto: " + ex.Message;
             }
         }
 
-        /* protected void btnAgregar_Click(object sender, EventArgs e)
-         {
-             try
-             {
-                 VentaNegocio negocio = new VentaNegocio();
-                 Venta v = new Venta
-                 {
-                     ClienteId = int.Parse(ddlCliente.SelectedValue),
-                     Fecha = DateTime.Parse(TxtFecha.Text),
-                     Total = decimal.Parse(TxtTotal.Text),
-                     DNI = TxtDNI.Text,
-                     Email = TxtEmail.Text
-                 };
+        private void ActualizarGrillaYTotal()
+        {
+            gvDetalles.DataSource = ListaDetalles;
+            gvDetalles.DataBind();
 
-                 negocio.Agregar(v);
-
-                 ClientScript.RegisterStartupScript(this.GetType(), "VentaExitosa",
-                     "alert('Venta registrada correctamente'); window.location='Gestion_Ventas.aspx';", true);
-             }
-             catch (Exception ex)
-             {
-                 lblMensaje.Text = "Error al agregar la venta: " + ex.Message;
-             }
-         }*/
+            decimal total = ListaDetalles.Sum(x => x.Subtotal);
+            total = total * 1.30m; // aplicar ganancia global
+            TxtTotal.Text = total.ToString("0.00");
+        }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -188,6 +161,7 @@ namespace TPCuatrimestral_Grupo_19A
                 VentaNegocio negocio = new VentaNegocio();
                 negocio.AgregarVentaConDetalles(v);
 
+                ListaDetalles.Clear();
                 Session["DetallesVenta"] = null;
 
                 ClientScript.RegisterStartupScript(this.GetType(), "ok",
@@ -196,41 +170,6 @@ namespace TPCuatrimestral_Grupo_19A
             catch (Exception ex)
             {
                 lblMensaje.Text = "Error al guardar la venta: " + ex.Message;
-            }
-        }
-        
-
-        protected void btnAgregarDetalle_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ProductoNegocio negocio = new ProductoNegocio();
-                int id = int.Parse(ddlProducto.SelectedValue);
-                int cant = int.Parse(txtCantidad.Text);
-
-                var producto = negocio.listar().First(p => p.IdProducto == id);
-
-                if (cant > producto.Stock)
-                {
-                    lblMensaje.Text = "No hay stock suficiente.";
-                    return;
-                }
-
-                VentaDetalle det = new VentaDetalle
-                {
-                    ProductoId = producto.IdProducto,
-                    Nombre = producto.Nombre,
-                    Cantidad = cant,
-                    PrecioUnitario = producto.Precio,
-                };
-
-                ListaDetalles.Add(det);
-
-                ActualizarGrillaYTotal();
-            }
-            catch (Exception ex)
-            {
-                lblMensaje.Text = "Error agregando producto: " + ex.Message;
             }
         }
 
@@ -244,52 +183,27 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        private void ActualizarGrillaYTotal()
-        {
-            gvDetalles.DataSource = ListaDetalles;
-            gvDetalles.DataBind();
-
-            decimal total = ListaDetalles.Sum(x => x.Subtotal);
-
-            // Aplica aumento del 30%
-            total = total * 1.30m;
-
-            TxtTotal.Text = total.ToString("0.00");
-        }
-
-        protected void btnCancelar_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Gestion_Ventas.aspx", false);
-        }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnNuevoCliente_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("abmCliente.aspx?volverA=Ventas");
-        }
-
         protected void ddlCliente_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
+                if (ddlCliente.SelectedValue == "") return;
+
                 int idCliente = int.Parse(ddlCliente.SelectedValue);
-
-                AccesoDatos datos = new AccesoDatos();
-                datos.setearConsulta("SELECT DNI, Email FROM Clientes WHERE ClientesId = @id");
-                datos.setearParametro("@id", idCliente);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read())
+                using (AccesoDatos datos = new AccesoDatos())
                 {
-                    TxtDNI.Text = datos.Lector["DNI"].ToString();
-                    TxtEmail.Text = datos.Lector["Email"].ToString();
-                }
+                    datos.setearConsulta("SELECT DNI, Email FROM Clientes WHERE ClientesId = @id");
+                    datos.setearParametro("@id", idCliente);
+                    datos.ejecutarLectura();
 
-                datos.cerrarConexion();
+                    if (datos.Lector.Read())
+                    {
+                        TxtDNI.Text = datos.Lector["DNI"].ToString();
+                        TxtEmail.Text = datos.Lector["Email"].ToString();
+                    }
+
+                    datos.cerrarConexion();
+                }
             }
             catch (Exception ex)
             {
@@ -297,13 +211,39 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
+        // ✅ Nuevo método agregado para evitar el error CS1061
+        protected void btnNuevoCliente_Click(object sender, EventArgs e)
+        {
+            // Redirige a la página de ABM de clientes, puede ajustar el query string si quieres volver a ventas
+            Response.Redirect("abmClientes.aspx?volverA=Ventas");
+        }
 
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            // Limpiar todo
+            ListaDetalles.Clear();
+            Session["DetallesVenta"] = null;
+            Response.Redirect("Gestion_Ventas.aspx");
+        }
 
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    int ventaId = int.Parse(TxtVentaId.Text);
+            //    VentaNegocio negocio = new VentaNegocio();
+            //    negocio.Eliminar(ventaId);
 
+            //    ListaDetalles.Clear();
+            //    Session["DetallesVenta"] = null;
 
-
-
-
-
+            //    ClientScript.RegisterStartupScript(this.GetType(), "ok",
+            //        "alert('Venta eliminada correctamente'); window.location='Gestion_Ventas.aspx';", true);
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblMensaje.Text = "Error al eliminar la venta: " + ex.Message;
+            //}
+        }
     }
 }

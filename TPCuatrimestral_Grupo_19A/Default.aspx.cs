@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+﻿using Negocio;
+using System;
 using System.Data.SqlClient;
-using Negocio;
-using System.Collections.Specialized;
+using System.Linq;
+using System.Web.UI;
 
 namespace TPCuatrimestral_Grupo_19A
 {
@@ -22,8 +18,6 @@ namespace TPCuatrimestral_Grupo_19A
             string usuario = TxtUsuario.Text.Trim();
             string contrasena = TxtContra.Text.Trim();
 
-            AccesoDatos datos = new AccesoDatos();
-
             string[] peligrosos = { "<", ">", "'", "\"", ";", "--" };
 
             if (peligrosos.Any(p => usuario.Contains(p)))
@@ -32,11 +26,8 @@ namespace TPCuatrimestral_Grupo_19A
                 return;
             }
 
-
-
             if (ValidarCredenciales(usuario, contrasena))
             {
-
                 Response.Redirect("Gestion_Ventas.aspx");
             }
             else
@@ -45,7 +36,6 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-
         public void MostrarError(string mensaje)
         {
             lblMensaje.Text = mensaje;
@@ -53,68 +43,55 @@ namespace TPCuatrimestral_Grupo_19A
             lblMensaje.Visible = true;
         }
 
-
         public bool ValidarCredenciales(string User, string Pass)
         {
-            AccesoDatos datos = new AccesoDatos();
-
-
             if (Pass.Length < 4)
             {
                 MostrarError("La contraseña debe tener al menos 4 caracteres.");
                 return false;
             }
 
-            if (User.Contains("'") || User.Contains(";"))
-            {
-                MostrarError("Usuario inválido.");
-                return false;
-            }
-            if (User.Contains("<") || User.Contains(">"))
-            {
-                MostrarError("Usuario inválido.");
-                return false;
-            }
-
-
-
             try
             {
-                datos.setearConsulta("SELECT Usuario, Password, Rol FROM Usuario WHERE Usuario = @Usuario AND Password = @Password");
-                datos.setearParametro("@Usuario", User);
-                datos.setearParametro("@Password", Pass);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read())
+                using (SqlConnection conexion = new SqlConnection("server=.\\SQLEXPRESS; database=TPCuatri_DB; integrated security=true"))
                 {
-                    string passwordReal = datos.Lector["Password"].ToString().Trim();
-                    string rol = datos.Lector["Rol"].ToString();
+                    conexion.Open();
 
-                    if (passwordReal == Pass.Trim())
+                    using (SqlCommand cmd = new SqlCommand("SELECT Password, Rol FROM Usuario WHERE Usuario = @Usuario", conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@Usuario", User);
 
-                        Session["RolUsuario"] = rol;
+                        using (SqlDataReader lector = cmd.ExecuteReader())
+                        {
+                            if (lector.Read())
+                            {
+                                string passwordReal = lector["Password"].ToString().Trim();
+                                string rol = lector["Rol"].ToString();
 
-                    return true;
-
-                }
-                else
-                {
-                    // Usuario no encontrado
-                    return false;
+                                if (passwordReal == Pass.Trim())
+                                {
+                                    Session["RolUsuario"] = rol;
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MostrarError("Error de conexión: " + ex.Message);
                 return false;
             }
-            finally
-            {
-                datos.cerrarConexion();
-            }
         }
+
     }
-
-
 }
-
-

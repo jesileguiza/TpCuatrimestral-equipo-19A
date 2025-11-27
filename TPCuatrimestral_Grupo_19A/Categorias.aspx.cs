@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +31,6 @@ namespace TPCuatrimestral_Grupo_19A
 
         }
 
-        protected void dgvCategorias_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int idSeleccionado = Convert.ToInt32(dgvCategorias.SelectedDataKey.Value);
-            ViewState["IdSeleccionado"] = idSeleccionado;
-        }
-
         private void CargarCategorias()
         {
             CategoriaNegocio negocio = new CategoriaNegocio();
@@ -57,71 +52,55 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        protected void btnAgregarCategoria_Click(object sender, EventArgs e)
+        protected void btnLimpiar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("abmCategorias.aspx");
+            Filtro.Text = "";
+            ddlFiltro.SelectedIndex = 0;
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            dgvCategorias.DataSource = negocio.Listar();
+            dgvCategorias.DataBind();
         }
 
-        protected void btnBuscarCategoria_Click(object sender, EventArgs e)
+        protected void dgvCategorias_SelectedIndexChanged1(object sender, EventArgs e)
         {
-            //string filtro = txtBuscar.Text.Trim().ToLower();
-            //  var filtrados = listaclientes
-            //     .Where(c => c.Nombre.ToLower().Contains(filtro) || c.DNI.Contains(filtro))
-            //    .ToList();
-
-            // dgvClientes.DataSource = filtrados;
-            //  dgvClientes.DataBind();
+            int IdCategoria = Convert.ToInt32(dgvCategorias.SelectedDataKey.Value);
+            Response.Redirect("abmCategorias.aspx?IdCategoria=" + IdCategoria );
         }
 
-        protected void btnDarAltaCategoria_Click(object sender, EventArgs e)
+        protected void btnAgregarCategoria_Click1(object sender, EventArgs e)
         {
-            if (ViewState["IdSeleccionado"] == null)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná una categoria antes de dar de alta.');", true);
-                return;
-            }
-
-            int id = (int)ViewState["IdSeleccionado"];
-
-            try
-            {
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                negocio.darAlta(id);
-
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Categoria dada de alta correctamente.');", true);
-
-                CargarCategorias();
-            }
-            catch (Exception ex)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al dar de alta: {ex.Message}');", true);
-            }
+            Response.Redirect("abmCategorias.aspx", false);
         }
 
-        protected void btnEliminarCategoria_Click(object sender, EventArgs e)
+        protected void filtro_TextChanged(object sender, EventArgs e)
         {
-            if (ViewState["IdSeleccionado"] == null)
+            string filtro = Filtro.Text.Trim();
+            string columna =ddlFiltro.SelectedValue;
+
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            List<Categoria> lista = negocio.Listar();
+
+            if (!string.IsNullOrEmpty(filtro))
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná una categoria antes de eliminar.');", true);
-                return;
+                switch (columna)
+                {
+
+                    case "IdCategoria":
+                        lista = lista.FindAll(x => x.IdCategoria.ToString().Contains(filtro));
+                    break;
+
+                    case "Descripcion":
+                        lista = lista.FindAll(x => x.Descripcion.ToUpper().Contains(filtro.ToUpper()));
+                    break;
+
+                }
+
             }
 
-            int id = (int)ViewState["IdSeleccionado"];
+            dgvCategorias.DataSource = lista;
+            dgvCategorias.DataBind();
 
-            try
-            {
-                CategoriaNegocio negocio = new CategoriaNegocio();
-                negocio.eliminar(id);
-
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Categoria eliminada correctamente.');", true);
-
-                CargarCategorias(); // recarga la grilla
-            }
-            catch (Exception ex)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al eliminar: {ex.Message}');", true);
-            }
         }
-
     }
 }

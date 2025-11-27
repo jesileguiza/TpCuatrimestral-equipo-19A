@@ -200,11 +200,6 @@ namespace TPCuatrimestral_Grupo_19A
             Response.Redirect("Catalogo.aspx", false);
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            // Acción eliminar (a completar)
-        }
-
         protected void ddlCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
         }

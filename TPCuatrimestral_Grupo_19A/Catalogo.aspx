@@ -179,9 +179,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="header-container">
-        <h1>Catálogo de Productos</h1>
+        <h3>Catálogo de Productos</h3>
     </div>
-<div class="filtro-container">
+    
+<div class="filtro-container"> 
 
     <asp:Label Text="Filtrar por:" runat="server" />
 

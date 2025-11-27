@@ -40,10 +40,16 @@ namespace TPCuatrimestral_Grupo_19A
                             {
                                 Categoria seleccionado = lista[0];
 
+                                //guardo categoria seleccionado
+
+                                Session.Add("CategoriaSeleccionado", seleccionado);
+
 
                                 TxtNombreCategoria.Text = seleccionado.Descripcion;
 
-
+                                //configurar acciones
+                                if (!seleccionado.Activo)
+                                    btnInactivar.Text = "Reactivar";
                             }
                             else
                             {
@@ -86,12 +92,18 @@ namespace TPCuatrimestral_Grupo_19A
                 {
                     nuevo.IdCategoria = int.Parse(Request.QueryString["IdCategoria"].ToString());
                     negocio.modificarCategoria(nuevo);
-                    lblMensaje.Text = "Categoria Modificada correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                  "alert",
+                  "alert('Categoria Modificada correctamente'); window.location='categorias.aspx';",
+                  true);
                 }
                 else
                 {
                     negocio.agregar(nuevo);
-                    lblMensaje.Text = "Categoria agregada correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "alert",
+                    "alert('Categoria agregado correctamente'); window.location='categorias.aspx';",
+                    true);
 
                 }
             }
@@ -106,6 +118,45 @@ namespace TPCuatrimestral_Grupo_19A
         protected void btnCancelarCategoria_Click(object sender, EventArgs e)
         {
             Response.Redirect("Categorias.aspx");
+        }
+
+        protected void btnInactivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                CategoriaNegocio negocio = new CategoriaNegocio();
+                Categoria seleccionado = (Categoria)Session["CategoriaSeleccionado"];
+                bool nuevoEstado = !seleccionado.Activo;
+
+
+                negocio.Estado(int.Parse(Request.QueryString["IdCategoria"].ToString()), nuevoEstado);
+
+                string mensaje = nuevoEstado ?
+                "la categoria fue reactivada correctamente" :
+                "La categoria fue inactivada correctamente";
+
+                ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   $"alert('{mensaje}'); window.location='categorias.aspx';",
+                   true);
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+
+
+
+
         }
     }
 }

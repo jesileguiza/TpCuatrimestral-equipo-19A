@@ -1,57 +1,175 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterComercio.Master" AutoEventWireup="true" CodeBehind="Categorias.aspx.cs" Inherits="TPCuatrimestral_Grupo_19A.Categorias" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-            <style>
-    .contenedor {
-        width: 80%;
-        margin: 40px auto;
-        text-align: center;
-    }
+    <style>
+        body {
+            background-color: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
 
-    .botonera {
-        margin-bottom: 20px;
-    }
+        h1 {
+            color: #1a7d40;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            border-bottom: 3px solid #1a7d40;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
 
-    .botonera asp:single-button {
-        margin: 5px;
-    }
+        .header-container {
+            text-align: center;
+        }
 
-    .listbox {
-        width: 100%;
-        height: 250px;
-    }
-</style>
+        .filtro-container {
+            width: 90%;
+            max-width: 650px;
+            margin: 0 auto 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background-color: #e8f5e9;
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid #c5e1a5;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .input-search-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .icono-lupa {
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            transform: translateY(-50%);
+            color: #388e3c;
+            font-size: 1.1em;
+        }
+
+        .input-search {
+            width: 100%;
+            padding: 8px 10px 8px 30px;
+            border: 1px solid #a5d6a7;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .input-search:focus {
+            outline: none;
+            box-shadow: 0 0 6px #66bb6a;
+        }
+
+        .btn-accion, .btn-limpiar {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+        .btn-limpiar {
+            background-color: #ef5350;
+        }
+
+        .btn-limpiar:hover {
+            background-color: #d32f2f;
+        }
+
+        .btn-accion:hover {
+            background-color: #388e3c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .tabla-catalogo {
+            width: 90%;
+            max-width: 900px;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .tabla-catalogo th {
+            background-color: #388e3c;
+            color: white;
+            padding: 14px 10px;
+            text-align: left;
+            font-weight: 600;
+            border-right: 1px solid #4caf50;
+        }
+
+        .tabla-catalogo td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .tabla-catalogo tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        .tabla-catalogo tr:hover {
+            background-color: #e8f5e9;
+            cursor: pointer;
+        }
+    </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        
-    <div class="contenedor">
-    <h1>Gestión de Categorias</h1>
 
-    <div class="botonera">
-        <asp:Button ID="btnAgregarCategoria" runat="server" Text="Alta" CssClass="btn btn-success" OnClick="btnAgregarCategoria_Click" />
-        <asp:Button ID="btnModificarCategoria" runat="server" Text="Modificación" CssClass="btn btn-success" OnClick="btnModificarCategoria_Click" />
-        <asp:TextBox ID="txtBuscarCategoria" runat="server" placeholder="Buscar Categoria..." CssClass="form-control" Style="display: inline-block; width: 200px; margin-left: 10px;" />
-        <asp:Button ID="btnBuscarCategoria" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscarCategoria_Click" />
+
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div class="header-container">
+        <h3>Gestión de Categorías</h3>
+    </div>
+    <div class="filtro-container">
+
+         <asp:Label Text="Filtrar por:" runat="server" />   
+        <asp:DropDownList ID="ddlFiltro" runat="server" CssClass="dropdown-filtro">
+        <asp:ListItem Value="IdCategoria">IdCategoria</asp:ListItem>
+        <asp:ListItem Value="Descripcion">Descripcion</asp:ListItem>
+        </asp:DropDownList>  
+        
+        
+        <div class="input-search-wrapper">
+            <i class="fa fa-search icono-lupa"></i>
+            <asp:TextBox ID="Filtro" runat="server" CssClass="input-search" AutoPostBack="true" OnTextChanged="filtro_TextChanged"/>
+        </div>
+        <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn-limpiar" OnClick="btnLimpiar_Click" />
     </div>
 
-    <asp:GridView ID="dgvCategorias" runat="server"
-        AutoGenerateColumns="False"
-        DataKeyNames="IdCategoria"
-         CssClass="table table-striped table-bordered"
-        OnSelectedIndexChanged="dgvCategorias_SelectedIndexChanged">
+ 
+    <asp:GridView ID="dgvCategorias" runat="server" AutoGenerateColumns="False" CssClass="tabla-catalogo" DataKeyNames="IdCategoria" OnSelectedIndexChanged="dgvCategorias_SelectedIndexChanged1">
         <Columns>
-            <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="👆" />
-            <asp:BoundField DataField="IdCategoria" HeaderText="Id" />
-            <asp:BoundField DataField="Descripcion" HeaderText="Descripcion" />
-            <asp:CheckBoxField DataField="Activo" HeaderText="Estado" />
+            <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="👆" />
+            <asp:BoundField DataField="IdCategoria" HeaderText="ID" />
+            <asp:BoundField DataField="Descripcion" HeaderText="Descripción" />
+            <asp:CheckBoxField HeaderText="Activo" DataField="Activo" /> 
         </Columns>
+
     </asp:GridView>
 
-   <asp:Button ID="btnEliminarCategoria" runat="server" Text="Dar de baja categoria" CssClass="btn btn-danger mt-3"
-       OnClientClick="return confirm('¿Seguro que querés eliminar esta categoria?');"
-       OnClick="btnEliminarCategoria_Click" />
-    <asp:Button ID="btnDarAltaCategoria" runat="server" Text="Dar de Alta categoria" CssClass="btn btn-success mt-3"
-       OnClientClick="return confirm('¿Seguro que querés dar de alta esta categoria?');"
-       OnClick="btnDarAltaCategoria_Click" />
+    <asp:Button ID="btnAgregarCategoria" runat="server" Text="Agregar Categoría" CssClass="btn-accion" OnClick="btnAgregarCategoria_Click1" />
 
-</div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 </asp:Content>

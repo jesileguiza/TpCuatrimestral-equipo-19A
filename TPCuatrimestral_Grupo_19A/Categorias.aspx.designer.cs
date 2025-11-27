@@ -15,40 +15,31 @@ namespace TPCuatrimestral_Grupo_19A
     {
 
         /// <summary>
-        /// Control btnAgregarCategoria.
+        /// Control ddlFiltro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarCategoria;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltro;
 
         /// <summary>
-        /// Control btnModificarCategoria.
+        /// Control Filtro.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificarCategoria;
+        protected global::System.Web.UI.WebControls.TextBox Filtro;
 
         /// <summary>
-        /// Control txtBuscarCategoria.
+        /// Control btnLimpiar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarCategoria;
-
-        /// <summary>
-        /// Control btnBuscarCategoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarCategoria;
+        protected global::System.Web.UI.WebControls.Button btnLimpiar;
 
         /// <summary>
         /// Control dgvCategorias.
@@ -60,21 +51,12 @@ namespace TPCuatrimestral_Grupo_19A
         protected global::System.Web.UI.WebControls.GridView dgvCategorias;
 
         /// <summary>
-        /// Control btnEliminarCategoria.
+        /// Control btnAgregarCategoria.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminarCategoria;
-
-        /// <summary>
-        /// Control btnDarAltaCategoria.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDarAltaCategoria;
+        protected global::System.Web.UI.WebControls.Button btnAgregarCategoria;
     }
 }

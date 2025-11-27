@@ -2,70 +2,215 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-        .contenedor {
-            width: 80%;
-            margin: 40px auto;
+
+        body {
+            background-color: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        h3 {
+            color: #1a7d40;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 25px;
+            font-size: 2.4em;
+            border-bottom: 3px solid #1a7d40;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .header-container {
             text-align: center;
         }
 
-        .botonera {
-            margin-bottom: 20px;
+        /* --- FILTROS --- */
+
+        .filtro-container {
+            width: 90%;
+            max-width: 700px;
+            margin: 0 auto 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background-color: #e8f5e9;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #c5e1a5;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
         }
 
-        .botonera asp:single-button {
-            margin: 5px;
+        .dropdown-filtro {
+            padding: 8px;
+            border: 1px solid #a5d6a7;
+            border-radius: 5px;
+            background-color: #ffffff;
+            font-size: 1em;
         }
 
-        .listbox {
+        .input-search-wrapper {
+            position: relative;
+            width: 50%;
+        }
+
+        .icono-lupa {
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            transform: translateY(-50%);
+            color: #388e3c;
+            font-size: 1.1em;
+        }
+
+        .input-search {
             width: 100%;
-            height: 250px;
+            padding: 8px 10px 8px 30px;
+            border: 1px solid #a5d6a7;
+            border-radius: 5px;
+            font-size: 1em;
         }
+
+        .input-search:focus {
+            outline: none;
+            box-shadow: 0 0 6px #66bb6a;
+        }
+
+        .btn-limpiar {
+            background-color: #ef5350;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .btn-limpiar:hover {
+            background-color: #d32f2f;
+        }
+
+        /* --- TABLA --- */
+
+        .tabla-catalogo {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .tabla-catalogo th {
+            background-color: #388e3c;
+            color: white;
+            padding: 14px 10px;
+            text-align: left;
+            font-weight: 600;
+            border-right: 1px solid #4caf50;
+        }
+
+        .tabla-catalogo th:last-child {
+            border-right: none;
+            text-align: center;
+        }
+
+        .tabla-catalogo td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .tabla-catalogo td:last-child {
+            text-align: center;
+        }
+
+        .tabla-catalogo tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        .tabla-catalogo tr:hover {
+            background-color: #e8f5e9;
+            cursor: pointer;
+        }
+        .btn-accion {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+        .btn-accion:hover {
+            background-color: #388e3c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
     </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="contenedor">
-        <h1>Gestión de Proveedores</h1>
 
-        <div class="botonera">
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-success" OnClick="btnAgregar_Click" />
-         
-            <asp:Button ID="btnModificar" runat="server" Text="Modificación" CssClass="btn btn-success" OnClick="btnModificar_Click" />
-            <asp:TextBox ID="txtBuscar" runat="server" placeholder="Buscar proveedor..." CssClass="form-control" Style="display:inline-block; width:200px; margin-left:10px;" />
-            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+    <div class="header-container">
+        <h3>Gestión de Proveedores</h3>
+    </div>
+    <div class="filtro-container">
+        <asp:Label Text="Filtrar por:" runat="server" />
+
+        <asp:DropDownList ID="ddlFiltroProv" runat="server" CssClass="dropdown-filtro">
+            <asp:ListItem Value="RazonSocial">Razón Social</asp:ListItem>
+            <asp:ListItem Value="Nombre">Nombre</asp:ListItem>
+            <asp:ListItem Value="Cuit">CUIT</asp:ListItem>
+            <asp:ListItem Value="Localidad">Localidad</asp:ListItem>
+            <asp:ListItem Value="IdProveedor">ID</asp:ListItem>
+        </asp:DropDownList>
+
+        <div class="input-search-wrapper">
+            <i class="fa fa-search icono-lupa"></i>
+            <asp:TextBox runat="server" ID="Filtro" CssClass="input-search" AutoPostBack="true" OnTextChanged="Filtro_TextChanged" />
         </div>
 
-        <%--<asp:ListBox ID="lstProveedores" runat="server" CssClass="listbox"></asp:ListBox>--%>
-        <asp:GridView ID="dgvProveedores" runat="server"
-            AutoGenerateColumns="False"
-            CssClass="table table-striped table-bordered"
-            DataKeyNames="IdProveedor"
-            OnSelectedIndexChanged="dgvProveedores_SelectedIndexChanged">
-            <Columns>
-
-                <asp:CommandField HeaderText="accion" ShowSelectButton="true" SelectText="👆" />
-
-
-                <asp:BoundField DataField="IdProveedor" HeaderText="ID" />
-                <asp:BoundField DataField="RazonSocial" HeaderText="Razón Social" />
-                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
-                <asp:BoundField DataField="Cuit" HeaderText="CUIT" />
-                <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
-                <asp:BoundField DataField="Email" HeaderText="Email" />
-                <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
-                <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
-                <asp:CheckBoxField DataField="Activo" HeaderText="Estado" />
-            </Columns>
-        </asp:GridView>
-
-        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar seleccionado" CssClass="btn btn-danger mt-3"
-            OnClientClick="return confirm('¿Seguro que querés eliminar este proveedor?');"
-            OnClick="btnEliminar_Click" />
-        <asp:Button ID="BtnAlta" runat="server" Text="Dar de alta seleccionado" CssClass="btn btn-success mt-3"
-            OnClientClick="return confirm('¿Seguro que querés dar de alta este proveedor?');"
-            OnClick="btnAlta_Click" />
+        <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn-limpiar" OnClick="btnLimpiar_Click" />
     </div>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+ 
+    <asp:GridView ID="dgvProveedores" runat="server" AutoGenerateColumns="False" CssClass="tabla-catalogo" DataKeyNames="IdProveedor" OnSelectedIndexChanged="dgvProveedores_SelectedIndexChanged1">
+
+        <Columns>
+            <asp:CommandField HeaderText="Modificar" ShowSelectButton="true" SelectText="👆" />
+            <asp:CheckBoxField DataField="Activo" HeaderText="Activo" />
+
+            <asp:BoundField DataField="IdProveedor" HeaderText="ID" />
+            <asp:BoundField DataField="RazonSocial" HeaderText="Razón Social" />
+            <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+            <asp:BoundField DataField="Cuit" HeaderText="CUIT" />
+            <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
+            <asp:BoundField DataField="Email" HeaderText="Email" />
+            <asp:BoundField DataField="Direccion" HeaderText="Dirección" />
+            <asp:BoundField DataField="Localidad" HeaderText="Localidad" />
+        </Columns>
+
+    </asp:GridView>
+    <asp:Button ID="btnAgregar" runat="server" Text="Agregar Nuevo Proveedor" CssClass="btn-accion" OnClick="btnAgregar_Click1"/>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </asp:Content>

@@ -50,13 +50,6 @@ namespace TPCuatrimestral_Grupo_19A
             dgvProveedores.DataBind();
         }
 
-        protected void dgvProveedores_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-            int idSeleccionado = Convert.ToInt32(dgvProveedores.SelectedDataKey.Value);
-            ViewState["IdSeleccionado"] = idSeleccionado;
-        }
-
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             Response.Redirect("abmProveedor.aspx",false);
@@ -73,35 +66,6 @@ namespace TPCuatrimestral_Grupo_19A
             int idProveedor = Convert.ToInt32(dgvProveedores.SelectedDataKey.Value);
             Response.Redirect("abmProveedor.aspx?IdProveedor=" + idProveedor);
 
-            }
-        }
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-           
-            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Botón Modificar presionado');", true);
-        }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (ViewState["IdSeleccionado"] == null)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un proveedor antes de eliminar.');", true);
-                return;
-            }
-
-            int id = (int)ViewState["IdSeleccionado"];
-
-            try
-            {
-                ProveedorNegocio negocio = new ProveedorNegocio();
-                negocio.eliminar(id);
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Proveedor eliminado correctamente.');", true);
-                CargarProveedores();
-            }
-            catch (Exception ex)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al eliminar: {ex.Message}');", true);
             }
         }
 
@@ -126,6 +90,28 @@ namespace TPCuatrimestral_Grupo_19A
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al dar de alta: {ex.Message}');", true);
             }
+        }
+
+        protected void Filtro_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void dgvProveedores_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+
+            int IdProveedor = Convert.ToInt32(dgvProveedores.SelectedDataKey.Value);
+            Response.Redirect("abmProveedor.aspx?IdProveedor=" + IdProveedor);
+        }
+
+        protected void btnAgregar_Click1(object sender, EventArgs e)
+        {
+
         }
     }
 }

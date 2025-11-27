@@ -20,21 +20,23 @@ namespace TPCuatrimestral_Grupo_19A
 
             if (rol != "ADMIN")
             {
-                string script = @"
-            Swal.fire({
-                icon: 'error',
-                title: 'Acceso denegado',
-                text: 'No estás autorizado para acceder a esta sección.',
-                confirmButtonText: 'Aceptar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'Gestion_Ventas.aspx';
-                }
-            });
-             ";
+                string aviso = @"
+        <html>
+            <body style='font-family:Segoe UI; text-align:center; margin-top:40px;'>
+                <h2 style='color:red;'>Acceso denegado</h2>
+                <p>No estás autorizado para acceder a esta sección.</p>
+                <br/>
+                <a href='Gestion_Ventas.aspx' 
+                   style='padding:10px 20px; background:#28a745; color:white; 
+                          text-decoration:none; border-radius:5px;'>
+                    Volver
+                </a>
+            </body>
+        </html>";
 
-                ClientScript.RegisterStartupScript(this.GetType(), "NoAutorizado", script, true);
-                
+                Response.Write(aviso);
+                Response.End();
+
             }
 
 

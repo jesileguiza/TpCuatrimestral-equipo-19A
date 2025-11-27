@@ -120,6 +120,7 @@
 
         <asp:Button ID="btnAgregarPROV" runat="server" Text="Agregar" OnClick="btnAgregarPROV_Click" />
         <asp:Button ID="btnCancelarPROV" runat="server" Text="Cancelar" OnClick="btnCancelarPROV_Click" />
+        <asp:Button ID="btnInactivar" runat="server" Text="Inactivar" Onclick="btnInactivar_Click" CssClass="btn btn-warning" />
         <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label>
         <asp:Label ID="Label1" runat="server" />
     </div>

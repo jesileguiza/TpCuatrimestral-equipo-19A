@@ -64,6 +64,11 @@ namespace TPCuatrimestral_Grupo_19A
                             lblMensaje.ForeColor = System.Drawing.Color.Red;
                         }
                     }
+                    else
+                    {
+
+                        btnInactivar.Visible = false;
+                    }
                 }
             }
         }

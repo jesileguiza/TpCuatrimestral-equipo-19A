@@ -28,7 +28,7 @@ namespace TPCuatrimestral_Grupo_19A
                     ddlProveedores.DataValueField = "IdProveedor";
                     ddlProveedores.DataTextField = "RazonSocial";
                     ddlProveedores.DataBind();
-                    
+
 
                     ddlCategoria.DataSource = negocioCategoria.Listar();
                     ddlCategoria.DataValueField = "IdCategoria";
@@ -40,7 +40,7 @@ namespace TPCuatrimestral_Grupo_19A
                     ddlMarca.DataTextField = "Descripcion";
                     ddlMarca.DataBind();
 
-                   //modificacion
+                    //modificacion
                     if (!string.IsNullOrEmpty(IdProducto))
                     {
                         btnAgregar.Text = "Modificar";
@@ -50,29 +50,30 @@ namespace TPCuatrimestral_Grupo_19A
                         {
                             ProductoNegocio negocio = new ProductoNegocio();
                             List<Producto> lista = negocio.listar(IdProducto);
-
+                            btnInactivar.Visible = false;
                             if (lista != null && lista.Count > 0)
                             {
                                 Producto seleccionado = lista[0];
 
                                 //guardo producto seleccionado
 
-                                Session.Add("productoSeleccionado",seleccionado);
+                                Session.Add("productoSeleccionado", seleccionado);
 
                                 //precargo datos
                                 TxtNombre.Text = seleccionado.Nombre;
                                 TxtDescripcion.Text = seleccionado.Descripcion;
-                                ddlProveedores.SelectedValue=seleccionado.proveedor.IdProveedor.ToString();
+                                ddlProveedores.SelectedValue = seleccionado.proveedor.IdProveedor.ToString();
                                 TxtStock.Text = seleccionado.Stock.ToString();
                                 TxtPrecio.Text = seleccionado.Precio.ToString();
 
-                               
+
                                 ddlCategoria.SelectedValue = seleccionado.categoria.IdCategoria.ToString();
                                 ddlMarca.SelectedValue = seleccionado.Marca.IdMarca.ToString();
 
                                 //configurar acciones
                                 if (!seleccionado.Activo)
                                     btnInactivar.Text = "Reactivar";
+                                btnInactivar.Visible = true;
                             }
                             else
                             {
@@ -85,6 +86,10 @@ namespace TPCuatrimestral_Grupo_19A
                             lblMensaje.Text = "Ocurrió un error al cargar los datos: " + ex.Message;
                             lblMensaje.ForeColor = System.Drawing.Color.Red;
                         }
+                    }
+                    else
+                    {
+                        btnInactivar.Visible = false;
                     }
                 }
             }

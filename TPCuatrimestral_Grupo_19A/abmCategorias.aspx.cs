@@ -29,6 +29,7 @@ namespace TPCuatrimestral_Grupo_19A
                         //modo modificar
                         btnAgregarCategoria.Text = "Modificar";
                         tituloCategoria.InnerText = "Modificar Categoria";
+                        
 
                         try
                         {
@@ -64,6 +65,11 @@ namespace TPCuatrimestral_Grupo_19A
                             lblMensaje.Text = "Ocurrió un error al cargar los datos: " + ex.Message;
                             lblMensaje.ForeColor = System.Drawing.Color.Red;
                         }
+                    }
+                    else
+                    {
+
+                        btnInactivar.Visible = false;
                     }
                 }
             }

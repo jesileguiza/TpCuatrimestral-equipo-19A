@@ -27,7 +27,7 @@ namespace TPCuatrimestral_Grupo_19A
                 {
                     //modo modificar
                     btnAgregarCliente.Text = "Modificar";
-                    tituloCliente.InnerText = "Modificar Marca";
+                    tituloCliente.InnerText = "Modificar Cliente";
 
                     try
                     {
@@ -52,6 +52,7 @@ namespace TPCuatrimestral_Grupo_19A
                             //configurar acciones
                             if (!seleccionado.Activo)
                                 btnInactivar.Text = "Reactivar";
+                           
 
                         }
                         else
@@ -67,6 +68,10 @@ namespace TPCuatrimestral_Grupo_19A
                         lblMensaje.Text = "Ocurrió un error al cargar los datos: " + ex.Message;
                         lblMensaje.ForeColor = System.Drawing.Color.Red;
                     }
+                }
+                else
+                {
+                    btnInactivar.Visible = false;
                 }
             }
         }

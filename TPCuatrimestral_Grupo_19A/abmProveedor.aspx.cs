@@ -66,6 +66,11 @@ namespace TPCuatrimestral_Grupo_19A
                         lblMensaje.ForeColor = System.Drawing.Color.Red;
                     }
                 }
+                else
+                {
+                    btnInactivar.Visible = false;
+                }
+                
             }
 
         
@@ -124,6 +129,37 @@ namespace TPCuatrimestral_Grupo_19A
         protected void btnCancelarPROV_Click(object sender, EventArgs e)
         {
             Response.Redirect("Proveedores.aspx");
+        }
+
+        protected void btnInactivar_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+
+            //    ProveedorNegocio negocio = new ProveedorNegocio();
+            //    Proveedor seleccionado = (Proveedor)Session["proveedorSeleccionado"];
+            //    bool nuevoEstado = !seleccionado.Activo;
+
+
+            //    negocio.Estado(int.Parse(Request.QueryString["IdProducto"].ToString()), nuevoEstado);
+
+            //    string mensaje = nuevoEstado ?
+            //     "El producto fue reactivado correctamente" :
+            //     "El producto fue inactivado correctamente";
+
+            //    ScriptManager.RegisterStartupScript(this, this.GetType(),
+            //       "alert",
+            //       $"alert('{mensaje}'); window.location='catalogo.aspx';",
+            //       true);
+
+
+
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw ex;
+            //}
         }
     }
 }

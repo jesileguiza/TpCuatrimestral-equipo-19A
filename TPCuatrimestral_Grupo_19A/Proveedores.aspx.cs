@@ -111,7 +111,7 @@ namespace TPCuatrimestral_Grupo_19A
 
         protected void btnAgregar_Click1(object sender, EventArgs e)
         {
-
+            Response.Redirect("abmProveedor.aspx", false);
         }
     }
 }

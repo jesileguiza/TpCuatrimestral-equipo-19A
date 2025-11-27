@@ -26,17 +26,27 @@
     <main id="contenido">
         <asp:Button ID="btnAgregarVenta" runat="server" Text="➕ Agregar Venta" CssClass="boton-agregar" OnClick="btnAgregarVenta_Click" />
 
-        <asp:GridView ID="dgvVentas" runat="server" AutoGenerateColumns="False" CssClass="tabla-ventas" DataKeyNames="VentaId" OnSelectedIndexChanged="dgvVentas_SelectedIndexChanged">
-            <Columns>
-                <asp:CommandField ShowSelectButton="True" SelectText="👆" HeaderText="Acción" />
-                <asp:BoundField DataField="VentaId" HeaderText="ID" />
-                <asp:BoundField DataField="ClienteNombre" HeaderText="Cliente" />
-                <asp:BoundField DataField="DNI" HeaderText="DNI" />
-                <asp:BoundField DataField="Email" HeaderText="Email" />
-                <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
-                <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" />
-            </Columns>
-        </asp:GridView>
+       <asp:GridView ID="dgvVentas" runat="server" AutoGenerateColumns="False" 
+    CssClass="tabla-ventas" DataKeyNames="VentaId" OnRowCommand="dgvVentas_RowCommand">
+    <Columns>
+        <asp:BoundField DataField="VentaId" HeaderText="ID" />
+        <asp:BoundField DataField="ClienteNombre" HeaderText="Cliente" />
+        <asp:BoundField DataField="DNI" HeaderText="DNI" />
+        <asp:BoundField DataField="Email" HeaderText="Email" />
+        <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
+        <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" />
+
+        
+        <asp:TemplateField HeaderText="Detalle">
+            <ItemTemplate>
+                <asp:Button runat="server" ID="btnVerDetalle" Text="Ver Detalle" 
+                    CommandName="VerDetalle" CommandArgument='<%# Eval("VentaId") %>' 
+                    CssClass="btn btn-info" />
+            </ItemTemplate>
+        </asp:TemplateField>
+    </Columns>
+</asp:GridView>
+
     </main>
 
     <footer>

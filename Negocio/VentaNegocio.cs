@@ -66,7 +66,48 @@ namespace Negocio
             }
         }
 
-        // Guardar venta con detalles y stock
+        public List<VentaDetalle> ListarDetallesPorVenta(int ventaId)
+        {
+            List<VentaDetalle> lista = new List<VentaDetalle>();
+            try
+            {
+                using (AccesoDatos datos = new AccesoDatos())
+                {
+                    string consulta = @"
+                        SELECT vd.ProductoId, p.Nombre, vd.Cantidad, vd.PrecioUnitario, vd.Ganancia, vd.Subtotal
+                        FROM VentaDetalle vd
+                        INNER JOIN Productos p ON vd.ProductoId = p.ProductoId
+                        WHERE vd.VentaId = @VentaId";
+
+                    datos.setearConsulta(consulta);
+                    datos.setearParametro("@VentaId", ventaId);
+                    datos.ejecutarLectura();
+
+                    while (datos.Lector.Read())
+                    {
+                        VentaDetalle det = new VentaDetalle
+                        {
+                            ProductoId = Convert.ToInt32(datos.Lector["ProductoId"]),
+                            Nombre = datos.Lector["Nombre"].ToString(),
+                            Cantidad = Convert.ToInt32(datos.Lector["Cantidad"]),
+                            PrecioUnitario = Convert.ToDecimal(datos.Lector["PrecioUnitario"]),
+                            Ganancia = Convert.ToDecimal(datos.Lector["Ganancia"]),
+                            Subtotal = Convert.ToDecimal(datos.Lector["Subtotal"])
+                        };
+                        lista.Add(det);
+                    }
+
+                    datos.cerrarConexion();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar detalles de venta: " + ex.Message);
+            }
+
+            return lista;
+        }
+
         public int AgregarVentaConDetalles(Venta venta)
         {
             int idVenta;

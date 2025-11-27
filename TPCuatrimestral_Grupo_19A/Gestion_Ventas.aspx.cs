@@ -36,6 +36,16 @@ namespace TPCuatrimestral_Grupo_19A
             Response.Redirect("abmVentas.aspx", false);
         }
 
+        protected void dgvVentas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "VerDetalle")
+            {
+                int ventaId = Convert.ToInt32(e.CommandArgument);
+                Response.Redirect("detalleVentas.aspx?VentaId=" + ventaId);
+            }
+        }
+
+
         protected void dgvVentas_SelectedIndexChanged(object sender, EventArgs e)
         {
             string ventaId = dgvVentas.SelectedDataKey.Value.ToString();

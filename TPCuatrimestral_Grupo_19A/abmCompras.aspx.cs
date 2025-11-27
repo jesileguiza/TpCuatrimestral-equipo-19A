@@ -100,9 +100,7 @@ namespace TPCuatrimestral_Grupo_19A
 
                 AccesoDatos datos = new AccesoDatos();
 
-                // ------------------------------------------------------------
-                //  MODO EDITAR (si viene CompraId en la URL)
-                // ------------------------------------------------------------
+              
                 if (compraIdQS != null)
                 {
                     datos.setearConsulta(@"
@@ -118,9 +116,7 @@ namespace TPCuatrimestral_Grupo_19A
                 }
                 else
                 {
-                    // ------------------------------------------------------------
-                    //  MODO AGREGAR (si NO viene CompraId)
-                    // ------------------------------------------------------------
+                   
                     datos.setearConsulta(@"
                 INSERT INTO Compras (ProveedorId, Stock, IdProducto, Fecha, Total)
                 VALUES (@ProveedorId, @Stock, @IdProducto, @Fecha, @Total)");
@@ -218,7 +214,7 @@ namespace TPCuatrimestral_Grupo_19A
                 if (datos.Lector.Read())
                 {
                     TxtCompraId.Text = datos.Lector["ProximoId"].ToString();
-                    TxtCompraId.ReadOnly = true;  // evita modificarlo
+                    TxtCompraId.ReadOnly = true;  
                 }
             }
             catch (Exception ex)

@@ -78,6 +78,24 @@ namespace TPCuatrimestral_Grupo_19A
         protected global::System.Web.UI.WebControls.GridView gvDetalles;
 
         /// <summary>
+        /// Control TxtTotal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtTotal;
+
+        /// <summary>
+        /// Control lblTotalGanancia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalGanancia;
+
+        /// <summary>
         /// Control TxtDNI.
         /// </summary>
         /// <remarks>
@@ -105,15 +123,6 @@ namespace TPCuatrimestral_Grupo_19A
         protected global::System.Web.UI.WebControls.TextBox TxtFecha;
 
         /// <summary>
-        /// Control TxtTotal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtTotal;
-
-        /// <summary>
         /// Control btnAgregar.
         /// </summary>
         /// <remarks>
@@ -130,15 +139,6 @@ namespace TPCuatrimestral_Grupo_19A
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelar;
-
-        /// <summary>
-        /// Control btnEliminar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminar;
 
         /// <summary>
         /// Control lblMensaje.

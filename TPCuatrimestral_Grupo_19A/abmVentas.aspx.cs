@@ -130,13 +130,20 @@ namespace TPCuatrimestral_Grupo_19A
 
         private void ActualizarGrillaYTotal()
         {
+           
             gvDetalles.DataSource = ListaDetalles;
             gvDetalles.DataBind();
 
-            decimal total = ListaDetalles.Sum(x => x.Subtotal);
-            total = total * 1.30m; // aplicar ganancia global
-            TxtTotal.Text = total.ToString("0.00");
+           
+            decimal totalVenta = ListaDetalles.Sum(x => x.Subtotal);
+            TxtTotal.Text = totalVenta.ToString("0.00");
+
+           
+            decimal totalGanancia = ListaDetalles.Sum(x => (x.PrecioUnitario * x.Cantidad * x.Ganancia / 100));
+            lblTotalGanancia.Text = "$" + totalGanancia.ToString("0.00");
         }
+
+
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -211,39 +218,21 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        // ✅ Nuevo método agregado para evitar el error CS1061
+      
         protected void btnNuevoCliente_Click(object sender, EventArgs e)
         {
-            // Redirige a la página de ABM de clientes, puede ajustar el query string si quieres volver a ventas
+            
             Response.Redirect("abmClientes.aspx?volverA=Ventas");
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-            // Limpiar todo
+            
             ListaDetalles.Clear();
             Session["DetallesVenta"] = null;
             Response.Redirect("Gestion_Ventas.aspx");
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    int ventaId = int.Parse(TxtVentaId.Text);
-            //    VentaNegocio negocio = new VentaNegocio();
-            //    negocio.Eliminar(ventaId);
-
-            //    ListaDetalles.Clear();
-            //    Session["DetallesVenta"] = null;
-
-            //    ClientScript.RegisterStartupScript(this.GetType(), "ok",
-            //        "alert('Venta eliminada correctamente'); window.location='Gestion_Ventas.aspx';", true);
-            //}
-            //catch (Exception ex)
-            //{
-            //    lblMensaje.Text = "Error al eliminar la venta: " + ex.Message;
-            //}
-        }
+        
     }
 }

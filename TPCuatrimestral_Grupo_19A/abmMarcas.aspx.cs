@@ -40,13 +40,13 @@ namespace TPCuatrimestral_Grupo_19A
                             {
                                 Marca seleccionado = lista[0];
 
-                                //guardo categoria seleccionado
+                                
 
                                 Session.Add("MarcaSeleccionado", seleccionado);
 
                                 TxtNombreMarca.Text = seleccionado.Descripcion;
 
-                                //configurar acciones
+                                
                                 if (!seleccionado.Activo)
                                     btnInactivar.Text = "Reactivar";
                             }

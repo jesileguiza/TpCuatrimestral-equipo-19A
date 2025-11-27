@@ -39,7 +39,7 @@ namespace TPCuatrimestral_Grupo_19A
                         {
                             Cliente seleccionado = lista[0];
 
-                            //guardo categoria seleccionado
+                            
 
                             Session.Add("ClienteSeleccionado", seleccionado);
 
@@ -49,7 +49,7 @@ namespace TPCuatrimestral_Grupo_19A
                             TxtDNICliente.Text = seleccionado.DNI;
                             TxtEmailCliente.Text = seleccionado.Email;
 
-                            //configurar acciones
+                            
                             if (!seleccionado.Activo)
                                 btnInactivar.Text = "Reactivar";
                            

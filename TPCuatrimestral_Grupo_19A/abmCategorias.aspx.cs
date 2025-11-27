@@ -41,14 +41,14 @@ namespace TPCuatrimestral_Grupo_19A
                             {
                                 Categoria seleccionado = lista[0];
 
-                                //guardo categoria seleccionado
+                               
 
                                 Session.Add("CategoriaSeleccionado", seleccionado);
 
 
                                 TxtNombreCategoria.Text = seleccionado.Descripcion;
 
-                                //configurar acciones
+                               
                                 if (!seleccionado.Activo)
                                     btnInactivar.Text = "Reactivar";
                             }

@@ -55,11 +55,11 @@ namespace TPCuatrimestral_Grupo_19A
                             {
                                 Producto seleccionado = lista[0];
 
-                                //guardo producto seleccionado
+                                
 
                                 Session.Add("productoSeleccionado", seleccionado);
 
-                                //precargo datos
+                                
                                 TxtNombre.Text = seleccionado.Nombre;
                                 TxtDescripcion.Text = seleccionado.Descripcion;
                                 ddlProveedores.SelectedValue = seleccionado.proveedor.IdProveedor.ToString();
@@ -70,7 +70,7 @@ namespace TPCuatrimestral_Grupo_19A
                                 ddlCategoria.SelectedValue = seleccionado.categoria.IdCategoria.ToString();
                                 ddlMarca.SelectedValue = seleccionado.Marca.IdMarca.ToString();
 
-                                //configurar acciones
+                                
                                 if (!seleccionado.Activo)
                                     btnInactivar.Text = "Reactivar";
                                 btnInactivar.Visible = true;

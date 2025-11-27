@@ -24,7 +24,7 @@
             text-align: center;
         }
 
-        /* --- FILTROS --- */
+   
 
         .filtro-container {
             width: 90%;
@@ -93,7 +93,6 @@
             background-color: #d32f2f;
         }
 
-        /* --- TABLA --- */
 
         .tabla-catalogo {
             width: 90%;

@@ -117,7 +117,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
    
 
-    <!-- se agrega stock, marca, categoria -->
 
           <header>
         <h1>Panel Principal - Sistema de Compras</h1>
@@ -126,7 +125,7 @@
        
 
          <main id="contenido">
-        <!-- Sección principal -->
+      
         <section id="inicio">
 
              
@@ -142,7 +141,7 @@
 
     <Columns>
 
-        <%-- Botón seleccionar --%>
+
         <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="👆" />
 
         <asp:BoundField DataField="CompraId" HeaderText="ID" />
@@ -206,19 +205,19 @@
     </footer>
 
         <script>
-            // Mostrar secciones
+         
             function mostrarSeccion(id) {
                 document.querySelectorAll("main section").forEach(sec => sec.style.display = "none");
                 document.getElementById(id).style.display = "block";
             }
 
-            // Mostrar formulario
+        
             function mostrarFormulario(idForm) {
                 const form = document.getElementById(idForm);
                 form.style.display = (form.style.display === "none" || form.style.display === "") ? "block" : "none";
             }
 
-            // Agregar nueva venta
+           
             function agregarVenta() {
                 const id = document.getElementById("idVenta").value;
                 const cliente = document.getElementById("clienteVenta").value;
@@ -241,7 +240,7 @@
                 mostrarFormulario('formVenta');
             }
 
-            // Agregar nueva compra
+        
             function agregarCompra() {
                 const id = document.getElementById("idCompra").value;
                 const proveedor = document.getElementById("proveedorCompra").value;

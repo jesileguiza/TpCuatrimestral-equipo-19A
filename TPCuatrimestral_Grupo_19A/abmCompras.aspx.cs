@@ -63,6 +63,7 @@ namespace TPCuatrimestral_Grupo_19A
         {
             try
             {
+                
                 if (string.IsNullOrEmpty(ddlProveedor.SelectedValue) ||
                     string.IsNullOrEmpty(ddlProducto.SelectedValue) ||
                     string.IsNullOrEmpty(ddlCategoria.SelectedValue) ||
@@ -73,19 +74,7 @@ namespace TPCuatrimestral_Grupo_19A
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(TxtCompraId.Text) ||
-                    string.IsNullOrWhiteSpace(TxtStock.Text) ||
-                    string.IsNullOrWhiteSpace(TxtPrecio.Text) ||
-                    string.IsNullOrWhiteSpace(TxtFecha.Text))
-                {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "alert",
-                        "alert('Complete todos los campos antes de continuar.');", true);
-                    return;
-                }
-
-                int stock;
-                decimal precio;
-                DateTime fecha;
+                int stock; decimal precio; DateTime fecha;
 
                 if (!int.TryParse(TxtStock.Text, out stock) ||
                     !decimal.TryParse(TxtPrecio.Text, out precio) ||
@@ -96,43 +85,74 @@ namespace TPCuatrimestral_Grupo_19A
                     return;
                 }
 
-                string compraIdQS = Request.QueryString["CompraId"];
+                string compraId = Request.QueryString["CompraId"];
 
-                AccesoDatos datos = new AccesoDatos();
-
-              
-                if (compraIdQS != null)
+                
+                if (compraId != null)
                 {
-                    datos.setearConsulta(@"
-                UPDATE Compras 
-                SET ProveedorId = @ProveedorId,
-                    Stock = @Stock,
-                    IdProducto = @IdProducto,
-                    Fecha = @Fecha,
-                    Total = @Total
-                WHERE CompraId = @CompraId");
+                    int stockAnterior = 0;
+                    int idProductoAnterior = 0;
 
-                    datos.setearParametro("@CompraId", int.Parse(compraIdQS));
+                    AccesoDatos datos1 = new AccesoDatos();
+                    datos1.setearConsulta("SELECT Stock, IdProducto FROM Compras WHERE CompraId = @id");
+                    datos1.setearParametro("@id", int.Parse(compraId));
+                    datos1.ejecutarLectura();
+
+                    if (datos1.Lector.Read())
+                    {
+                        stockAnterior = (int)datos1.Lector["Stock"];
+                        idProductoAnterior = (int)datos1.Lector["IdProducto"];
+                    }
+                    datos1.cerrarConexion();
+
+                    
+                    AccesoDatos datos2 = new AccesoDatos();
+                    datos2.setearConsulta("UPDATE Productos SET Stock = Stock - @stock WHERE ProductoId = @idProd");
+                    datos2.setearParametro("@stock", stockAnterior);
+                    datos2.setearParametro("@idProd", idProductoAnterior);
+                    datos2.ejecutarAccion();
+                }
+
+               
+                AccesoDatos datos3 = new AccesoDatos();
+
+                if (compraId != null)
+                {
+                    datos3.setearConsulta(@"
+                UPDATE Compras SET 
+                    ProveedorId = @prov,
+                    Stock = @stock,
+                    IdProducto = @prod,
+                    Fecha = @fecha,
+                    Total = @total
+                WHERE CompraId = @id");
+
+                    datos3.setearParametro("@id", int.Parse(compraId));
                 }
                 else
                 {
-                   
-                    datos.setearConsulta(@"
+                    datos3.setearConsulta(@"
                 INSERT INTO Compras (ProveedorId, Stock, IdProducto, Fecha, Total)
-                VALUES (@ProveedorId, @Stock, @IdProducto, @Fecha, @Total)");
+                VALUES (@prov, @stock, @prod, @fecha, @total)");
                 }
 
-                datos.setearParametro("@ProveedorId", int.Parse(ddlProveedor.SelectedValue));
-                datos.setearParametro("@Stock", stock);
-                datos.setearParametro("@IdProducto", int.Parse(ddlProducto.SelectedValue));
-                datos.setearParametro("@Fecha", fecha);
-                datos.setearParametro("@Total", precio);
+                datos3.setearParametro("@prov", int.Parse(ddlProveedor.SelectedValue));
+                datos3.setearParametro("@stock", stock);
+                datos3.setearParametro("@prod", int.Parse(ddlProducto.SelectedValue));
+                datos3.setearParametro("@fecha", fecha);
+                datos3.setearParametro("@total", precio);
 
-                datos.ejecutarAccion();
+                datos3.ejecutarAccion();
 
-                string mensaje = (compraIdQS != null)
-                    ? "¡Compra modificada correctamente!"
-                    : "¡Compra agregada correctamente!";
+               
+                AccesoDatos datos4 = new AccesoDatos();
+                datos4.setearConsulta("UPDATE Productos SET Stock = Stock + @stock WHERE ProductoId = @idProd");
+                datos4.setearParametro("@stock", stock);
+                datos4.setearParametro("@idProd", int.Parse(ddlProducto.SelectedValue));
+                datos4.ejecutarAccion();
+
+               
+                string mensaje = compraId != null ? "¡Compra modificada correctamente!" : "¡Compra agregada correctamente!";
 
                 string script = $@"
             Swal.fire({{
@@ -143,10 +163,9 @@ namespace TPCuatrimestral_Grupo_19A
                 if (result.isConfirmed) {{
                     window.location.href = 'Gestion_Compras.aspx';
                 }}
-            }});
-        ";
+            }});";
 
-                ClientScript.RegisterStartupScript(this.GetType(), "OperacionExitosa", script, true);
+                ClientScript.RegisterStartupScript(this.GetType(), "OK", script, true);
             }
             catch (Exception ex)
             {
@@ -154,6 +173,8 @@ namespace TPCuatrimestral_Grupo_19A
                 lblMensaje.Text = "Error: " + ex.Message;
             }
         }
+
+
 
 
         protected void btnCancelar_Click(object sender, EventArgs e)

@@ -38,7 +38,7 @@ namespace TPCuatrimestral_Grupo_19A
              ";
 
                 ClientScript.RegisterStartupScript(this.GetType(), "NoAutorizado", script, true);
-
+                
             }
 
             try

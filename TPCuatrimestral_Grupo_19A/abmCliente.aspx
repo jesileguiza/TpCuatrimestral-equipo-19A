@@ -108,6 +108,7 @@
 
     <asp:Button ID="btnAgregarCliente" runat="server" Text="Agregar" OnClick="btnAgregarCliente_Click" />
     <asp:Button ID="btnCancelarCliente" runat="server" Text="Cancelar" OnClick="btnCancelarCliente_Click" />
+    <asp:Button ID="btnInactivar" Text="Inactivar" runat="server" OnClick="btnInactivar_Click" CssClass="btn btn-warning" />
     <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label>
     <asp:Label ID="Label1" runat="server" />
 </div>

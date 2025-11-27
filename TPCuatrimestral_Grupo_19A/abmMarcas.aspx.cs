@@ -89,12 +89,18 @@ namespace TPCuatrimestral_Grupo_19A
                 {
                     nuevo.IdMarca = int.Parse(Request.QueryString["IdMarca"].ToString());
                     negocio.modificarMarca(nuevo);
-                    lblMensaje.Text = "Marca Modificada correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "alert",
+                    "alert('Marca Modificada correctamente'); window.location='Marcas.aspx';",
+                     true);
                 }
                 else
                 {
                     negocio.agregar(nuevo);
-                    lblMensaje.Text = "Marca agregada correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                    "alert",
+                    "alert('Marca agregada correctamente'); window.location='Marcas.aspx';",
+                    true);
 
                 }
             }

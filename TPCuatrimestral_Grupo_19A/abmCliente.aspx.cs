@@ -20,7 +20,7 @@ namespace TPCuatrimestral_Grupo_19A
             {
 
 
-                string idCliente = Request.QueryString["IdCliente"];
+                string idCliente = Request.QueryString["ClientesId"];
 
 
                 if (!string.IsNullOrEmpty(idCliente))
@@ -39,11 +39,19 @@ namespace TPCuatrimestral_Grupo_19A
                         {
                             Cliente seleccionado = lista[0];
 
+                            //guardo categoria seleccionado
+
+                            Session.Add("ClienteSeleccionado", seleccionado);
+
 
                             TxtNombreCliente.Text = seleccionado.Nombre;
                             TxtApellidoCliente.Text = seleccionado.Apellido;
                             TxtDNICliente.Text = seleccionado.DNI;
                             TxtEmailCliente.Text = seleccionado.Email;
+
+                            //configurar acciones
+                            if (!seleccionado.Activo)
+                                btnInactivar.Text = "Reactivar";
 
                         }
                         else
@@ -89,12 +97,19 @@ namespace TPCuatrimestral_Grupo_19A
                 {
                     nuevo.ClientesId = int.Parse(Request.QueryString["IdCliente"].ToString());
                     negocio.modificarCliente(nuevo);
-                    lblMensaje.Text = "Cliente Modificado correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                 "alert",
+                 "alert('Cliente Modificado correctamente'); window.location='clientes.aspx';",
+                 true);
                 }
                 else
                 {
                     negocio.agregar(nuevo);
-                    lblMensaje.Text = "Cliente agregado correctamente.";
+                    ScriptManager.RegisterStartupScript(this, this.GetType(),
+                   "alert",
+                   "alert('Cliente agregado correctamente'); window.location='clientes.aspx';",
+                   true);
+
 
                 }
             }
@@ -109,6 +124,39 @@ namespace TPCuatrimestral_Grupo_19A
         protected void btnCancelarCliente_Click(object sender, EventArgs e)
         {
             Response.Redirect("Clientes.aspx");
+        }
+
+        protected void btnInactivar_Click(object sender, EventArgs e)
+        {
+          try
+            {
+
+            ClienteNegocio negocio = new ClienteNegocio();
+            Cliente seleccionado = (Cliente)Session["ClienteSeleccionado"];
+            bool nuevoEstado = !seleccionado.Activo;
+
+
+            negocio.Estado(int.Parse(Request.QueryString["ClientesId"].ToString()), nuevoEstado);
+
+            string mensaje = nuevoEstado ?
+            "El cliente fue reactivado correctamente" :
+            "El cliente fue inactivado correctamente";
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(),
+               "alert",
+               $"alert('{mensaje}'); window.location='clientes.aspx';",
+               true);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+
+
         }
     }
 }

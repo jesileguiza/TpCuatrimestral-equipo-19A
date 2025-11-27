@@ -47,70 +47,12 @@ namespace TPCuatrimestral_Grupo_19A
             }
         }
 
-        protected void dgvClientes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int idSeleccionado = Convert.ToInt32(dgvClientes.SelectedDataKey.Value);
-            ViewState["IdSeleccionado"] = idSeleccionado;
-        }
-
         private void CargarClientes()
         {
             ClienteNegocio negocio = new ClienteNegocio();
             dgvClientes.DataSource = negocio.listar();
             dgvClientes.DataBind();
         }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (ViewState["IdSeleccionado"] == null)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un Cliente antes de eliminar.');", true);
-                return;
-            }
-
-            int id = (int)ViewState["IdSeleccionado"];
-
-            try
-            {
-                ClienteNegocio negocio = new ClienteNegocio();
-                negocio.eliminar(id);
-
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Cliente eliminado correctamente.');", true);
-
-                CargarClientes(); // recarga la grilla
-            }
-            catch (Exception ex)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al eliminar: {ex.Message}');", true);
-            }
-        }
-
-        protected void btnDarAlta_Click(object sender, EventArgs e)
-        {
-            if (ViewState["IdSeleccionado"] == null)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Seleccioná un Cliente antes de dar de alta.');", true);
-                return;
-            }
-
-            int id = (int)ViewState["IdSeleccionado"];
-
-            try
-            {
-                ClienteNegocio negocio = new ClienteNegocio();
-                negocio.darAlta(id);
-
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Cliente dado de alta correctamente.');", true);
-
-                CargarClientes();
-            }
-            catch (Exception ex)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"alert('Error al dar de alta: {ex.Message}');", true);
-            }
-        }
-
-
 
 
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -127,21 +69,65 @@ namespace TPCuatrimestral_Grupo_19A
             else
             {
                 int idCliente = Convert.ToInt32(dgvClientes.SelectedDataKey.Value);
-                Response.Redirect("abmCliente.aspx?IdCliente=" + idCliente);
+                Response.Redirect("abmClientes.aspx?IdCliente=" + idCliente);
 
             }
         }
 
-        protected void btnBuscar_Click(object sender, EventArgs e)
+        protected void Filtro_TextChanged(object sender, EventArgs e)
         {
-            //string filtro = txtBuscar.Text.Trim().ToLower();
-            //  var filtrados = listaclientes
-            //     .Where(c => c.Nombre.ToLower().Contains(filtro) || c.DNI.Contains(filtro))
-            //    .ToList();
+            string filtro = Filtro.Text.Trim();
+            string columna = ddlFiltro.SelectedValue;
 
-            // dgvClientes.DataSource = filtrados;
-            //  dgvClientes.DataBind();
+            ClienteNegocio negocio = new ClienteNegocio();
+            List<Cliente> lista = negocio.listar();
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                switch (columna)
+                {
+
+                    case "ClientesId":
+                        lista = lista.FindAll(x => x.ClientesId.ToString().Contains(filtro));
+                        break;
+
+                    case "Apellido":
+                        lista = lista.FindAll(x => x.Apellido.ToUpper().Contains(filtro.ToUpper()));
+                        break;
+
+                    case "Dni":
+                        lista = lista.FindAll(x => x.DNI.ToUpper().Contains(filtro.ToUpper()));
+                        break;
+                    case "Nombre":
+                        lista = lista.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()));
+                        break;
+                }
+
+            }
+
+            dgvClientes.DataSource = lista;
+            dgvClientes.DataBind();
         }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            Filtro.Text = "";
+            ddlFiltro.SelectedIndex = 0;
+
+            ClienteNegocio negocio = new ClienteNegocio();
+            dgvClientes.DataSource = negocio.listar();
+            dgvClientes.DataBind();
+
+        }
+
+        protected void dgvClientes_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+
+            int ClientesId= Convert.ToInt32(dgvClientes.SelectedDataKey.Value);
+            Response.Redirect("abmCliente.aspx?ClientesId=" + ClientesId);
+        }
+
+
     }
 
 

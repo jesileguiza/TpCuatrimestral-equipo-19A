@@ -36,8 +36,7 @@ namespace TPCuatrimestral_Grupo_19A
         protected void DgvCompras_SelectedIndexChanged(object sender, EventArgs e)
         {
             string CompraId = dgvCompras.SelectedDataKey.Value.ToString();
-            Response.Redirect("abmCompras.aspx?IdCompra=" + CompraId);
-
+            Response.Redirect("abmCompras.aspx?CompraId=" + CompraId);
         }
 
         private void CargarCompras()

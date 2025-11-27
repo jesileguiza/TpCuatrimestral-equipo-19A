@@ -10,7 +10,7 @@ namespace Negocio
 {
     public class CompraNegocio
     {
-        public List<Compra> listar(string CompraId = "")
+        public List<Compra> listar(int? compraId = null)
         {
             List<Compra> lista = new List<Compra>();
             AccesoDatos datos = new AccesoDatos();
@@ -18,48 +18,53 @@ namespace Negocio
             try
             {
                 string consulta = @"
-                                  SELECT 
-    C.CompraId,
-    C.Fecha,
-    C.Stock,
-    C.Total,
-    P.ProductoId,
-    P.Nombre AS Nombre,
-    P.Descripcion AS Descripcion,
-    Prov.id_Proveedor AS IdProveedor,
-    Prov.Nombre AS ProveedorNombre,
-    Cat.Id AS IdCategoria,
-    Cat.Descripcion AS CategoriaNombre,
-    M.Id AS IdMarca,
-    M.Descripcion AS MarcaNombre
-FROM Compras C
-LEFT JOIN Productos P ON C.IdProducto = P.ProductoId
-LEFT JOIN Proveedores Prov ON C.ProveedorId = Prov.id_Proveedor
-LEFT JOIN CATEGORIAS Cat ON P.IdCategoria = Cat.Id
-LEFT JOIN MARCAS M ON P.IdMarca = M.Id";
+            SELECT 
+                C.CompraId,
+                C.Fecha,
+                C.Stock,
+                C.Total,
+                P.ProductoId,
+                P.Nombre AS ProductoNombre,
+                P.Descripcion AS ProductoDescripcion,
+                Prov.id_Proveedor AS IdProveedor,
+                Prov.Nombre AS ProveedorNombre,
+                Cat.Id AS IdCategoria,
+                Cat.Descripcion AS CategoriaNombre,
+                M.Id AS IdMarca,
+                M.Descripcion AS MarcaNombre
+            FROM Compras C
+            LEFT JOIN Productos P ON C.IdProducto = P.ProductoId
+            LEFT JOIN Proveedores Prov ON C.ProveedorId = Prov.id_Proveedor
+            LEFT JOIN CATEGORIAS Cat ON P.IdCategoria = Cat.Id
+            LEFT JOIN MARCAS M ON P.IdMarca = M.Id";
 
-                if (!string.IsNullOrEmpty(CompraId))
+                if (compraId != null)
                 {
-                    consulta += " WHERE CompraId = @CompraId";
-                    datos.setearConsulta(consulta);
-                    datos.setearParametro("@CompraId", CompraId);
+                    consulta += " WHERE C.CompraId = @CompraId";
                 }
-                else
-                {
-                    datos.setearConsulta(consulta);
-                }
+
+                datos.setearConsulta(consulta);
+
+                if (compraId != null)
+                    datos.setearParametro("@CompraId", compraId);
 
                 datos.ejecutarLectura();
+
                 while (datos.Lector.Read())
                 {
                     Compra aux = new Compra();
 
                     aux.CompraId = (int)datos.Lector["CompraId"];
+                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
+                    aux.Stock = datos.Lector["Stock"] != DBNull.Value ? (int)datos.Lector["Stock"] : 0;
+                    aux.Total = datos.Lector["Total"] != DBNull.Value ? Convert.ToDecimal(datos.Lector["Total"]) : 0;
+
                     aux.idProducto = datos.Lector["ProductoId"] != DBNull.Value ? (int)datos.Lector["ProductoId"] : 0;
-                    aux.ProveedorNombre = datos.Lector["ProveedorNombre"].ToString();
+                    aux.Nombre = datos.Lector["ProductoNombre"].ToString();
+                    aux.Descripcion = datos.Lector["ProductoDescripcion"].ToString();
+
                     aux.ProveedorId = datos.Lector["IdProveedor"] != DBNull.Value ? (int)datos.Lector["IdProveedor"] : 0;
-                    aux.Nombre = datos.Lector["Nombre"].ToString();
-                    aux.Descripcion = datos.Lector["Descripcion"].ToString();
+                    aux.ProveedorNombre = datos.Lector["ProveedorNombre"].ToString();
 
                     aux.categoria = new Categoria
                     {
@@ -73,22 +78,17 @@ LEFT JOIN MARCAS M ON P.IdMarca = M.Id";
                         Descripcion = datos.Lector["MarcaNombre"].ToString()
                     };
 
-                    aux.Stock = datos.Lector["Stock"] != DBNull.Value ? (int)datos.Lector["Stock"] : 0;
-                    aux.Total = datos.Lector["Total"] != DBNull.Value ? Convert.ToDecimal(datos.Lector["Total"]) : 0;
-
                     lista.Add(aux);
                 }
+
                 return lista;
-            }
-            catch (Exception)
-            {
-                throw;
             }
             finally
             {
                 datos.cerrarConexion();
             }
         }
+
 
 
 

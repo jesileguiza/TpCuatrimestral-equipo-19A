@@ -100,7 +100,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-4">
         
-        <h2 class="form-title">Agregar Compra</h2>
+        <h2 class="form-title" id="formTitle" runat="server">Agregar Compra</h2>
 
         <div class="form-row">
         
@@ -148,8 +148,8 @@
          
         <div class="form-row">
 <div class="form-group col-md-6">
-    <label for="TxtFecha">Fecha</label>
-    <asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control"></asp:TextBox>
+ <label for="TxtFecha">Fecha</label>
+<asp:TextBox ID="TxtFecha" runat="server" CssClass="form-control" TextMode="Date"></asp:TextBox>
 </div>
             </div>
         <hr style="margin-top: 30px; margin-bottom: 25px; border-top: 1px solid #e0e0e0;" />
